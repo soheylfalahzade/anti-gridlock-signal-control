@@ -1,8 +1,21 @@
 <viewsettings>
-    <scheme name="real world">
-        <vehicles vehicleColor="by speed" vehicleSizeExaggeration="1.6"/>
-        <junctions drawActionSteps="false"/>
+    <scheme name="anti-gridlock">
+        <background backgroundColor="20,22,26" showGrid="0"/>
+        <edges laneEdgeMode="0" laneShowBorders="1" widthExaggeration="1.00">
+            <colorScheme name="uniform"><entry color="43,43,43"/></colorScheme>
+        </edges>
+        <vehicles vehicleMode="9" vehicle_exaggeration="1.50">
+            <colorScheme name="by speed" interpolated="1">
+                <entry color="255,40,40"  threshold="0.00"/>
+                <entry color="255,140,0"  threshold="3.00"/>
+                <entry color="255,225,60" threshold="7.00"/>
+                <entry color="60,220,120" threshold="13.89"/>
+            </colorScheme>
+        </vehicles>
+        <junctions junctionMode="0" drawShape="1">
+            <colorScheme name="uniform"><entry color="34,36,40"/></colorScheme>
+        </junctions>
     </scheme>
-    <viewport zoom="380" x="0" y="0"/>
+    <viewport zoom="350.00" x="0.00" y="0.00" angle="0.00"/>
     <delay value="60"/>
 </viewsettings>

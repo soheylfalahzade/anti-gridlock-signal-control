@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2026-09-20T13:44:33.079030+03:30 by Eclipse SUMO netconvert 1.27.1
+<!-- generated on 2026-09-20T19:20:30.791081+03:30 by Eclipse SUMO netconvert 1.27.1
 <netconvertConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
@@ -143,24 +143,24 @@
         <phase duration="3"  state="rryyrryy"/>
     </tlLogic>
     <tlLogic id="M_E" type="static" programID="0" offset="0">
-        <phase duration="24" state="GGG"/>
+        <phase duration="30" state="GGG"/>
         <phase duration="3"  state="GGy"/>
-        <phase duration="23" state="GGr"/>
+        <phase duration="17" state="GGr"/>
     </tlLogic>
     <tlLogic id="M_N" type="static" programID="0" offset="0">
-        <phase duration="24" state="GGG"/>
+        <phase duration="15" state="GGG"/>
         <phase duration="3"  state="GGy"/>
-        <phase duration="23" state="GGr"/>
+        <phase duration="32" state="GGr"/>
     </tlLogic>
     <tlLogic id="M_S" type="static" programID="0" offset="0">
-        <phase duration="24" state="GGG"/>
+        <phase duration="15" state="GGG"/>
         <phase duration="3"  state="yGG"/>
-        <phase duration="23" state="rGG"/>
+        <phase duration="32" state="rGG"/>
     </tlLogic>
     <tlLogic id="M_W" type="static" programID="0" offset="0">
-        <phase duration="24" state="GGG"/>
+        <phase duration="30" state="GGG"/>
         <phase duration="3"  state="yGG"/>
-        <phase duration="23" state="rGG"/>
+        <phase duration="17" state="rGG"/>
     </tlLogic>
 
     <junction id="C" type="traffic_light" x="250.00" y="250.00" incLanes="in_N_0 in_N_1 in_E_0 in_E_1 in_S_0 in_S_1 in_W_0 in_W_1" intLanes=":C_0_0 :C_0_1 :C_2_0 :C_2_1 :C_4_0 :C_4_1 :C_6_0 :C_6_1" shape="243.60,260.40 253.20,260.40 253.56,258.82 254.00,258.18 254.62,257.63 255.42,257.19 256.40,256.84 257.56,256.60 258.89,256.45 260.40,256.40 260.40,246.80 258.82,246.44 258.18,246.00 257.63,245.38 257.19,244.58 256.84,243.60 256.60,242.44 256.45,241.11 256.40,239.60 246.80,239.60 246.44,241.18 246.00,241.82 245.38,242.37 244.58,242.81 243.60,243.16 242.44,243.40 241.11,243.55 239.60,243.60 239.60,253.20 241.18,253.56 241.82,254.00 242.37,254.62 242.81,255.42 243.16,256.40 243.40,257.56 243.55,258.89">

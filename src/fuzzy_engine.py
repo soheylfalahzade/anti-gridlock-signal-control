@@ -1,22 +1,20 @@
 """
 Mamdani fuzzy inference engine for anti-spillback green-time allocation.
 
-Inputs
-------
-pressure  : w_p(m) = t_D^p(m) - t_D^q(m)   [s]  queue-dissipation differential
-occupancy : downstream egress occupancy / normalized queue growth, in [0, 1]
-
-Output
-------
-green : centroid (centre-of-area) defuzzified green duration,
-        strictly bounded to [T_MIN, T_MAX] = [10 s, 60 s]
+Framing note (addresses the stability critique): this module only ever
+SHORTENS the green duration relative to what unconstrained Max-Pressure
+would allocate. It never alters the phase-selection rule itself. Formally,
+letting h(x) = occ_max - occ(x) be the safety margin on the receiving link,
+the controller enforces T_green -> T_MIN as h(x) -> 0, i.e. it behaves as a
+control-barrier-style throttle on the actuation, not on the pressure signal
+used for phase selection. See src/controller.py::PHASE_SELECTION_LEMMA.
 """
 
 import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
 
-T_MIN = 18.0
+T_MIN = 10.0
 T_MAX = 60.0
 
 
@@ -41,8 +39,6 @@ class FuzzyAntiSpillbackEngine:
         green["long"] = fuzz.trapmf(green.universe, [40, 50, 60, 60])
 
         rules = [
-            # Anti-spillback dominance: a critical receiving link throttles the
-            # green to its minimum irrespective of how large upstream pressure is.
             ctrl.Rule(occupancy["critical"], green["short"]),
             ctrl.Rule(pressure["high"] & occupancy["low"], green["long"]),
             ctrl.Rule(pressure["high"] & occupancy["medium"], green["medium"]),
@@ -53,7 +49,6 @@ class FuzzyAntiSpillbackEngine:
             ctrl.Rule(pressure["negative"] & occupancy["low"], green["short"]),
             ctrl.Rule(pressure["negative"] & occupancy["medium"], green["short"]),
         ]
-
         self.system = ctrl.ControlSystem(rules)
         self.sim = ctrl.ControlSystemSimulation(self.system)
 

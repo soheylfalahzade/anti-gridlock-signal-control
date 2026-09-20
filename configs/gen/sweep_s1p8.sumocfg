@@ -1,8 +1,8 @@
 <configuration>
     <input>
-        <net-file value="intersection.net.xml"/>
-        <route-files value="intersection.rou.xml"/>
-        <gui-settings-file value="viewsettings.xml"/>
+        <net-file value="../intersection.net.xml"/>
+        <route-files value="sweep_s1p8.rou.xml"/>
+        <gui-settings-file value="../viewsettings.xml"/>
     </input>
     <time>
         <begin value="0"/>

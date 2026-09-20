@@ -768,7 +768,6 @@
     <vehicle id="S318" type="car" route="r_S" depart="1196.17" departLane="best" departSpeed="max"/>
     <vehicle id="E66" type="car" route="r_E" depart="1196.78" departLane="best" departSpeed="max"/>
     <vehicle id="S319" type="car" route="r_S" depart="1196.98" departLane="best" departSpeed="max"/>
-    <vehicle id="amb0" type="ambulance" route="r_N" depart="1200.00" departLane="best" departSpeed="max"/>
     <vehicle id="N313" type="car" route="r_N" depart="1200.16" departLane="best" departSpeed="max"/>
     <vehicle id="E67" type="car" route="r_E" depart="1203.29" departLane="best" departSpeed="max"/>
     <vehicle id="E68" type="car" route="r_E" depart="1204.95" departLane="best" departSpeed="max"/>
