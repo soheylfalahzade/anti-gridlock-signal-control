@@ -1,0 +1,8 @@
+<viewsettings>
+    <scheme name="real world">
+        <vehicles vehicleColor="by speed" vehicleSizeExaggeration="1.6"/>
+        <junctions drawActionSteps="false"/>
+    </scheme>
+    <viewport zoom="380" x="0" y="0"/>
+    <delay value="60"/>
+</viewsettings>
