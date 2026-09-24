@@ -9,7 +9,8 @@ import traci
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from src.metrics import MetricsCollector
 from src.controller import (TLS_ID, PHASE_UP, PHASE_DOWN, OPPOSITE,
-                            build_state_strings, start_sumo, step, switch, queue)
+                            build_state_strings, step, switch, queue)
+from baselines.fixed_time import start_sumo
 
 DECISION_INTERVAL, MIN_GREEN = 5, 10
 
@@ -19,10 +20,10 @@ def mp_pressure(group):
 
 
 def run(sumocfg="configs/intersection.sumocfg", gui=False, seed=1, verbose=False,
-        sim_end=3600,
+        sim_end=3600, regime="moderate",
         tripinfo_out="results/tripinfo_vanilla_mp.xml",
         metrics_out="results/metrics_vanilla_mp.json"):
-    start_sumo(sumocfg, tripinfo_out, gui, seed)
+    start_sumo(sumocfg, tripinfo_out, gui, seed, regime)
     states = build_state_strings()
     metrics = MetricsCollector()
 
@@ -45,10 +46,11 @@ def run(sumocfg="configs/intersection.sumocfg", gui=False, seed=1, verbose=False
     results = metrics.finalize(tripinfo_out, inserted, max(pending, 0))
     results["policy"] = "Vanilla Max-Pressure"
     MetricsCollector.save(results, metrics_out)
-    print(f"[Vanilla Max-Pressure] delay={results['avg_delay_s']:.1f}s "
+    print(f"[Vanilla Max-Pressure:{regime}] delay={results['avg_delay_s']:.1f}s "
          f"queue={results['mean_queue_length']:.1f} "
          f"throughput={results['throughput_completed_trips']} "
-         f"spillbacks={results['spillback_occurrences']}")
+         f"box_gridlock={results['box_gridlock_events']} "
+         f"storage_overflow={results['storage_overflow_events']}")
     return results
 
 
@@ -57,4 +59,5 @@ if __name__ == "__main__":
     p.add_argument("--sumocfg", default="configs/intersection.sumocfg")
     p.add_argument("--gui", action="store_true")
     p.add_argument("--seed", type=int, default=1)
+    p.add_argument("--regime", default="moderate", choices=["moderate", "stress"])
     run(**vars(p.parse_args()))

@@ -1,15 +1,13 @@
 """
-Shared demand model. Fix vs. previous revision: time-to-teleport is now
-finite (300s) instead of -1 (infinite). With teleport disabled, a genuine
-gridlock at high demand can permanently block insertion, producing the
-anomalous non-monotonic sweep results observed at scale=1.5 (61s delay,
-52 completed trips) -- the simulation was not failing, it was measuring a
-frozen network where almost nothing could depart, while at scale=1.8 a
-different random arrival pattern happened to avoid that lock. A finite,
-consistent teleport window makes deadlock end deterministically and
-comparably across policies, and every teleport is now counted explicitly
-as `deadlock_teleports` in metrics -- so gridlock still shows up in the
-results, but as a reported number instead of a silent sampling artifact.
+Shared demand model.
+
+Fix vs. previous revision: AMBULANCE_DEPART moved from 1800s (deep into
+chronic oversaturation, where it experienced ~985s of pure insertion delay
+before ever entering the network -- confounding signal-preemption benefit
+with a queue-storage problem no signal policy at C can fix) to 300s, while
+traffic is still light. The chronic-demand ambulance scenario is kept as
+an explicit, separately labeled ablation (see evaluate.py) rather than the
+default, so the two effects are never silently mixed into one number again.
 """
 
 import random
@@ -25,7 +23,8 @@ BURST_LEN = 300
 BURST_STARTS = [500, 1400, 2400]
 TIME_TO_TELEPORT = 300
 
-AMBULANCE_DEPART = 1200.0   # earlier than before, so it has time to finish
+AMBULANCE_DEPART_LIGHT = 300.0    # primary ablation: light traffic
+AMBULANCE_DEPART_STRESS = 1800.0  # secondary ablation: deep congestion
 AMBULANCE_DIR = "N"
 
 
@@ -40,7 +39,8 @@ def _arrivals(vph_base, end, bursty, rng):
     return times
 
 
-def write_routes(path, scale=1.0, seed=1, ambulance=False, sim_end=SIM_END):
+def write_routes(path, scale=1.0, seed=1, ambulance=False,
+                 ambulance_depart=AMBULANCE_DEPART_LIGHT, sim_end=SIM_END):
     rng = random.Random(seed)
     routes = {d: f"app_{d} in_{d} out_{THROUGH[d]} exit_{THROUGH[d]}" for d in DIRS}
     demand = {"N": NS_BASE_VPH * scale / 2, "S": NS_BASE_VPH * scale / 2,
@@ -52,7 +52,7 @@ def write_routes(path, scale=1.0, seed=1, ambulance=False, sim_end=SIM_END):
             vehicles.append({"route": f"r_{d}", "depart": t, "id_prefix": d})
 
     if ambulance:
-        vehicles.append({"route": f"r_{AMBULANCE_DIR}", "depart": AMBULANCE_DEPART,
+        vehicles.append({"route": f"r_{AMBULANCE_DIR}", "depart": ambulance_depart,
                          "id_prefix": "amb", "vtype": "ambulance"})
 
     vehicles.sort(key=lambda v: float(v["depart"]))
@@ -109,14 +109,16 @@ def write_sumocfg(path, net_file, route_file, view_file=None, sim_end=SIM_END,
 """)
 
 
-def make_config(tag, scale=1.0, seed=1, ambulance=False, config_dir="configs",
-                gen_dir="configs/gen", net_file="../intersection.net.xml",
-                view_file="../viewsettings.xml"):
+def make_config(tag, scale=1.0, seed=1, ambulance=False,
+                ambulance_depart=AMBULANCE_DEPART_LIGHT,
+                config_dir="configs", gen_dir="configs/gen",
+                net_file="../intersection.net.xml", view_file="../viewsettings.xml"):
     import os
     os.makedirs(gen_dir, exist_ok=True)
     rou_path = os.path.join(gen_dir, f"{tag}.rou.xml")
     cfg_path = os.path.join(gen_dir, f"{tag}.sumocfg")
-    n = write_routes(rou_path, scale=scale, seed=seed, ambulance=ambulance)
+    n = write_routes(rou_path, scale=scale, seed=seed, ambulance=ambulance,
+                     ambulance_depart=ambulance_depart)
     write_sumocfg(cfg_path, net_file=net_file, route_file=f"{tag}.rou.xml",
                  view_file=view_file)
     return cfg_path, n

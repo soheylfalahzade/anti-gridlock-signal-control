@@ -8,16 +8,21 @@ import traci
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from src.metrics import MetricsCollector
-from src.controller import TLS_ID, YELLOW_TIME, ALL_RED_TIME, build_state_strings, start_sumo, step
+from src.controller import TLS_ID, YELLOW_TIME, ALL_RED_TIME, build_state_strings, step
+from src.metering import apply_metering, CAPACITY_VPH_PER_LANE
+import sumolib
 
-SAT_PER_LANE, LANES = 1900.0, 2
-FLOW_NS, FLOW_EW = 750.0, 200.0
 MIN_GREEN = 10.0
+FLOW_EW_PER_DIR = 200.0
 
 
-def webster_plan(scale=1.0):
-    cap = SAT_PER_LANE * LANES
-    y_ns, y_ew = (FLOW_NS * scale) / cap, (FLOW_EW * scale) / cap
+def webster_plan(scale=1.0, regime="moderate"):
+    lanes = 2
+    cap_ns_per_lane = CAPACITY_VPH_PER_LANE[regime]["NS"]
+    cap_ew_per_lane = CAPACITY_VPH_PER_LANE[regime]["EW"]
+    flow_ns = min(750.0 * scale, cap_ns_per_lane * lanes * 0.98)
+    flow_ew = min(FLOW_EW_PER_DIR * scale, cap_ew_per_lane * lanes * 0.98)
+    y_ns, y_ew = flow_ns / (1900.0 * lanes), flow_ew / (1900.0 * lanes)
     Y = min(y_ns + y_ew, 0.95)
     L = 2 * (YELLOW_TIME + ALL_RED_TIME)
     c = min(max((1.5 * L + 5.0) / max(1e-6, 1.0 - Y), 60.0), 120.0)
@@ -26,18 +31,28 @@ def webster_plan(scale=1.0):
             "g_ew": max(MIN_GREEN, eff * y_ew / (y_ns + y_ew)), "cycle": c}
 
 
+def start_sumo(sumocfg, tripinfo_out, gui, seed, regime):
+    binary = sumolib.checkBinary("sumo-gui" if gui else "sumo")
+    os.makedirs(os.path.dirname(tripinfo_out), exist_ok=True)
+    cmd = [binary, "-c", sumocfg, "--seed", str(seed), "--tripinfo-output", tripinfo_out,
+          "--tripinfo-output.write-unfinished", "true",
+          "--no-step-log", "true", "--duration-log.disable", "true", "--no-warnings", "true"]
+    traci.start(cmd)
+    apply_metering(regime)
+
+
 def run(sumocfg="configs/intersection.sumocfg", gui=False, seed=1, verbose=False,
-        scale=1.0, sim_end=3600,
+        scale=1.0, sim_end=3600, regime="moderate",
         tripinfo_out="results/tripinfo_fixed_time.xml",
         metrics_out="results/metrics_fixed_time.json"):
-    plan = webster_plan(scale)
-    start_sumo(sumocfg, tripinfo_out, gui, seed)
+    plan = webster_plan(scale, regime)
+    start_sumo(sumocfg, tripinfo_out, gui, seed, regime)
     states = build_state_strings()
     metrics = MetricsCollector()
 
     schedule = [("NS_green", plan["g_ns"]), ("NS_yellow", YELLOW_TIME),
-                ("all_red", ALL_RED_TIME), ("EW_green", plan["g_ew"]),
-                ("EW_yellow", YELLOW_TIME), ("all_red", ALL_RED_TIME)]
+               ("all_red", ALL_RED_TIME), ("EW_green", plan["g_ew"]),
+               ("EW_yellow", YELLOW_TIME), ("all_red", ALL_RED_TIME)]
     idx, remaining, inserted = 0, schedule[0][1], 0
     traci.trafficlight.setRedYellowGreenState(TLS_ID, states[schedule[0][0]])
 
@@ -55,10 +70,11 @@ def run(sumocfg="configs/intersection.sumocfg", gui=False, seed=1, verbose=False
     results = metrics.finalize(tripinfo_out, inserted, max(pending, 0))
     results["policy"] = "Fixed-Time (Webster)"
     MetricsCollector.save(results, metrics_out)
-    print(f"[Fixed-Time] delay={results['avg_delay_s']:.1f}s "
+    print(f"[Fixed-Time:{regime}] delay={results['avg_delay_s']:.1f}s "
          f"queue={results['mean_queue_length']:.1f} "
          f"throughput={results['throughput_completed_trips']} "
-         f"spillbacks={results['spillback_occurrences']}")
+         f"box_gridlock={results['box_gridlock_events']} "
+         f"storage_overflow={results['storage_overflow_events']}")
     return results
 
 
@@ -68,4 +84,5 @@ if __name__ == "__main__":
     p.add_argument("--gui", action="store_true")
     p.add_argument("--seed", type=int, default=1)
     p.add_argument("--scale", type=float, default=1.0)
+    p.add_argument("--regime", default="moderate", choices=["moderate", "stress"])
     run(**vars(p.parse_args()))
