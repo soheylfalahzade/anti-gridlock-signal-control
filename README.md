@@ -249,3 +249,26 @@ Varaiya, P. (2013). Max pressure control of a network of signalized intersection
 Webster, F. V. (1958). Traffic Signal Settings. Road Research Technical Paper No. 39, HMSO.
 Jain, R., Chiu, D., & Hawe, W. (1984). A quantitative measure of fairness and discrimination for resource allocation in shared computer systems. DEC Research Report TR-301.
 Ames, A. D., Coogan, S., Egerstedt, M., Notomista, G., Sreenath, K., & Tabuada, P. (2019). Control barrier functions: Theory and applications. 2019 18th European Control Conference (ECC).
+---
+
+## 10. Robustness: Sensitivity Analysis and Direct Bottleneck-Severity Sweep
+
+Two additional robustness checks complement §5, addressing parameters that were previously hand-set without characterizing sensitivity to them:
+
+**Parameter sensitivity** (`sensitivity_analysis.py`, 3-seed average per point): sweeps the hard-override threshold `OCC_OVERRIDE` ∈ [0.65, 0.85] and a horizontal shift of the "critical" occupancy membership function ∈ [−0.10, +0.10], reporting delay, box-gridlock, and storage-overflow response curves against the benchmark's default values (marked on each plot). Output: `results/sensitivity_analysis.png`, `results/sensitivity_report.json`.
+
+**Bottleneck-severity sweep** (`bottleneck_sweep.py`, 3-seed average per point): the demand sweep in §5.2 varies arrival rate against a *fixed* bottleneck; this sweep instead varies the NS egress metering duty ratio directly at *fixed* demand (scale = 1.0), directly testing whether the fuzzy controller degrades more gracefully than the baselines as the physical constraint itself tightens — the more direct test of this project's core claim. Output: `results/bottleneck_sweep.png`, `results/bottleneck_sweep_report.json`.
+
+```bash
+python sensitivity_analysis.py
+python bottleneck_sweep.py
+```
+
+## 11. Tests
+
+Structural sanity tests (no SUMO execution required) guard against regression of defects found and fixed during development — unsorted route files, metering plans violating the cycle constraint, and network build well-formedness:
+
+```bash
+pip install pytest --break-system-packages
+pytest tests/ -v
+```

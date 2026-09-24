@@ -1,21 +1,12 @@
 """
 Fuzzy Anti-Spillback Max-Pressure controller.
 
-Fixes vs. previous revision:
-  - Metering timing is applied at runtime via src.metering.apply_metering
-    (regime "moderate" by default), instead of relying on the net file's
-    baked-in plan.
-  - Emergency detection now only checks approach edges (app_D, in_D). The
-    previous version also matched egress edges (out_T/exit_T) because
-    DIR_GROUP keys on the edge's trailing direction letter, which an
-    egress edge also has (out_S -> "S" -> NS) -- so an ambulance that had
-    already crossed the stop line kept re-triggering "EMERGENCY PREEMPT"
-    for a movement it no longer needed, wasting yellow/all-red clearance
-    time on every spurious re-trigger (visible in the previous log as 5
-    preemptions logged for a single ambulance). Restricting detection to
-    the approach edges fixes this.
-  - Preemption logging is deduplicated: only prints on an actual state
-    change, not every step preemption remains active for the same vehicle.
+Adds occ_override and critical_shift parameters (both default to the
+values used throughout the primary benchmark) so sensitivity_analysis.py
+can vary them without touching the controller's core logic. Adds
+ns_green_override / ew_green_override, applied via
+src.metering.apply_metering_custom right after start_sumo, so
+bottleneck_sweep.py can vary bottleneck severity directly at fixed demand.
 """
 
 import argparse
@@ -29,13 +20,13 @@ import sumolib
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from src.fuzzy_engine import FuzzyAntiSpillbackEngine, T_MIN
 from src.metrics import MetricsCollector
-from src.metering import apply_metering
+from src.metering import apply_metering, apply_metering_custom
 
 TLS_ID = "C"
 SAT_FLOW_VPH_PER_LANE = 1900.0
 YELLOW_TIME = 3
 ALL_RED_TIME = 2
-OCC_OVERRIDE = 0.75
+OCC_OVERRIDE_DEFAULT = 0.75
 PREEMPT_MAX_HOLD = 45.0
 OCC_SMOOTH_WINDOW = 50
 
@@ -99,9 +90,6 @@ class _OccupancySmoother:
 
 
 def detect_emergency_group():
-    """Only fires while the emergency vehicle is still approaching (on
-    app_D or in_D). Once it has crossed the stop line onto out_T/exit_T,
-    it no longer needs -- and must not re-trigger -- preemption."""
     for vid in traci.vehicle.getIDList():
         if not vid.startswith("amb"):
             continue
@@ -113,7 +101,8 @@ def detect_emergency_group():
     return None, None, None
 
 
-def start_sumo(sumocfg, tripinfo_out, gui=False, seed=1, regime="moderate"):
+def start_sumo(sumocfg, tripinfo_out, gui=False, seed=1, regime="moderate",
+               ns_green_override=None, ew_green_override=30):
     binary = sumolib.checkBinary("sumo-gui" if gui else "sumo")
     os.makedirs(os.path.dirname(tripinfo_out), exist_ok=True)
     cmd = [binary, "-c", sumocfg, "--seed", str(seed),
@@ -124,7 +113,10 @@ def start_sumo(sumocfg, tripinfo_out, gui=False, seed=1, regime="moderate"):
     if gui:
         cmd += ["--start", "true", "--quit-on-end", "true"]
     traci.start(cmd)
-    apply_metering(regime)
+    if ns_green_override is not None:
+        apply_metering_custom(ns_green_override, ew_green_override)
+    else:
+        apply_metering(regime)
 
 
 def step(metrics):
@@ -144,11 +136,14 @@ def switch(states, metrics, frm, to):
 
 def run(sumocfg="configs/intersection.sumocfg", gui=False, seed=1, verbose=False,
         emergency_preempt=True, sim_end=3600, regime="moderate",
+        occ_override=OCC_OVERRIDE_DEFAULT, critical_shift=0.0,
+        ns_green_override=None, ew_green_override=30,
         tripinfo_out="results/tripinfo_fuzzy.xml",
         metrics_out="results/metrics_fuzzy.json"):
-    start_sumo(sumocfg, tripinfo_out, gui, seed, regime)
+    start_sumo(sumocfg, tripinfo_out, gui, seed, regime,
+              ns_green_override, ew_green_override)
     states = build_state_strings()
-    engine = FuzzyAntiSpillbackEngine()
+    engine = FuzzyAntiSpillbackEngine(critical_shift=critical_shift)
     metrics = MetricsCollector()
     smoother = _OccupancySmoother()
 
@@ -202,10 +197,10 @@ def run(sumocfg="configs/intersection.sumocfg", gui=False, seed=1, verbose=False
 
         note = "fuzzy"
         occ_nxt_s = occ_cur_s if nxt == phase else occ_oth_s
-        if occ_nxt_s > OCC_OVERRIDE:
+        if occ_nxt_s > occ_override:
             alt = other if nxt == phase else phase
             occ_alt_s = occ_oth_s if nxt == phase else occ_cur_s
-            if occ_alt_s <= OCC_OVERRIDE:
+            if occ_alt_s <= occ_override:
                 nxt, note = alt, "ANTI-SPILLBACK rotate"
             else:
                 note = "ANTI-SPILLBACK hold@Tmin"
@@ -219,7 +214,7 @@ def run(sumocfg="configs/intersection.sumocfg", gui=False, seed=1, verbose=False
 
         if verbose:
             print(f"{traci.simulation.getTime():6.0f} {nxt:>6} w={w_sel:7.2f} "
-                 f"occ(smoothed)={occ_sel*100:5.1f}% green={green:5.1f}  {note}")
+                 f"occ={occ_sel*100:5.1f}% green={green:5.1f}  {note}")
 
         if nxt != phase:
             switch(states, metrics, phase, nxt)
@@ -231,15 +226,14 @@ def run(sumocfg="configs/intersection.sumocfg", gui=False, seed=1, verbose=False
 
     results = metrics.finalize(tripinfo_out, inserted, max(pending, 0))
     results.update(policy="Fuzzy Anti-Spillback", anti_spillback_overrides=overrides,
-                   emergency_preemptions=preemptions)
+                   emergency_preemptions=preemptions, occ_override=occ_override,
+                   critical_shift=critical_shift)
     MetricsCollector.save(results, metrics_out)
-    print(f"[Fuzzy Anti-Spillback:{regime}] delay={results['avg_delay_s']:.1f}s "
-         f"queue={results['mean_queue_length']:.1f} "
+    print(f"[Fuzzy:{regime} occ_ovr={occ_override} shift={critical_shift:+.2f}] "
+         f"delay={results['avg_delay_s']:.1f}s queue={results['mean_queue_length']:.1f} "
          f"throughput={results['throughput_completed_trips']} "
          f"box_gridlock={results['box_gridlock_events']} "
-         f"storage_overflow={results['storage_overflow_events']} "
-         f"teleports={results['deadlock_teleports']} "
-         f"preemptions={preemptions}")
+         f"storage_overflow={results['storage_overflow_events']}")
     return results
 
 
@@ -249,6 +243,8 @@ if __name__ == "__main__":
     p.add_argument("--gui", action="store_true")
     p.add_argument("--seed", type=int, default=1)
     p.add_argument("--regime", default="moderate", choices=["moderate", "stress"])
+    p.add_argument("--occ-override", type=float, default=OCC_OVERRIDE_DEFAULT)
+    p.add_argument("--critical-shift", type=float, default=0.0)
     p.add_argument("--quiet", dest="verbose", action="store_false")
     p.add_argument("--no-preempt", dest="emergency_preempt", action="store_false")
     run(**vars(p.parse_args()))

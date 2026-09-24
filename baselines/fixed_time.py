@@ -5,21 +5,25 @@ import os
 import sys
 
 import traci
+import sumolib
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from src.metrics import MetricsCollector
 from src.controller import TLS_ID, YELLOW_TIME, ALL_RED_TIME, build_state_strings, step
-from src.metering import apply_metering, CAPACITY_VPH_PER_LANE
-import sumolib
+from src.metering import apply_metering, apply_metering_custom, CAPACITY_VPH_PER_LANE
 
 MIN_GREEN = 10.0
 FLOW_EW_PER_DIR = 200.0
 
 
-def webster_plan(scale=1.0, regime="moderate"):
+def webster_plan(scale=1.0, regime="moderate", ns_green_override=None, ew_green_override=30):
     lanes = 2
-    cap_ns_per_lane = CAPACITY_VPH_PER_LANE[regime]["NS"]
-    cap_ew_per_lane = CAPACITY_VPH_PER_LANE[regime]["EW"]
+    if ns_green_override is not None:
+        cap_ns_per_lane = 1900 * ns_green_override / 50.0
+        cap_ew_per_lane = 1900 * ew_green_override / 50.0
+    else:
+        cap_ns_per_lane = CAPACITY_VPH_PER_LANE[regime]["NS"]
+        cap_ew_per_lane = CAPACITY_VPH_PER_LANE[regime]["EW"]
     flow_ns = min(750.0 * scale, cap_ns_per_lane * lanes * 0.98)
     flow_ew = min(FLOW_EW_PER_DIR * scale, cap_ew_per_lane * lanes * 0.98)
     y_ns, y_ew = flow_ns / (1900.0 * lanes), flow_ew / (1900.0 * lanes)
@@ -31,22 +35,27 @@ def webster_plan(scale=1.0, regime="moderate"):
             "g_ew": max(MIN_GREEN, eff * y_ew / (y_ns + y_ew)), "cycle": c}
 
 
-def start_sumo(sumocfg, tripinfo_out, gui, seed, regime):
+def start_sumo(sumocfg, tripinfo_out, gui, seed, regime,
+               ns_green_override=None, ew_green_override=30):
     binary = sumolib.checkBinary("sumo-gui" if gui else "sumo")
     os.makedirs(os.path.dirname(tripinfo_out), exist_ok=True)
     cmd = [binary, "-c", sumocfg, "--seed", str(seed), "--tripinfo-output", tripinfo_out,
           "--tripinfo-output.write-unfinished", "true",
           "--no-step-log", "true", "--duration-log.disable", "true", "--no-warnings", "true"]
     traci.start(cmd)
-    apply_metering(regime)
+    if ns_green_override is not None:
+        apply_metering_custom(ns_green_override, ew_green_override)
+    else:
+        apply_metering(regime)
 
 
 def run(sumocfg="configs/intersection.sumocfg", gui=False, seed=1, verbose=False,
         scale=1.0, sim_end=3600, regime="moderate",
+        ns_green_override=None, ew_green_override=30,
         tripinfo_out="results/tripinfo_fixed_time.xml",
         metrics_out="results/metrics_fixed_time.json"):
-    plan = webster_plan(scale, regime)
-    start_sumo(sumocfg, tripinfo_out, gui, seed, regime)
+    plan = webster_plan(scale, regime, ns_green_override, ew_green_override)
+    start_sumo(sumocfg, tripinfo_out, gui, seed, regime, ns_green_override, ew_green_override)
     states = build_state_strings()
     metrics = MetricsCollector()
 

@@ -1,13 +1,11 @@
 """
 Mamdani fuzzy inference engine for anti-spillback green-time allocation.
 
-Framing note (addresses the stability critique): this module only ever
-SHORTENS the green duration relative to what unconstrained Max-Pressure
-would allocate. It never alters the phase-selection rule itself. Formally,
-letting h(x) = occ_max - occ(x) be the safety margin on the receiving link,
-the controller enforces T_green -> T_MIN as h(x) -> 0, i.e. it behaves as a
-control-barrier-style throttle on the actuation, not on the pressure signal
-used for phase selection. See src/controller.py::PHASE_SELECTION_LEMMA.
+Adds critical_shift: horizontally shifts the "critical" occupancy
+membership function's breakpoints by this amount (in occupancy units,
+e.g. +0.05), enabling a sensitivity analysis of the single most
+consequential design choice in this controller -- where "critical"
+begins -- rather than presenting the hand-set breakpoints as fixed given.
 """
 
 import numpy as np
@@ -19,7 +17,7 @@ T_MAX = 60.0
 
 
 class FuzzyAntiSpillbackEngine:
-    def __init__(self):
+    def __init__(self, critical_shift=0.0):
         pressure = ctrl.Antecedent(np.arange(-60.0, 60.01, 0.5), "pressure")
         occupancy = ctrl.Antecedent(np.arange(0.0, 1.001, 0.01), "occupancy")
         green = ctrl.Consequent(np.arange(T_MIN, T_MAX + 0.01, 0.5), "green",
@@ -30,9 +28,13 @@ class FuzzyAntiSpillbackEngine:
         pressure["positive"] = fuzz.trimf(pressure.universe, [2, 18, 34])
         pressure["high"] = fuzz.trapmf(pressure.universe, [26, 42, 60, 60])
 
-        occupancy["low"] = fuzz.trapmf(occupancy.universe, [0.00, 0.00, 0.25, 0.45])
-        occupancy["medium"] = fuzz.trimf(occupancy.universe, [0.32, 0.55, 0.76])
-        occupancy["critical"] = fuzz.trapmf(occupancy.universe, [0.62, 0.78, 1.0, 1.0])
+        s = critical_shift
+        low_pts = np.clip([0.00, 0.00, 0.25 + s, 0.45 + s], 0, 1)
+        med_pts = np.clip([0.32 + s, 0.55 + s, 0.76 + s], 0, 1)
+        crit_pts = np.clip([0.62 + s, 0.78 + s, 1.0, 1.0], 0, 1)
+        occupancy["low"] = fuzz.trapmf(occupancy.universe, sorted(low_pts))
+        occupancy["medium"] = fuzz.trimf(occupancy.universe, sorted(med_pts))
+        occupancy["critical"] = fuzz.trapmf(occupancy.universe, sorted(crit_pts))
 
         green["short"] = fuzz.trapmf(green.universe, [10, 10, 14, 22])
         green["medium"] = fuzz.trimf(green.universe, [18, 32, 46])
