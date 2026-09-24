@@ -155,6 +155,8 @@ We deliberately do **not** report a single composite "gridlock index" combining 
 
 **Reading:** the fuzzy controller sits strictly between the two baselines on total delay, and the difference from vanilla Max-Pressure is statistically significant after correction for multiple comparisons. It does not overtake Webster fixed-time on aggregate delay at this demand level — a result we do not obscure (§6.1) — but it substantially closes the fairness gap that fixed-time leaves open (0.68 → 0.77 toward Max-Pressure's 0.94), while avoiding the throughput cost that full Max-Pressure pays in cross-street starvation (see §6.2).
 
+---
+
 ### 5.2 Bottleneck-Severity Sweep (Fixed demand, scale=1.0, 3-seed average)
 
 Across the 7-point egress bottleneck sweep (NS egress duty ratio 0.66 → 0.20, corresponding to metered egress capacity from 1254 down to 380 veh/h/lane), as the downstream bottleneck tightens:
@@ -174,17 +176,24 @@ Across the 7-point egress bottleneck sweep (NS egress duty ratio 0.66 → 0.20, 
 </div>
 
 <p align="center">
-  <img src="results/demand_sweep.png" alt="Bottleneck Severity Sweep" width="85%">
+  <img src="results/bottleneck_sweep.png" alt="Bottleneck Severity Sweep" width="100%">
 </p>
+
+---
 
 ### 5.3 Chronic Stress Regime (n = 10 paired seeds)
 
 Under sustained V/C ≈ 1.3 for the full simulation, all three policies show markedly higher delay (Fixed-Time: 302.5s, Vanilla MP: 376.8s, Fuzzy: 375.4s) and Jain's index for both Max-Pressure variants converges toward ≈0.96–0.97, indicating that at extreme, unrecoverable oversaturation, both pressure-based controllers converge to similarly fair (but similarly poor) delay outcomes, and the fuzzy throttle's marginal contribution over vanilla Max-Pressure is not distinguishable in this regime.
 
 <p align="center">
-  <img src="results/fairness.png" alt="Fairness Comparison" width="48%">
-  <img src="results/comparison_metrics_stress.png" alt="Stress Regime Comparison" width="48%">
+  <img src="results/comparison_metrics_stress.png" alt="Stress Regime Comparison" width="85%">
 </p>
+
+<p align="center">
+  <img src="results/fairness.png" alt="Fairness Comparison" width="60%">
+</p>
+
+---
 
 ### 5.4 Direction-Specific Storage-Overflow Trade-off
 
@@ -193,6 +202,8 @@ This is the mechanistically important result. Across both regimes, **100% of sto
 <p align="center">
   <img src="results/storage_overflow_breakdown.png" alt="Storage Overflow Breakdown" width="85%">
 </p>
+
+---
 
 ### 5.5 Emergency Preemption: Controlled Causal Ablation
 
