@@ -1,0 +1,1040 @@
+{
+  "moderate_regime": {
+    "summary": {
+      "Fixed-Time (Webster)": {
+        "avg_delay_s": {
+          "mean": 234.76627912486887,
+          "std": 4.024893940900544,
+          "ci95_lo": 232.43775494965837,
+          "ci95_hi": 237.28374606717463
+        },
+        "mean_queue_length": {
+          "mean": 42.261694444444444,
+          "std": 1.2623180745344245,
+          "ci95_lo": 41.52141597222222,
+          "ci95_hi": 43.00254583333333
+        },
+        "throughput_completed_trips": {
+          "mean": 1659.0,
+          "std": 19.922070396645246,
+          "ci95_lo": 1647.2975,
+          "ci95_hi": 1671.2025
+        },
+        "gridlock_incidents_per_1000veh": {
+          "mean": 2.4139879168383027,
+          "std": 1.6819305844997456,
+          "ci95_lo": 1.56654405217667,
+          "ci95_hi": 3.496877497896702
+        },
+        "box_gridlock_events": {
+          "mean": 4.0,
+          "std": 2.788866755113585,
+          "ci95_lo": 2.6,
+          "ci95_hi": 5.8
+        },
+        "storage_overflow_events_NS": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "storage_overflow_events_EW": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "deadlock_teleports": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        }
+      },
+      "Vanilla Max-Pressure": {
+        "avg_delay_s": {
+          "mean": 260.9514471990156,
+          "std": 2.9984536160837973,
+          "ci95_lo": 259.206892830884,
+          "ci95_hi": 262.7443631753161
+        },
+        "mean_queue_length": {
+          "mean": 55.080972222222215,
+          "std": 2.0259196215370125,
+          "ci95_lo": 53.87195902777778,
+          "ci95_hi": 56.284623611111115
+        },
+        "throughput_completed_trips": {
+          "mean": 1695.6,
+          "std": 24.980881578608155,
+          "ci95_lo": 1680.5974999999999,
+          "ci95_hi": 1710.5
+        },
+        "gridlock_incidents_per_1000veh": {
+          "mean": 2.802176089241772,
+          "std": 2.252029046307434,
+          "ci95_lo": 1.498585503981798,
+          "ci95_hi": 4.126254806485072
+        },
+        "box_gridlock_events": {
+          "mean": 4.1,
+          "std": 3.314949304120485,
+          "ci95_lo": 2.2,
+          "ci95_hi": 6.002499999999986
+        },
+        "storage_overflow_events_NS": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "storage_overflow_events_EW": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "deadlock_teleports": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        }
+      },
+      "Fuzzy Anti-Spillback": {
+        "avg_delay_s": {
+          "mean": 243.35514077040528,
+          "std": 5.845469531928313,
+          "ci95_lo": 239.58410962684096,
+          "ci95_hi": 246.82385868192875
+        },
+        "mean_queue_length": {
+          "mean": 51.59189772131199,
+          "std": 1.7375275401414227,
+          "ci95_lo": 50.53599155423648,
+          "ci95_hi": 52.63693125
+        },
+        "throughput_completed_trips": {
+          "mean": 1657.5,
+          "std": 20.59800421831634,
+          "ci95_lo": 1645.6975,
+          "ci95_hi": 1670.5
+        },
+        "gridlock_incidents_per_1000veh": {
+          "mean": 4.1210606230954,
+          "std": 1.7720303147194225,
+          "ci95_lo": 3.093798635123007,
+          "ci95_hi": 5.206806917244435
+        },
+        "box_gridlock_events": {
+          "mean": 2.3,
+          "std": 1.888562063228706,
+          "ci95_lo": 1.2,
+          "ci95_hi": 3.4
+        },
+        "storage_overflow_events_NS": {
+          "mean": 3.9,
+          "std": 1.286683937707919,
+          "ci95_lo": 3.1,
+          "ci95_hi": 4.602499999999986
+        },
+        "storage_overflow_events_EW": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "deadlock_teleports": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        }
+      }
+    },
+    "wilcoxon_p_raw": {
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | avg_delay_s": 0.001953125,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | mean_queue_length": 0.001953125,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | throughput_completed_trips": 0.001953125,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | gridlock_incidents_per_1000veh": 0.76953125,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | box_gridlock_events": 0.7890625,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_NS": "identical (no variance)",
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_EW": "identical (no variance)",
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | deadlock_teleports": "identical (no variance)",
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | avg_delay_s": 0.00390625,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | mean_queue_length": 0.001953125,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.396484375,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": 0.130859375,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | box_gridlock_events": 0.265625,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.001953125,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 0.001953125,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 0.009765625,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.001953125,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": 0.10546875,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 0.12890625,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.001953125,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)"
+    },
+    "wilcoxon_p_holm_bonferroni": {
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | avg_delay_s": 0.033203125,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | mean_queue_length": 0.033203125,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | throughput_completed_trips": 0.033203125,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | gridlock_incidents_per_1000veh": 1.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | box_gridlock_events": 1.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_NS": "identical (no variance)",
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_EW": "identical (no variance)",
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | deadlock_teleports": "identical (no variance)",
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | avg_delay_s": 0.03515625,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | mean_queue_length": 0.033203125,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | throughput_completed_trips": 1.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": 0.7734375,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | box_gridlock_events": 1.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.033203125,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 0.033203125,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 0.078125,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.033203125,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": 0.73828125,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 0.7734375,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.033203125,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)"
+    },
+    "cohens_dz": {
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | avg_delay_s": -7.385456324559646,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | mean_queue_length": -6.581367096704161,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | throughput_completed_trips": -3.040163531165413,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | gridlock_incidents_per_1000veh": -0.11550478494700842,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | box_gridlock_events": -0.019170209636973738,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_NS": 0.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_EW": 0.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | deadlock_teleports": 0.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | avg_delay_s": -1.9325971209188197,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | mean_queue_length": -7.650535884565675,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.12807576736885198,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": -0.5686457837966407,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | box_gridlock_events": 0.40819598111769856,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_NS": -3.0310473968824128,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | deadlock_teleports": 0.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 3.3125766154701277,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 1.431616005013103,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 2.101976768267584,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": -0.5991998563337083,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 0.5522869910672277,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": -3.0310473968824128,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": 0.0
+    },
+    "jains_index": {
+      "Fixed-Time (Webster)": [
+        0.6943940208746004,
+        0.6648104223197935,
+        0.6747680423177466,
+        0.6743421491305083,
+        0.6655400855151075,
+        0.6619150040083736,
+        0.7054087717159503,
+        0.7082913251706773,
+        0.6932624085576793,
+        0.7191027979182623
+      ],
+      "Vanilla Max-Pressure": [
+        0.9357846018989909,
+        0.9611099360159948,
+        0.9485341762101663,
+        0.9409424562228843,
+        0.9599325630425125,
+        0.9365147987191409,
+        0.9491109386482275,
+        0.9018828174157223,
+        0.9089421737286768,
+        0.9544766929641414
+      ],
+      "Fuzzy Anti-Spillback": [
+        0.783267066164857,
+        0.7548583209897134,
+        0.7494936236662807,
+        0.7532240880732991,
+        0.7705568427104919,
+        0.7960766333749006,
+        0.7725194486782263,
+        0.767169017565193,
+        0.7834960895983082,
+        0.7828319444952897
+      ]
+    },
+    "emergency": {
+      "Fixed-Time (Webster)": [
+        {
+          "id": "amb0",
+          "delay_s": 139.85,
+          "duration_s": 188.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 47.22,
+          "duration_s": 95.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 41.23,
+          "duration_s": 89.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 131.96,
+          "duration_s": 180.0,
+          "actual_depart_s": 301.0,
+          "insertion_delay_s": 1.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 127.47,
+          "duration_s": 176.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 141.76,
+          "duration_s": 190.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 188.74,
+          "duration_s": 237.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 136.11,
+          "duration_s": 184.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 187.19,
+          "duration_s": 235.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 89.43,
+          "duration_s": 137.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        }
+      ],
+      "Vanilla Max-Pressure": [
+        {
+          "id": "amb0",
+          "delay_s": 177.5,
+          "duration_s": 225.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 77.57,
+          "duration_s": 126.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 84.53,
+          "duration_s": 133.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 154.36,
+          "duration_s": 202.0,
+          "actual_depart_s": 301.0,
+          "insertion_delay_s": 1.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 103.58,
+          "duration_s": 152.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 137.36,
+          "duration_s": 186.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 136.7,
+          "duration_s": 185.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 89.58,
+          "duration_s": 138.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 136.56,
+          "duration_s": 185.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 99.21,
+          "duration_s": 147.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        }
+      ],
+      "Fuzzy Anti-Spillback": [
+        {
+          "id": "amb0",
+          "delay_s": 131.72,
+          "duration_s": 180.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 87.05,
+          "duration_s": 135.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 82.84,
+          "duration_s": 131.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 140.25,
+          "duration_s": 188.0,
+          "actual_depart_s": 301.0,
+          "insertion_delay_s": 1.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 145.46,
+          "duration_s": 193.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 129.82,
+          "duration_s": 178.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 131.45,
+          "duration_s": 179.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 98.53,
+          "duration_s": 147.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 139.83,
+          "duration_s": 188.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        },
+        {
+          "id": "amb0",
+          "delay_s": 130.44,
+          "duration_s": 178.0,
+          "actual_depart_s": 300.0,
+          "insertion_delay_s": 0.0
+        }
+      ]
+    }
+  },
+  "demand_sweep_moderate": {
+    "Fixed-Time (Webster)": {
+      "scale": [
+        0.6,
+        0.8,
+        1.0,
+        1.2,
+        1.5,
+        1.8,
+        2.0
+      ],
+      "avg_delay_s": [
+        111.31538202601736,
+        222.0711558260549,
+        231.06635826448039,
+        243.57482118901132,
+        317.1788847707446,
+        374.12628274474287,
+        388.99960136547935
+      ],
+      "throughput_completed_trips": [
+        1357.6666666666667,
+        1582.3333333333333,
+        1650.6666666666667,
+        1734.6666666666667,
+        1878.3333333333333,
+        1888.3333333333333,
+        1892.3333333333333
+      ],
+      "gridlock_incidents_per_1000veh": [
+        1.9560755366019473,
+        0.8425610197453207,
+        1.221125533892791,
+        1.3363879343260787,
+        1.6005513595428313,
+        0.8833434487291153,
+        1.4124329447365973
+      ],
+      "deadlock_teleports": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "Vanilla Max-Pressure": {
+      "scale": [
+        0.6,
+        0.8,
+        1.0,
+        1.2,
+        1.5,
+        1.8,
+        2.0
+      ],
+      "avg_delay_s": [
+        91.44916453394559,
+        246.53330311649566,
+        258.37299045059666,
+        262.51362238984206,
+        260.5945313676976,
+        268.5060965470061,
+        279.36086991694
+      ],
+      "throughput_completed_trips": [
+        1357.6666666666667,
+        1615.0,
+        1691.3333333333333,
+        1763.0,
+        1915.6666666666667,
+        2004.0,
+        2010.3333333333333
+      ],
+      "gridlock_incidents_per_1000veh": [
+        0.6458469383414775,
+        2.3831527767689216,
+        3.6600710120423208,
+        3.0076390812145397,
+        3.1958638516015565,
+        3.8190765310082093,
+        3.550320478800017
+      ],
+      "deadlock_teleports": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "Fuzzy Anti-Spillback": {
+      "scale": [
+        0.6,
+        0.8,
+        1.0,
+        1.2,
+        1.5,
+        1.8,
+        2.0
+      ],
+      "avg_delay_s": [
+        145.81963235565476,
+        240.97373188353822,
+        241.2756551609292,
+        243.3085165762541,
+        241.3120968113941,
+        262.33965790101377,
+        290.41015592187523
+      ],
+      "throughput_completed_trips": [
+        1357.6666666666667,
+        1577.3333333333333,
+        1639.3333333333333,
+        1715.0,
+        1833.0,
+        1887.0,
+        1885.3333333333333
+      ],
+      "gridlock_incidents_per_1000veh": [
+        2.8160376576666173,
+        5.0687650299491045,
+        4.078421777361619,
+        4.985219095001962,
+        3.2584621975757457,
+        6.726460465671068,
+        6.01588526778491
+      ],
+      "deadlock_teleports": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "stress_regime_ablation": {
+    "summary": {
+      "Fixed-Time (Webster)": {
+        "avg_delay_s": {
+          "mean": 306.17756883925733,
+          "std": 5.815420234212951,
+          "ci95_lo": 302.6812586958475,
+          "ci95_hi": 309.64846031615696
+        },
+        "mean_queue_length": {
+          "mean": 56.5921388888889,
+          "std": 1.743810773139434,
+          "ci95_lo": 55.57782152777777,
+          "ci95_hi": 57.66192222222222
+        },
+        "throughput_completed_trips": {
+          "mean": 1374.2,
+          "std": 21.128180233990808,
+          "ci95_lo": 1361.9975,
+          "ci95_hi": 1386.7
+        },
+        "gridlock_incidents_per_1000veh": {
+          "mean": 2.2708875319791497,
+          "std": 2.755349871114353,
+          "ci95_lo": 0.7912456623745729,
+          "ci95_hi": 4.047953433848755
+        },
+        "box_gridlock_events": {
+          "mean": 3.1,
+          "std": 3.725288952252936,
+          "ci95_lo": 1.1,
+          "ci95_hi": 5.5
+        },
+        "storage_overflow_events_NS": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "storage_overflow_events_EW": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "deadlock_teleports": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        }
+      },
+      "Vanilla Max-Pressure": {
+        "avg_delay_s": {
+          "mean": 380.34840702809913,
+          "std": 6.486219986512712,
+          "ci95_lo": 376.300025472705,
+          "ci95_hi": 384.12095803261155
+        },
+        "mean_queue_length": {
+          "mean": 82.12089913700108,
+          "std": 1.8167051047106282,
+          "ci95_lo": 81.05656948489751,
+          "ci95_hi": 83.18986007570506
+        },
+        "throughput_completed_trips": {
+          "mean": 1374.4,
+          "std": 20.287927444665215,
+          "ci95_lo": 1362.5,
+          "ci95_hi": 1386.1
+        },
+        "gridlock_incidents_per_1000veh": {
+          "mean": 3.1838920321355015,
+          "std": 2.249528604887873,
+          "ci95_lo": 1.868944112019277,
+          "ci95_hi": 4.469194734916937
+        },
+        "box_gridlock_events": {
+          "mean": 3.8,
+          "std": 2.699794230842212,
+          "ci95_lo": 2.2,
+          "ci95_hi": 5.4
+        },
+        "storage_overflow_events_NS": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "storage_overflow_events_EW": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "deadlock_teleports": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        }
+      },
+      "Fuzzy Anti-Spillback": {
+        "avg_delay_s": {
+          "mean": 381.7772142945683,
+          "std": 11.304375606232336,
+          "ci95_lo": 375.4317155460294,
+          "ci95_hi": 388.8887082214764
+        },
+        "mean_queue_length": {
+          "mean": 85.17766666666668,
+          "std": 2.641795725839618,
+          "ci95_lo": 83.70250347222223,
+          "ci95_hi": 86.79741041666666
+        },
+        "throughput_completed_trips": {
+          "mean": 1353.0,
+          "std": 21.7511174681006,
+          "ci95_lo": 1340.7,
+          "ci95_hi": 1366.7025
+        },
+        "gridlock_incidents_per_1000veh": {
+          "mean": 7.891933016364736,
+          "std": 2.355597515173904,
+          "ci95_lo": 6.4776658579507735,
+          "ci95_hi": 9.237189195869762
+        },
+        "box_gridlock_events": {
+          "mean": 3.8,
+          "std": 2.780887148615228,
+          "ci95_lo": 2.2,
+          "ci95_hi": 5.6
+        },
+        "storage_overflow_events_NS": {
+          "mean": 6.1,
+          "std": 1.728840330651992,
+          "ci95_lo": 5.0,
+          "ci95_hi": 7.1
+        },
+        "storage_overflow_events_EW": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "deadlock_teleports": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        }
+      }
+    },
+    "wilcoxon_p_raw": {
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | avg_delay_s": 0.001953125,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | mean_queue_length": 0.001953125,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | throughput_completed_trips": 1.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | gridlock_incidents_per_1000veh": 0.66015625,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | box_gridlock_events": 0.6640625,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_NS": "identical (no variance)",
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_EW": "identical (no variance)",
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | deadlock_teleports": "identical (no variance)",
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | avg_delay_s": 0.001953125,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | mean_queue_length": 0.001953125,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.001953125,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": 0.009765625,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | box_gridlock_events": 0.689453125,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.001953125,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 0.921875,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 0.01953125,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.001953125,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": 0.001953125,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.001953125,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)"
+    },
+    "wilcoxon_p_holm_bonferroni": {
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | avg_delay_s": 0.033203125,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | mean_queue_length": 0.033203125,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | throughput_completed_trips": 1.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | gridlock_incidents_per_1000veh": 1.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | box_gridlock_events": 1.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_NS": "identical (no variance)",
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_EW": "identical (no variance)",
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | deadlock_teleports": "identical (no variance)",
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | avg_delay_s": 0.033203125,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | mean_queue_length": 0.033203125,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.033203125,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": 0.078125,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | box_gridlock_events": 1.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.033203125,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 0.13671875,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.033203125,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": 0.033203125,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.033203125,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)"
+    },
+    "cohens_dz": {
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | avg_delay_s": -19.59390990833267,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | mean_queue_length": -17.374853654123847,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | throughput_completed_trips": -0.06485065517506755,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | gridlock_incidents_per_1000veh": -0.27974855404017,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | box_gridlock_events": -0.16494068251249178,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_NS": 0.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_EW": 0.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | deadlock_teleports": 0.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | avg_delay_s": -8.500345660329623,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | mean_queue_length": -12.343456354910908,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | throughput_completed_trips": 2.210786860002036,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": -1.4169667282384595,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | box_gridlock_events": -0.13725197038522335,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_NS": -3.5283767343046226,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | deadlock_teleports": 0.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": -0.1384136066839038,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": -1.0116711936861855,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 2.054570947414533,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": -1.2897096374744315,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 0.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": -3.5283767343046226,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": 0.0
+    },
+    "jains_index": {
+      "Fixed-Time (Webster)": [
+        0.628133329472472,
+        0.6419666720144328,
+        0.6172623413349977,
+        0.6360684248183216,
+        0.6118505674038383,
+        0.6127506949377486,
+        0.6521107889376815,
+        0.6794190206080273,
+        0.6453990299951426,
+        0.6693202151490707
+      ],
+      "Vanilla Max-Pressure": [
+        0.9676667008443309,
+        0.983820232476779,
+        0.9806094031139242,
+        0.9570821271798879,
+        0.9780555619033565,
+        0.9801542830317554,
+        0.9678704629542294,
+        0.9335390956833004,
+        0.9814361065912255,
+        0.9798437095302096
+      ],
+      "Fuzzy Anti-Spillback": [
+        0.9533185304830655,
+        0.9568103601568215,
+        0.9698318175859121,
+        0.9590031279916129,
+        0.9716177282297431,
+        0.9857638294895815,
+        0.9253613929670507,
+        0.9690486190801196,
+        0.9794880550118333,
+        0.9641909920685513
+      ]
+    },
+    "emergency": {
+      "Fixed-Time (Webster)": [
+        null,
+        null,
+        null,
+        {
+          "id": "amb0",
+          "delay_s": 287.15,
+          "duration_s": 299.0,
+          "actual_depart_s": 3301.0,
+          "insertion_delay_s": 1501.0
+        },
+        null,
+        {
+          "id": "amb0",
+          "delay_s": 26.92,
+          "duration_s": 29.0,
+          "actual_depart_s": 3571.0,
+          "insertion_delay_s": 1771.0
+        },
+        null,
+        {
+          "id": "amb0",
+          "delay_s": 127.46,
+          "duration_s": 133.0,
+          "actual_depart_s": 3467.0,
+          "insertion_delay_s": 1667.0
+        },
+        null,
+        null
+      ],
+      "Vanilla Max-Pressure": [
+        null,
+        null,
+        null,
+        {
+          "id": "amb0",
+          "delay_s": 278.35,
+          "duration_s": 291.0,
+          "actual_depart_s": 3309.0,
+          "insertion_delay_s": 1509.0
+        },
+        null,
+        {
+          "id": "amb0",
+          "delay_s": 19.45,
+          "duration_s": 21.0,
+          "actual_depart_s": 3579.0,
+          "insertion_delay_s": 1779.0
+        },
+        null,
+        {
+          "id": "amb0",
+          "delay_s": 168.04,
+          "duration_s": 175.0,
+          "actual_depart_s": 3425.0,
+          "insertion_delay_s": 1625.0
+        },
+        null,
+        null
+      ],
+      "Fuzzy Anti-Spillback": [
+        null,
+        null,
+        null,
+        {
+          "id": "amb0",
+          "delay_s": 270.99,
+          "duration_s": 283.0,
+          "actual_depart_s": 3317.0,
+          "insertion_delay_s": 1517.0
+        },
+        null,
+        null,
+        null,
+        {
+          "id": "amb0",
+          "delay_s": 18.0,
+          "duration_s": 19.0,
+          "actual_depart_s": 3581.0,
+          "insertion_delay_s": 1781.0
+        },
+        null,
+        null
+      ]
+    }
+  },
+  "preemption_ablation": {
+    "with": [
+      131.72,
+      87.05,
+      82.84,
+      140.25,
+      145.46,
+      129.82,
+      131.45,
+      98.53,
+      139.83,
+      130.44
+    ],
+    "without": [
+      183.76,
+      87.52,
+      81.77,
+      143.74,
+      177.42,
+      150.05,
+      177.51,
+      98.16,
+      138.42,
+      188.9
+    ],
+    "wilcoxon_p": 0.048828125,
+    "cohens_dz": -0.8656525300052025
+  },
+  "methodology_notes": {
+    "seeds_primary": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "seeds_sweep": [
+      1,
+      2,
+      3
+    ],
+    "min_seeds_for_wilcoxon": 6,
+    "multiple_comparison_correction": "Holm-Bonferroni, family = all pairwise comparisons per regime across CORE_KEYS",
+    "effect_size": "Cohen's d_z (paired), mean(diff)/std(diff)",
+    "ci_method": "percentile bootstrap, 2000 resamples, 95% CI"
+  }
+}

@@ -1,7 +1,5 @@
+configs/gen/
+results/tripinfo_*.xml
+results/metrics_*.json
 __pycache__/
-*.py[cod]
-*$py.class
-*.log
-results/
-.vscode/
-.idea/
+*.pyc
