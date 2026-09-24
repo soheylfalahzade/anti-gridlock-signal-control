@@ -155,12 +155,26 @@ We deliberately do **not** report a single composite "gridlock index" combining 
 
 **Reading:** the fuzzy controller sits strictly between the two baselines on total delay, and the difference from vanilla Max-Pressure is statistically significant after correction for multiple comparisons. It does not overtake Webster fixed-time on aggregate delay at this demand level — a result we do not obscure (§6.1) — but it substantially closes the fairness gap that fixed-time leaves open (0.68 → 0.77 toward Max-Pressure's 0.94), while avoiding the throughput cost that full Max-Pressure pays in cross-street starvation (see §6.2).
 
-### 5.2 Demand Sweep (Moderate Regime, 3-seed average per point)
+### 5.2 Bottleneck-Severity Sweep (Fixed demand, scale=1.0, 3-seed average)
 
-Across V/C scale 0.6–2.0, Fixed-Time's delay grows steeply beyond scale ≈1.2 (94.7s → 396.7s), while both Max-Pressure variants remain comparatively flat (Fuzzy: 146.5s → 308.4s; Vanilla: 84.1s → 282.5s). This is the expected qualitative signature of Max-Pressure's adaptivity advantage over a fixed cycle under rising demand, and it contextualizes §5.1: Fixed-Time's apparent delay advantage at scale = 1.0 is local to a specific operating point, not a general property.
+Across the 7-point egress bottleneck sweep (NS egress duty ratio 0.66 → 0.20, corresponding to metered egress capacity from 1254 down to 380 veh/h/lane), as the downstream bottleneck tightens:
+
+<div align="center">
+
+| Duty (Cap [veh/h/ln]) | FT Delay [s] | Vanilla MP Delay [s] | Fuzzy Delay [s] | FT Thr [veh] | Vanilla MP Thr | Fuzzy Thr |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **0.66** (1254) | 179.6 | 173.3 | 191.2 | 1941 | 2048 | 1891 |
+| **0.56** (1064) | 199.9 | 204.6 | 208.9 | 1815 | 1898 | 1795 |
+| **0.46** (874)  | 231.1 | 258.4 | 241.3 | 1651 | 1691 | 1639 |
+| **0.36** (684)  | 273.7 | 330.0 | 297.8 | 1469 | 1478 | 1480 |
+| **0.30** (570)  | 302.1 | 375.0 | 374.2 | 1368 | 1368 | 1342 |
+| **0.26** (494)  | 340.4 | 435.6 | 430.6 | 1248 | 1251 | 1247 |
+| **0.20** (380)  | 403.9 | 537.3 | 520.4 | 1092 | 1093 | 1091 |
+
+</div>
 
 <p align="center">
-  <img src="results/demand_sweep.png" alt="Demand Sweep" width="85%">
+  <img src="results/demand_sweep.png" alt="Bottleneck Severity Sweep" width="85%">
 </p>
 
 ### 5.3 Chronic Stress Regime (n = 10 paired seeds)
@@ -249,26 +263,3 @@ Varaiya, P. (2013). Max pressure control of a network of signalized intersection
 Webster, F. V. (1958). Traffic Signal Settings. Road Research Technical Paper No. 39, HMSO.
 Jain, R., Chiu, D., & Hawe, W. (1984). A quantitative measure of fairness and discrimination for resource allocation in shared computer systems. DEC Research Report TR-301.
 Ames, A. D., Coogan, S., Egerstedt, M., Notomista, G., Sreenath, K., & Tabuada, P. (2019). Control barrier functions: Theory and applications. 2019 18th European Control Conference (ECC).
----
-
-## 10. Robustness: Sensitivity Analysis and Direct Bottleneck-Severity Sweep
-
-Two additional robustness checks complement §5, addressing parameters that were previously hand-set without characterizing sensitivity to them:
-
-**Parameter sensitivity** (`sensitivity_analysis.py`, 3-seed average per point): sweeps the hard-override threshold `OCC_OVERRIDE` ∈ [0.65, 0.85] and a horizontal shift of the "critical" occupancy membership function ∈ [−0.10, +0.10], reporting delay, box-gridlock, and storage-overflow response curves against the benchmark's default values (marked on each plot). Output: `results/sensitivity_analysis.png`, `results/sensitivity_report.json`.
-
-**Bottleneck-severity sweep** (`bottleneck_sweep.py`, 3-seed average per point): the demand sweep in §5.2 varies arrival rate against a *fixed* bottleneck; this sweep instead varies the NS egress metering duty ratio directly at *fixed* demand (scale = 1.0), directly testing whether the fuzzy controller degrades more gracefully than the baselines as the physical constraint itself tightens — the more direct test of this project's core claim. Output: `results/bottleneck_sweep.png`, `results/bottleneck_sweep_report.json`.
-
-```bash
-python sensitivity_analysis.py
-python bottleneck_sweep.py
-```
-
-## 11. Tests
-
-Structural sanity tests (no SUMO execution required) guard against regression of defects found and fixed during development — unsorted route files, metering plans violating the cycle constraint, and network build well-formedness:
-
-```bash
-pip install pytest --break-system-packages
-pytest tests/ -v
-```
