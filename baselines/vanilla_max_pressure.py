@@ -20,10 +20,10 @@ def mp_pressure(group):
 
 
 def run(sumocfg="configs/intersection.sumocfg", gui=False, seed=1, verbose=False,
-        sim_end=3600, regime="moderate",
+        sim_end=3600, regime="moderate", ns_green_override=None, ew_green_override=30,
         tripinfo_out="results/tripinfo_vanilla_mp.xml",
         metrics_out="results/metrics_vanilla_mp.json"):
-    start_sumo(sumocfg, tripinfo_out, gui, seed, regime)
+    start_sumo(sumocfg, tripinfo_out, gui, seed, regime, ns_green_override, ew_green_override)
     states = build_state_strings()
     metrics = MetricsCollector()
 
