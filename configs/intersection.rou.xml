@@ -158,6 +158,7 @@
     <vehicle id="N66" type="car" route="r_N" depart="295.16" departLane="best" departSpeed="max"/>
     <vehicle id="E13" type="car" route="r_E" depart="297.20" departLane="best" departSpeed="max"/>
     <vehicle id="S54" type="car" route="r_S" depart="298.47" departLane="best" departSpeed="max"/>
+    <vehicle id="amb0" type="ambulance" route="r_N" depart="300.00" departLane="best" departSpeed="max"/>
     <vehicle id="S55" type="car" route="r_S" depart="300.14" departLane="best" departSpeed="max"/>
     <vehicle id="N67" type="car" route="r_N" depart="302.39" departLane="best" departSpeed="max"/>
     <vehicle id="S56" type="car" route="r_S" depart="303.55" departLane="best" departSpeed="max"/>
@@ -768,7 +769,6 @@
     <vehicle id="S318" type="car" route="r_S" depart="1196.17" departLane="best" departSpeed="max"/>
     <vehicle id="E66" type="car" route="r_E" depart="1196.78" departLane="best" departSpeed="max"/>
     <vehicle id="S319" type="car" route="r_S" depart="1196.98" departLane="best" departSpeed="max"/>
-    <vehicle id="amb0" type="ambulance" route="r_N" depart="1200.00" departLane="best" departSpeed="max"/>
     <vehicle id="N313" type="car" route="r_N" depart="1200.16" departLane="best" departSpeed="max"/>
     <vehicle id="E67" type="car" route="r_E" depart="1203.29" departLane="best" departSpeed="max"/>
     <vehicle id="E68" type="car" route="r_E" depart="1204.95" departLane="best" departSpeed="max"/>

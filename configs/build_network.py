@@ -1,16 +1,10 @@
 #!/usr/bin/env python3
 """
-Symmetrical 4-way intersection with an engineered downstream bottleneck.
-
-Metering asymmetry: NS egress metering duty ratio ~0.30 (green=15s of a
-50s cycle) => sustainable capacity ~570 veh/h/lane, deliberately BELOW the
-750 veh/h/direction baseline NS demand, so the arterial is continuously
-oversaturated even without burst windows. EW egress metering duty ratio
-~0.60 => capacity ~1140 veh/h/lane, comfortably above the 200 veh/h/direction
-cross-street demand, so the cross street's own downstream is never the
-constraint -- isolating the benchmark question to how well each policy at
-C protects the cross street from an arterial that a fixed, uncoordinated
-downstream signal cannot drain fast enough.
+Symmetrical 4-way intersection, geometry only. Metering timing is no
+longer baked in here (see src/metering.py) -- a placeholder "moderate"
+plan is written just so a bare `sumo -c intersection.sumocfg` without
+TraCI still runs sensibly; every experiment in evaluate.py overrides it
+at runtime via traci.trafficlight.setProgramLogic.
 """
 
 import os
@@ -33,12 +27,7 @@ SUMOCFG = os.path.join(CFG, "intersection.sumocfg")
 R_OUTER, R_METER = 250.0, 50.0
 V_ART, V_BOT = 13.89, 8.33
 DIRS = {"N": (0.0, 1.0), "S": (0.0, -1.0), "E": (1.0, 0.0), "W": (-1.0, 0.0)}
-
-# (green, yellow, red) per direction group, cycle = 50s in both cases
-METERING_PLAN = {
-    "N": (15, 3, 32), "S": (15, 3, 32),   # NS egress: duty 0.30 -> ~570 veh/h/lane
-    "E": (30, 3, 17), "W": (30, 3, 17),   # EW egress: duty 0.60 -> ~1140 veh/h/lane
-}
+DEFAULT_PLAN = {"N": (23, 3, 24), "S": (23, 3, 24), "E": (30, 3, 17), "W": (30, 3, 17)}
 
 
 def write_nodes():
@@ -78,9 +67,9 @@ def write_connections():
 
 def netconvert(tllogic=None):
     cmd = ["netconvert", "--node-files", NOD, "--edge-files", EDG,
-           "--connection-files", CON, "--output-file", NET,
-           "--tls.default-type", "static", "--no-turnarounds", "true",
-           "--junctions.corner-detail", "8", "--no-warnings", "true"]
+          "--connection-files", CON, "--output-file", NET,
+          "--tls.default-type", "static", "--no-turnarounds", "true",
+          "--junctions.corner-detail", "8", "--no-warnings", "true"]
     if tllogic:
         cmd += ["--tllogic-files", tllogic]
     subprocess.run(cmd, check=True)
@@ -91,7 +80,7 @@ def write_metering_tll():
     lines = ["<additional>"]
     for d in DIRS:
         tls_id = f"M_{d}"
-        g, y, r = METERING_PLAN[d]
+        g, y, r = DEFAULT_PLAN[d]
         conns = net.getTLS(tls_id).getConnections()
         n = max(c[2] for c in conns) + 1
         role = ["G"] * n
@@ -102,10 +91,10 @@ def write_metering_tll():
             return "".join(ch if r_ == "M" else "G" for r_ in role)
 
         lines += [f'    <tlLogic id="{tls_id}" type="static" programID="0" offset="0">',
-                  f'        <phase duration="{g}" state="{state("G")}"/>',
-                  f'        <phase duration="{y}" state="{state("y")}"/>',
-                  f'        <phase duration="{r}" state="{state("r")}"/>',
-                  "    </tlLogic>"]
+                 f'        <phase duration="{g}" state="{state("G")}"/>',
+                 f'        <phase duration="{y}" state="{state("y")}"/>',
+                 f'        <phase duration="{r}" state="{state("r")}"/>',
+                 "    </tlLogic>"]
     lines.append("</additional>")
     open(TLL, "w").write("\n".join(lines) + "\n")
 
@@ -120,7 +109,6 @@ if __name__ == "__main__":
     netconvert(tllogic=TLL)
     n = dmd.write_routes(ROU, scale=1.0, seed=1, ambulance=True)
     dmd.write_sumocfg(SUMOCFG, net_file="intersection.net.xml",
-                      route_file="intersection.rou.xml",
-                      view_file="viewsettings.xml")
-    print(f"[net] rebuilt with asymmetric metering (NS duty=0.30, EW duty=0.60); "
+                      route_file="intersection.rou.xml", view_file="viewsettings.xml")
+    print(f"[net] geometry built; default (moderate) metering baked as fallback; "
          f"{n} vehicles in baseline route file")

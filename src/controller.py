@@ -1,10 +1,21 @@
 """
 Fuzzy Anti-Spillback Max-Pressure controller.
 
-start_sumo() now passes --tripinfo-output.write-unfinished true, so an
-ambulance still en route at sim end is still recorded (with its
-in-progress timeLoss) instead of being silently absent from tripinfo.xml,
-which was the direct cause of every emergency_delay_s being null.
+Fixes vs. previous revision:
+  - Metering timing is applied at runtime via src.metering.apply_metering
+    (regime "moderate" by default), instead of relying on the net file's
+    baked-in plan.
+  - Emergency detection now only checks approach edges (app_D, in_D). The
+    previous version also matched egress edges (out_T/exit_T) because
+    DIR_GROUP keys on the edge's trailing direction letter, which an
+    egress edge also has (out_S -> "S" -> NS) -- so an ambulance that had
+    already crossed the stop line kept re-triggering "EMERGENCY PREEMPT"
+    for a movement it no longer needed, wasting yellow/all-red clearance
+    time on every spurious re-trigger (visible in the previous log as 5
+    preemptions logged for a single ambulance). Restricting detection to
+    the approach edges fixes this.
+  - Preemption logging is deduplicated: only prints on an actual state
+    change, not every step preemption remains active for the same vehicle.
 """
 
 import argparse
@@ -18,6 +29,7 @@ import sumolib
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from src.fuzzy_engine import FuzzyAntiSpillbackEngine, T_MIN
 from src.metrics import MetricsCollector
+from src.metering import apply_metering
 
 TLS_ID = "C"
 SAT_FLOW_VPH_PER_LANE = 1900.0
@@ -32,6 +44,7 @@ PHASE_STOPLINE = {"NS": ["in_N", "in_S"], "EW": ["in_E", "in_W"]}
 PHASE_DOWN = {"NS": ["out_S", "out_N"], "EW": ["out_W", "out_E"]}
 OPPOSITE = {"NS": "EW", "EW": "NS"}
 DIR_GROUP = {"N": "NS", "S": "NS", "E": "EW", "W": "EW"}
+APPROACH_EDGES = {"app_N", "in_N", "app_S", "in_S", "app_E", "in_E", "app_W", "in_W"}
 
 
 def controlled_incoming_edges(tls_id=TLS_ID):
@@ -86,18 +99,21 @@ class _OccupancySmoother:
 
 
 def detect_emergency_group():
+    """Only fires while the emergency vehicle is still approaching (on
+    app_D or in_D). Once it has crossed the stop line onto out_T/exit_T,
+    it no longer needs -- and must not re-trigger -- preemption."""
     for vid in traci.vehicle.getIDList():
         if not vid.startswith("amb"):
             continue
         edge = traci.vehicle.getRoadID(vid)
-        if edge and not edge.startswith(":"):
+        if edge in APPROACH_EDGES:
             d = edge.split("_")[-1]
             if d in DIR_GROUP:
                 return DIR_GROUP[d], vid, edge
     return None, None, None
 
 
-def start_sumo(sumocfg, tripinfo_out, gui=False, seed=1):
+def start_sumo(sumocfg, tripinfo_out, gui=False, seed=1, regime="moderate"):
     binary = sumolib.checkBinary("sumo-gui" if gui else "sumo")
     os.makedirs(os.path.dirname(tripinfo_out), exist_ok=True)
     cmd = [binary, "-c", sumocfg, "--seed", str(seed),
@@ -108,6 +124,7 @@ def start_sumo(sumocfg, tripinfo_out, gui=False, seed=1):
     if gui:
         cmd += ["--start", "true", "--quit-on-end", "true"]
     traci.start(cmd)
+    apply_metering(regime)
 
 
 def step(metrics):
@@ -126,10 +143,10 @@ def switch(states, metrics, frm, to):
 
 
 def run(sumocfg="configs/intersection.sumocfg", gui=False, seed=1, verbose=False,
-        emergency_preempt=True, sim_end=3600,
+        emergency_preempt=True, sim_end=3600, regime="moderate",
         tripinfo_out="results/tripinfo_fuzzy.xml",
         metrics_out="results/metrics_fuzzy.json"):
-    start_sumo(sumocfg, tripinfo_out, gui, seed)
+    start_sumo(sumocfg, tripinfo_out, gui, seed, regime)
     states = build_state_strings()
     engine = FuzzyAntiSpillbackEngine()
     metrics = MetricsCollector()
@@ -145,17 +162,20 @@ def run(sumocfg="configs/intersection.sumocfg", gui=False, seed=1, verbose=False
     overrides, preemptions = 0, 0
     inserted = 0
     preempt_active, preempt_hold = False, 0.0
+    last_preempt_vid = None
 
     while traci.simulation.getTime() < sim_end:
         if emergency_preempt and not preempt_active:
             grp, vid, edge = detect_emergency_group()
             if grp is not None and grp != phase:
-                if verbose:
+                if verbose and vid != last_preempt_vid:
                     print(f"{traci.simulation.getTime():6.0f}  EMERGENCY PREEMPT -> {grp} for {vid} on {edge}")
                 switch(states, metrics, phase, grp)
                 phase = grp
                 preempt_active, preempt_hold = True, PREEMPT_MAX_HOLD
-                preemptions += 1
+                if vid != last_preempt_vid:
+                    preemptions += 1
+                    last_preempt_vid = vid
                 inserted += traci.simulation.getDepartedNumber()
                 continue
 
@@ -213,10 +233,11 @@ def run(sumocfg="configs/intersection.sumocfg", gui=False, seed=1, verbose=False
     results.update(policy="Fuzzy Anti-Spillback", anti_spillback_overrides=overrides,
                    emergency_preemptions=preemptions)
     MetricsCollector.save(results, metrics_out)
-    print(f"[Fuzzy Anti-Spillback] delay={results['avg_delay_s']:.1f}s "
+    print(f"[Fuzzy Anti-Spillback:{regime}] delay={results['avg_delay_s']:.1f}s "
          f"queue={results['mean_queue_length']:.1f} "
          f"throughput={results['throughput_completed_trips']} "
-         f"spillbacks={results['spillback_occurrences']} "
+         f"box_gridlock={results['box_gridlock_events']} "
+         f"storage_overflow={results['storage_overflow_events']} "
          f"teleports={results['deadlock_teleports']} "
          f"preemptions={preemptions}")
     return results
@@ -227,6 +248,7 @@ if __name__ == "__main__":
     p.add_argument("--sumocfg", default="configs/intersection.sumocfg")
     p.add_argument("--gui", action="store_true")
     p.add_argument("--seed", type=int, default=1)
+    p.add_argument("--regime", default="moderate", choices=["moderate", "stress"])
     p.add_argument("--quiet", dest="verbose", action="store_false")
     p.add_argument("--no-preempt", dest="emergency_preempt", action="store_false")
     run(**vars(p.parse_args()))
