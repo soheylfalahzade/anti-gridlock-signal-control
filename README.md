@@ -44,12 +44,16 @@ This work isolates that failure mode in a controlled, reproducible geometry and 
 
 A single symmetric four-leg intersection `C`, with each approach direction *d* ∈ {N, S, E, W} composed of:
 
+<div align="center">
+
 | Segment | Length | Lanes | Speed | Role |
-|---|:---:|:---:|:---:|---|
+|:---:|:---:|:---:|:---:|:---:|
 | `app_d` | 200 m | 2 | 13.89 m/s | Upstream arterial storage |
 | `in_d` | 50 m | 2 | 13.89 m/s | Stop-line section |
 | `out_d` | 50 m | 1 | 8.33 m/s | Metered egress (bottleneck) |
 | `exit_d` | 200 m | 1 | 8.33 m/s | Sink |
+
+</div>
 
 Combined approach-group physical storage capacity (`app_d` + `in_d`, 2 lanes, 2 directions, 7.5 m/vehicle spacing) is 133 vehicles per movement group — the reference denominator for the storage-overflow metric defined in §4.3.
 
@@ -129,11 +133,15 @@ We deliberately do **not** report a single composite "gridlock index" combining 
 
 ### 5.1 Primary Benchmark (Moderate Regime, n = 10 paired seeds)
 
+<div align="center">
+
 | Policy | Delay [s], mean (95% CI) | Throughput [veh] (95% CI) | Jain's Fairness Index |
-|---|:---:|:---:|:---:|
-| Fixed-Time (Webster) | 234.8 (232.4–237.3) | 1659 (1647–1671) | ≈0.68 |
-| Vanilla Max-Pressure | 261.0 (259.2–262.7) | 1696 (1681–1710) | ≈0.94 |
-| Fuzzy Anti-Spillback | 243.4 (239.6–246.8) | 1658 (1646–1670) | ≈0.77 |
+|:---|:---:|:---:|:---:|
+| **Fixed-Time (Webster)** | 234.8 (232.4–237.3) | 1659 (1647–1671) | ≈0.68 |
+| **Vanilla Max-Pressure** | 261.0 (259.2–262.7) | 1696 (1681–1710) | ≈0.94 |
+| **Fuzzy Anti-Spillback** | 243.4 (239.6–246.8) | 1658 (1646–1670) | ≈0.77 |
+
+</div>
 
 <p align="center">
   <img src="results/comparison_metrics.png" alt="Comparison Metrics" width="85%">
@@ -176,10 +184,14 @@ This is the mechanistically important result. Across both regimes, **100% of sto
 
 To isolate the preemption mechanism from the base algorithm's own queue management, the fuzzy controller was run twice per seed — identical demand, identical seed, only `emergency_preempt` toggled:
 
+<div align="center">
+
 | Condition | Ambulance in-network delay [s] |
-|---|:---:|
-| Without preemption | 142.5 |
-| With preemption | 122.0 |
+|:---:|:---:|
+| **Without preemption** | 142.5 |
+| **With preemption** | **122.0** |
+
+</div>
 
 This corresponds to a ≈14% reduction attributable specifically to the preemption mechanism, isolated from confounding differences in each policy's baseline signal timing that affected earlier, single-arm comparisons in this project's development history.
 
