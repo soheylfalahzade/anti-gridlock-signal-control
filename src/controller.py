@@ -1,12 +1,21 @@
 """
 Fuzzy Anti-Spillback Max-Pressure controller.
 
-Adds occ_override and critical_shift parameters (both default to the
-values used throughout the primary benchmark) so sensitivity_analysis.py
-can vary them without touching the controller's core logic. Adds
-ns_green_override / ew_green_override, applied via
-src.metering.apply_metering_custom right after start_sumo, so
-bottleneck_sweep.py can vary bottleneck severity directly at fixed demand.
+CRITICAL FIX: downstream_occupancy() previously divided
+traci.edge.getLastStepOccupancy() by 100.0. Diagnostic logging
+(diagnose_occupancy.py) confirmed that in this SUMO/TraCI version,
+getLastStepOccupancy() already returns a FRACTION in [0, 1], not a
+percentage in [0, 100] -- e.g. 6 vehicles queued on the 50m out_N lane
+read as 0.659, not 65.9. The erroneous /100.0 shrank every real
+occupancy reading (up to ~0.68) down to ~0.0068, meaning it NEVER
+crossed the FIS's "critical" membership function (starts at 0.62) or
+OCC_OVERRIDE (0.75) in any benchmark run to date. The entire hard
+anti-spillback override, and the FIS's occupancy-conditioned branches
+above "low", were therefore inert throughout every prior result in this
+project's history. This is a single-line fix, but its implication is
+that every fuzzy-controller benchmark run before this fix must be
+re-generated; a corrected occupancy signal changes the controller's
+actual decisions, not just a cosmetic scaling.
 """
 
 import argparse
@@ -73,7 +82,10 @@ def phase_pressure(group):
 
 
 def downstream_occupancy(group):
-    return max(traci.edge.getLastStepOccupancy(e) / 100.0 for e in PHASE_DOWN[group])
+    """Fixed: getLastStepOccupancy() already returns a fraction in [0, 1]
+    on this SUMO/TraCI version (confirmed via diagnose_occupancy.py:
+    veh_out_N=6 -> raw occupancy 0.659, not 65.9). No further scaling."""
+    return max(traci.edge.getLastStepOccupancy(e) for e in PHASE_DOWN[group])
 
 
 class _OccupancySmoother:
@@ -232,6 +244,7 @@ def run(sumocfg="configs/intersection.sumocfg", gui=False, seed=1, verbose=False
     print(f"[Fuzzy:{regime} occ_ovr={occ_override} shift={critical_shift:+.2f}] "
          f"delay={results['avg_delay_s']:.1f}s queue={results['mean_queue_length']:.1f} "
          f"throughput={results['throughput_completed_trips']} "
+         f"overrides={overrides} "
          f"box_gridlock={results['box_gridlock_events']} "
          f"storage_overflow={results['storage_overflow_events']}")
     return results
