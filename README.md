@@ -7,12 +7,11 @@
 [![SUMO](https://img.shields.io/badge/SUMO-1.27.1-darkgreen.svg)](https://eclipse.dev/sumo/)
 [![Status](https://img.shields.io/badge/Status-Phase%201%20Validated-brightgreen.svg)]()
 [![Benchmark](https://img.shields.io/badge/Benchmark-10--Seed%20Paired-blueviolet.svg)]()
-[![Research Track](https://img.shields.io/badge/Target-Q1%20Submission%20Track-orange.svg)]()
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 <p align="center">
   <b>Phase 1: Single-Intersection Local Control Layer</b><br>
-  <i>Statistically benchmarked, causally ablated, and submission-track validated control substrate.</i>
+  <i>Statistically benchmarked, causally ablated, and technical validated control substrate.</i>
 </p>
 
 </div>
@@ -243,7 +242,7 @@ The fuzzy controller's most defensible claim is **not** "lowest aggregate delay"
 
 ### 6.3 On the Rejected Composite Metric
 
-An earlier iteration of this benchmark computed a single "gridlock incidents per 1000 vehicles" index summing box-gridlock and storage-overflow counts. At face value this composite made the fuzzy controller appear *worse* than both baselines, because it added the (mechanistically real) storage-overflow cost without crediting the corresponding protection benefit anywhere in the same number. We removed this composite and report the two phenomena separately (§5.4) because collapsing a genuine, explainable trade-off into a single ambiguous scalar is a presentation error a Q1 reviewer would — correctly — flag, and a defensible paper reports the mechanism instead of a number that hides it.
+An earlier iteration of this benchmark computed a single "gridlock incidents per 1000 vehicles" index summing box-gridlock and storage-overflow counts. At face value this composite made the fuzzy controller appear *worse* than both baselines, because it added the (mechanistically real) storage-overflow cost without crediting the corresponding protection benefit anywhere in the same number. We removed this composite and report the two phenomena separately (§5.4) because collapsing a genuine, explainable trade-off into a single ambiguous scalar is a presentation error a peer reviewer would — correctly — flag, and a defensible paper reports the mechanism instead of a number that hides it.
 
 ---
 
