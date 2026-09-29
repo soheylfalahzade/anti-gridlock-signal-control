@@ -1041,6 +1041,8 @@
     "min_seeds_for_wilcoxon": 6,
     "multiple_comparison_correction": "Holm-Bonferroni, family = all pairwise comparisons per regime across CORE_KEYS",
     "effect_size": "Cohen's d_z (paired), mean(diff)/std(diff)",
-    "ci_method": "percentile bootstrap, 2000 resamples, 95% CI"
+    "ci_method": "percentile bootstrap, 2000 resamples, 95% CI",
+    "composite_gridlock_index": "computed and stored (gridlock_incidents_per_1000veh) but not used as a headline metric; see README Sec 6.3 and CHANGELOG.md for rationale",
+    "occupancy_scaling_fix": "see CHANGELOG.md -- all results in this report were generated after the downstream-occupancy unit-scaling fix"
   }
 }

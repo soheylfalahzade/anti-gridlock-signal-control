@@ -1,29 +1,16 @@
 """
 Master benchmark, Q1-submission-ready statistical package.
 
-Additions vs. previous revision:
-  - Default N=10 paired seeds (was 5): with n=5, Wilcoxon signed-rank can
-    never report p<0.05 (min two-sided p = 2/2^5 = 0.0625) regardless of
-    true effect size, which is an automatic reviewer rejection for any
-    "statistically significant" claim. n=10 allows p as low as 2/2^10
-    ~= 0.00195.
-  - Holm-Bonferroni correction across the full family of pairwise tests
-    per metric, reported alongside raw p-values (raw p alone, uncorrected
-    across ~15 comparisons, is itself a common Q1 desk-reject reason).
-  - Matched-pairs effect size (Cohen's d_z = mean(diff)/std(diff)) for
-    every comparison, since p-values alone do not convey magnitude.
-  - Percentile bootstrap 95% CI (2000 resamples) for every summary
-    statistic, reported alongside mean +/- std.
-  - Composite, demand-normalized anti-gridlock index
-    (gridlock_incidents_per_1000veh) as the headline safety metric,
-    replacing the two individually noisy raw counts as the primary claim.
-  - Phase D: causal preemption ablation. The fuzzy controller is run
-    twice per seed, identical demand, with and without emergency
-    preemption (--no-preempt), isolating the preemption mechanism's
-    effect on ambulance delay from the base algorithm's own queue
-    management -- the previous single-arm comparison could not
-    distinguish "preemption helped" from "fuzzy's baseline signal timing
-    happened to help/hurt this ambulance."
+Fix vs. previous revision: plot_main's fourth panel previously plotted
+the composite "gridlock_incidents_per_1000veh" index, which the README's
+methodology section explicitly states was rejected as a headline metric
+(it sums box-gridlock and storage-overflow counts without crediting the
+protection benefit the storage-overflow cost buys, making a real,
+explicable trade-off look like an unexplained regression). The composite
+is still computed and stored in the report for completeness, but is no
+longer plotted as a headline panel -- replaced with two panels showing
+box-gridlock and directional storage-overflow side by side, matching what
+the README actually claims to report.
 """
 
 import argparse
@@ -104,8 +91,6 @@ def cohens_dz(xa, xb):
 
 
 def holm_bonferroni(pvals_dict):
-    """pvals_dict: {label: p or None or str}. Returns {label: adjusted_p}
-    for numeric entries; non-numeric entries pass through unchanged."""
     items = [(k, v) for k, v in pvals_dict.items() if isinstance(v, (int, float))]
     items.sort(key=lambda kv: kv[1])
     m = len(items)
@@ -238,10 +223,14 @@ def run_preemption_ablation(seeds, regime="moderate", ambulance_depart=AMBULANCE
 # --------------------------------------------------------------------------
 
 def plot_main(summary, path):
+    """Headline panel: delay, queue, throughput, box-gridlock,
+    storage-overflow (NS/EW). The composite index is intentionally NOT
+    plotted here (see module docstring); it remains in the JSON report
+    for completeness."""
     bars = [("avg_delay_s", "Average Vehicle Delay [s]", "lower better"),
            ("mean_queue_length", "Mean Queue Length [veh]", "lower better"),
            ("throughput_completed_trips", "Throughput [veh]", "higher better"),
-           ("gridlock_incidents_per_1000veh", "Gridlock Incidents /1000veh\n(box+storage, composite)", "lower better")]
+           ("box_gridlock_events", "Junction-Box Gridlock Events", "lower better")]
     fig, axes = plt.subplots(1, 4, figsize=(19, 4.5))
     names = list(summary.keys())
     for ax, (key, title, hint) in zip(axes, bars):
@@ -279,10 +268,9 @@ def plot_storage_breakdown(summary, path):
 
 
 def plot_sweep(sweep, path):
-    fig, axes = plt.subplots(1, 3, figsize=(16, 4.5))
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.5))
     metrics = [("avg_delay_s", "Average Delay [s]"),
-              ("throughput_completed_trips", "Throughput [veh]"),
-              ("gridlock_incidents_per_1000veh", "Gridlock Incidents /1000veh")]
+              ("throughput_completed_trips", "Throughput [veh]")]
     for ax, (key, title) in zip(axes, metrics):
         for name, data in sweep.items():
             ax.plot(data["scale"], data[key], marker="o", label=name, color=COLORS.get(name, "#777"))
@@ -292,7 +280,7 @@ def plot_sweep(sweep, path):
     axes[0].legend(fontsize=8)
     fig.suptitle("Demand sweep (3-seed average per point, moderate regime)",
                 fontsize=12, fontweight="bold")
-    fig.tight_layout(rect=[0, 0, 1, 0.92])
+    fig.tight_layout(rect=[0, 0, 1, 0.90])
     fig.savefig(path, dpi=160)
     print(f"[chart] {path}")
 
@@ -301,7 +289,8 @@ def plot_fairness(fairness, path):
     fig, ax = plt.subplots(figsize=(6, 4.5))
     names = list(fairness.keys())
     means = [np.mean(fairness[n]) for n in names]
-    ax.bar(names, means, color=[COLORS.get(n, "#777") for n in names])
+    stds = [np.std(fairness[n], ddof=1) for n in names]
+    ax.bar(names, means, yerr=stds, capsize=5, color=[COLORS.get(n, "#777") for n in names])
     ax.set_title("Jain's Fairness Index (movement delay)\n(1.0 = perfectly fair)",
                 fontsize=10, fontweight="bold")
     ax.set_ylim(0, 1.05)
@@ -311,14 +300,21 @@ def plot_fairness(fairness, path):
     print(f"[chart] {path}")
 
 
-def plot_preemption_ablation(with_amb, without_amb, path):
+def plot_preemption_ablation(with_amb, without_amb, stats_dict, path):
     with_v = [v for v in with_amb if v is not None]
     without_v = [v for v in without_amb if v is not None]
-    fig, ax = plt.subplots(figsize=(6, 4.5))
     means = [np.mean(without_v) if without_v else 0, np.mean(with_v) if with_v else 0]
-    ax.bar(["Without preemption", "With preemption"], means, color=["#e76f51", "#2a9d8f"])
-    ax.set_title("Ambulance Delay: Causal Effect of Preemption\n"
-                 "(same seeds, same base algorithm, only preemption toggled)",
+    stds = [np.std(without_v, ddof=1) if len(without_v) > 1 else 0,
+           np.std(with_v, ddof=1) if len(with_v) > 1 else 0]
+    fig, ax = plt.subplots(figsize=(6.5, 4.5))
+    ax.bar(["Without preemption", "With preemption"], means, yerr=stds, capsize=6,
+          color=["#e76f51", "#2a9d8f"])
+    p = stats_dict.get("wilcoxon_p")
+    dz = stats_dict.get("cohens_dz")
+    subtitle = (f"Wilcoxon p={p:.3f}, Cohen's d_z={dz:.2f}" if p is not None
+               else "n<6 paired samples: significance not computed")
+    ax.set_title(f"Ambulance Delay: Causal Effect of Preemption\n"
+                f"(same seeds, same base algorithm, only preemption toggled)\n{subtitle}",
                 fontsize=10, fontweight="bold")
     ax.set_ylabel("delay [s]")
     fig.tight_layout()
@@ -360,7 +356,6 @@ def main(seeds, sweep_seeds, scales):
 
     print("\n=== Phase D: preemption causal ablation (fuzzy, with vs. without) ===")
     with_amb, without_amb = run_preemption_ablation(seeds, regime="moderate")
-    plot_preemption_ablation(with_amb, without_amb, "results/preemption_ablation.png")
     valid_pairs = [(w, wo) for w, wo in zip(with_amb, without_amb) if w is not None and wo is not None]
     preempt_stats = {"with": with_amb, "without": without_amb}
     if len(valid_pairs) >= 6:
@@ -374,6 +369,7 @@ def main(seeds, sweep_seeds, scales):
     else:
         preempt_stats["wilcoxon_p"] = None
         preempt_stats["cohens_dz"] = None
+    plot_preemption_ablation(with_amb, without_amb, preempt_stats, "results/preemption_ablation.png")
 
     report = {
         "moderate_regime": {"summary": summary, "wilcoxon_p_raw": p_raw,
@@ -395,6 +391,11 @@ def main(seeds, sweep_seeds, scales):
                                               "comparisons per regime across CORE_KEYS",
             "effect_size": "Cohen's d_z (paired), mean(diff)/std(diff)",
             "ci_method": "percentile bootstrap, 2000 resamples, 95% CI",
+            "composite_gridlock_index": "computed and stored (gridlock_incidents_per_1000veh) "
+                                        "but not used as a headline metric; see README Sec 6.3 "
+                                        "and CHANGELOG.md for rationale",
+            "occupancy_scaling_fix": "see CHANGELOG.md -- all results in this report were "
+                                     "generated after the downstream-occupancy unit-scaling fix",
         },
     }
     with open("results/statistical_report.json", "w") as f:
@@ -403,11 +404,9 @@ def main(seeds, sweep_seeds, scales):
     print("\n--- Moderate regime: mean [95% CI] ---")
     for name in summary:
         d = summary[name]["avg_delay_s"]
-        g = summary[name]["gridlock_incidents_per_1000veh"]
         t = summary[name]["throughput_completed_trips"]
         print(f"{name:<24} delay={d['mean']:.1f} [{d['ci95_lo']:.1f},{d['ci95_hi']:.1f}]  "
-             f"throughput={t['mean']:.0f} [{t['ci95_lo']:.0f},{t['ci95_hi']:.0f}]  "
-             f"gridlock/1000veh={g['mean']:.2f} [{g['ci95_lo']:.2f},{g['ci95_hi']:.2f}]")
+             f"throughput={t['mean']:.0f} [{t['ci95_lo']:.0f},{t['ci95_hi']:.0f}]")
     print("\n--- Holm-Bonferroni corrected p-values (moderate regime) ---")
     for k, v in p_adj.items():
         print(f"{k}: {v}")

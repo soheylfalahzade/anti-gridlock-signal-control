@@ -85,3 +85,27 @@ def test_network_files_exist_after_build(tmp_path):
     tree = ET.parse(net_path)
     junction_ids = {j.attrib["id"] for j in tree.getroot().findall("junction")}
     assert "C" in junction_ids, "central junction 'C' missing from built network"
+
+
+def test_downstream_occupancy_is_fraction_not_double_scaled():
+    """Regression test for the critical occupancy unit-scaling defect
+    (see CHANGELOG.md): downstream_occupancy() must NOT divide TraCI's
+    getLastStepOccupancy() by an additional 100. Guards against silently
+    reintroducing a bug that, in this project's history, made the entire
+    anti-spillback mechanism inert without raising any error -- the
+    single most dangerous kind of defect because nothing crashes.
+
+    This inspects the source directly rather than running SUMO, so it
+    stays fast and dependency-free; a full runtime check is performed
+    separately by diagnose_occupancy.py, which is not part of automated
+    tests because it requires a SUMO binary and network build.
+    """
+    import inspect
+    from src import controller
+    source = inspect.getsource(controller.downstream_occupancy)
+    assert "/ 100" not in source.replace(" ", "") and "/100" not in source.replace(" ", ""), (
+        "downstream_occupancy() appears to divide by 100 again -- "
+        "traci.edge.getLastStepOccupancy() already returns a fraction "
+        "in [0,1] on this SUMO/TraCI version, not a percentage. See "
+        "CHANGELOG.md for the history of this exact defect."
+    )
