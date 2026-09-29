@@ -1,0 +1,14 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.21, pytest-9.1.1, pluggy-1.6.0 -- /home/dmin/miniconda3/envs/traffic_research_env/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /home/dmin/anti-gridlock-signal-control
+collecting ... collected 6 items
+
+tests/test_sanity.py::test_routes_sorted_by_departure PASSED             [ 16%]
+tests/test_sanity.py::test_ambulance_present_exactly_once PASSED         [ 33%]
+tests/test_sanity.py::test_all_vehicles_reference_declared_routes PASSED [ 50%]
+tests/test_sanity.py::test_metering_capacity_below_demand_in_moderate_regime PASSED [ 66%]
+tests/test_sanity.py::test_ns_green_override_never_exceeds_cycle PASSED  [ 83%]
+tests/test_sanity.py::test_network_files_exist_after_build PASSED        [100%]
+
+============================== 6 passed in 0.17s ===============================
