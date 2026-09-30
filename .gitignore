@@ -3,3 +3,4 @@ results/tripinfo_*.xml
 results/metrics_*.json
 __pycache__/
 *.pyc
+*.Zone.Identifier

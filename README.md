@@ -3,6 +3,8 @@
 **Status:** Phase 1 (single-intersection local control layer) — validated, statistically benchmarked, submission-track report.
 **Repository role:** Local control substrate for a planned network-level emergency-corridor navigation stack (time-varying, fault-tolerant geometric spanners + dynamic green wave). This repository stands on its own and makes no claims beyond the single-intersection scope tested here.
 
+*The short version: a signal controller that behaves exactly like textbook Max-Pressure until a downstream link starts to fill up, at which point it borrows an idea from safety-critical control (a barrier function) to back off before the junction box itself gets blocked. The four figures below carry most of the story; the sections after them carry the proof.*
+
 ---
 
 ## Abstract
@@ -25,7 +27,10 @@ This work isolates that failure mode in a controlled, reproducible geometry and 
 
 ### 2.1 Geometry
 
-A single symmetric four-leg intersection `C`, with each approach direction *d* ∈ {N, S, E, W} composed of:
+A single symmetric four-leg intersection `C`, with each approach direction *d* ∈ {N, S, E, W} composed of an inbound storage segment and a separate, deliberately narrower outbound egress:
+
+<p align="center"><img src="figures/intersection_geometry.svg" width="520" alt="Schematic of the four-approach intersection: teal upstream storage segments feed junction C, red egress segments mark the metered bottleneck, gray segments are the exit"></p>
+<p align="center"><sub><b>Figure 1.</b> Every approach carries 250 m of two-lane storage in, but only a 50 m one-lane metered egress out — the engineered constraint the whole benchmark is built around.</sub></p>
 
 | Segment | Length | Lanes | Speed | Role |
 |---|---|---|---|---|
@@ -119,6 +124,9 @@ The primary benchmark (§5) uses seeds **1–10**. The robustness analyses in §
 
 ### 5.1 Primary Benchmark (Moderate Regime, n = 10 paired seeds)
 
+<p align="center"><img src="results/comparison_metrics.png" width="100%" alt="Bar charts comparing average delay, mean queue length, throughput, and junction-box gridlock events across Fixed-Time, Vanilla Max-Pressure, and Fuzzy Anti-Spillback, with bootstrap 95% confidence intervals"></p>
+<p align="center"><sub><b>Figure 2.</b> Fuzzy sits between the two baselines on delay and queue, matches Vanilla Max-Pressure on throughput, and has the lowest box-gridlock count of the three — mean, bootstrap 95% CI, n=10 seeds.</sub></p>
+
 | Policy | Delay [s], mean | Throughput [veh] | Box-gridlock events | Jain's Fairness Index |
 |---|---|---|---|---|
 | Fixed-Time (Webster) | 234.8 | 1659 | 4.0 | 0.686 |
@@ -131,7 +139,7 @@ The primary benchmark (§5) uses seeds **1–10**. The robustness analyses in §
 
 ### 5.2 Demand Sweep (Moderate Regime, 3-seed average per point)
 
-Across V/C scale 0.6–2.0, Fixed-Time's delay grows steeply beyond scale ≈1.2 (≈95s → ≈390s), while both Max-Pressure variants remain comparatively flat (Fuzzy: ≈147s → ≈263s; Vanilla: ≈84s → ≈279s), with Fuzzy tracking below Vanilla for most of the range at higher demand. This is the expected qualitative signature of Max-Pressure's adaptivity advantage over a fixed cycle under rising demand.
+Across V/C scale 0.6–2.0, Fixed-Time's delay grows steeply beyond scale ≈1.2 (≈95s → ≈390s), while both Max-Pressure variants remain comparatively flat (Fuzzy: ≈147s → ≈263s; Vanilla: ≈84s → ≈279s), with Fuzzy tracking below Vanilla for most of the range at higher demand. This is the expected qualitative signature of Max-Pressure's adaptivity advantage over a fixed cycle under rising demand. (See `results/demand_sweep.png`.)
 
 ### 5.3 Chronic Stress Regime (n = 10 paired seeds)
 
@@ -147,11 +155,14 @@ This is the regime where the controller's design intent is most directly tested,
 
 ### 5.4 Direction-Specific Storage-Overflow Trade-off
 
-Across both regimes, **100% of storage-overflow events under the fuzzy controller occur on the NS (arterial) approach group**; the EW group shows zero storage-overflow events in every run, under every policy. This is consistent with the controller's design: the hard override and FIS both extend EW green (protecting the EW egress and the junction box) when NS egress occupancy is elevated, and the arterial's own upstream storage absorbs the resulting delay. We report this as **the controller's real cost**: *the fuzzy anti-spillback mechanism redistributes congestion risk from the junction box to upstream arterial storage, rather than eliminating congestion risk outright.*
+Across both regimes, **100% of storage-overflow events under the fuzzy controller occur on the NS (arterial) approach group**; the EW group shows zero storage-overflow events in every run, under every policy. This is consistent with the controller's design: the hard override and FIS both extend EW green (protecting the EW egress and the junction box) when NS egress occupancy is elevated, and the arterial's own upstream storage absorbs the resulting delay. We report this as **the controller's real cost**: *the fuzzy anti-spillback mechanism redistributes congestion risk from the junction box to upstream arterial storage, rather than eliminating congestion risk outright.* (See `results/storage_overflow_breakdown.png`.)
 
 ### 5.5 Emergency Preemption: Controlled Causal Ablation
 
 To isolate the preemption mechanism from the base algorithm's own queue management, the fuzzy controller was run twice per seed (n=10) — identical demand, identical seed, only `emergency_preempt` toggled:
+
+<p align="center"><img src="results/preemption_ablation.png" width="480" alt="Bar chart comparing ambulance delay with and without preemption, showing a reduction from 143.3 to 125.0 seconds"></p>
+<p align="center"><sub><b>Figure 3.</b> Same seeds, same base algorithm, only preemption toggled — the only lever in this chart is whether an approaching ambulance gets an immediate phase transition.</sub></p>
 
 | Condition | Ambulance in-network delay [s], mean |
 |---|---|
@@ -239,6 +250,9 @@ Output: `results/sensitivity_analysis.png`, `results/sensitivity_report.json`.
 ### 10.2 Bottleneck-Severity Sweep
 
 The demand sweep (§5.2) varies arrival rate against a *fixed* bottleneck. `bottleneck_sweep.py` instead varies the NS egress metering duty ratio directly at *fixed* demand (scale = 1.0, 3-seed average), the more direct test of this work's central claim.
+
+<p align="center"><img src="results/bottleneck_sweep.png" width="100%" alt="Four-panel line chart of delay, throughput, box-gridlock events, and storage-overflow events against NS egress duty ratio, comparing the three policies as bottleneck severity increases"></p>
+<p align="center"><sub><b>Figure 4.</b> Fuzzy (green) beats Vanilla Max-Pressure (red) at every severity tested, but crosses above Fixed-Time (gray) once the bottleneck loosens past duty ≈ 0.5 — the honest edge of the mechanism's usefulness.</sub></p>
 
 | NS egress duty | Fixed-Time delay [s] | Vanilla MP delay [s] | Fuzzy delay [s] |
 |---|---|---|---|
