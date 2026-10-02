@@ -49,6 +49,12 @@
           "std": 0.0,
           "ci95_lo": 0.0,
           "ci95_hi": 0.0
+        },
+        "total_co2_kg": {
+          "mean": 912.8148048648048,
+          "std": 20.524263670428013,
+          "ci95_lo": 900.2158796686326,
+          "ci95_hi": 925.1921159466258
         }
       },
       "Vanilla Max-Pressure": {
@@ -99,6 +105,12 @@
           "std": 0.0,
           "ci95_lo": 0.0,
           "ci95_hi": 0.0
+        },
+        "total_co2_kg": {
+          "mean": 1047.2467854388053,
+          "std": 21.085957297307463,
+          "ci95_lo": 1034.7699713861705,
+          "ci95_hi": 1059.5622392730347
         }
       },
       "Fuzzy Anti-Spillback": {
@@ -149,6 +161,12 @@
           "std": 0.0,
           "ci95_lo": 0.0,
           "ci95_hi": 0.0
+        },
+        "total_co2_kg": {
+          "mean": 946.341917047708,
+          "std": 23.67868148398708,
+          "ci95_lo": 932.0605596246806,
+          "ci95_hi": 960.6638994426435
         }
       }
     },
@@ -161,6 +179,7 @@
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_NS": "identical (no variance)",
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_EW": "identical (no variance)",
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | deadlock_teleports": "identical (no variance)",
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | total_co2_kg": 0.001953125,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | avg_delay_s": 0.00390625,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | mean_queue_length": 0.001953125,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.123046875,
@@ -169,6 +188,7 @@
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.001953125,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | total_co2_kg": 0.001953125,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 0.001953125,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 0.001953125,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.001953125,
@@ -176,33 +196,37 @@
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 0.125,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.001953125,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
-      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)"
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": 0.001953125
     },
     "wilcoxon_p_holm_bonferroni": {
-      "Fixed-Time (Webster) vs Vanilla Max-Pressure | avg_delay_s": 0.033203125,
-      "Fixed-Time (Webster) vs Vanilla Max-Pressure | mean_queue_length": 0.033203125,
-      "Fixed-Time (Webster) vs Vanilla Max-Pressure | throughput_completed_trips": 0.033203125,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | avg_delay_s": 0.0390625,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | mean_queue_length": 0.0390625,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | throughput_completed_trips": 0.0390625,
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | gridlock_incidents_per_1000veh": 1.0,
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | box_gridlock_events": 1.0,
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_NS": "identical (no variance)",
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_EW": "identical (no variance)",
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | deadlock_teleports": "identical (no variance)",
-      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | avg_delay_s": 0.033203125,
-      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | mean_queue_length": 0.033203125,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | total_co2_kg": 0.0390625,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | avg_delay_s": 0.0390625,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | mean_queue_length": 0.0390625,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.861328125,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": 1.0,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | box_gridlock_events": 0.861328125,
-      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.033203125,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.0390625,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)",
-      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 0.033203125,
-      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 0.033203125,
-      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.033203125,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | total_co2_kg": 0.0390625,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 0.0390625,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 0.0390625,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.0390625,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": 1.0,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 0.861328125,
-      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.033203125,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.0390625,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
-      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)"
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": 0.0390625
     },
     "cohens_dz": {
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | avg_delay_s": -7.385456324559646,
@@ -213,6 +237,7 @@
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_NS": 0.0,
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_EW": 0.0,
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | deadlock_teleports": 0.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | total_co2_kg": -11.975386607852847,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | avg_delay_s": -1.4502860094237426,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | mean_queue_length": -6.01067764222207,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.48702903858597624,
@@ -221,6 +246,7 @@
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_NS": -2.1213203435596424,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_EW": 0.0,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | deadlock_teleports": 0.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | total_co2_kg": -1.8817290713135955,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 3.1475446403544587,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 2.07151624432656,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 2.112735648617165,
@@ -228,7 +254,146 @@
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 0.6052533835439975,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": -2.1213203435596424,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": 0.0,
-      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": 0.0
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": 0.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": 5.3326873442078515
+    },
+    "rank_biserial_r": {
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | avg_delay_s": -1.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | mean_queue_length": -1.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | throughput_completed_trips": -1.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | gridlock_incidents_per_1000veh": -0.12727272727272726,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | box_gridlock_events": -0.15555555555555556,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_NS": 0.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_EW": 0.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | deadlock_teleports": 0.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | total_co2_kg": -1.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | avg_delay_s": -0.9636363636363636,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | mean_queue_length": -1.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.5636363636363636,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": -0.41818181818181815,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | box_gridlock_events": 0.5111111111111111,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_NS": -1.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | deadlock_teleports": 0.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | total_co2_kg": -1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": -0.16363636363636364,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 0.6666666666666666,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": -1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": 0.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": 1.0
+    },
+    "shapiro_wilk_on_diffs": {
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | avg_delay_s": {
+        "statistic": 0.9196224893407603,
+        "p_value": 0.3538170679140178,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | mean_queue_length": {
+        "statistic": 0.9873439578422228,
+        "p_value": 0.9924122820001805,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | throughput_completed_trips": {
+        "statistic": 0.9556065392351426,
+        "p_value": 0.7348525407915522,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | gridlock_incidents_per_1000veh": {
+        "statistic": 0.9296474526658873,
+        "p_value": 0.4444334463238142,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | box_gridlock_events": {
+        "statistic": 0.9213842970993023,
+        "p_value": 0.36864536513719415,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_NS": null,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_EW": null,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | deadlock_teleports": null,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | total_co2_kg": {
+        "statistic": 0.9767169694662033,
+        "p_value": 0.9452116263170259,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | avg_delay_s": {
+        "statistic": 0.9430138031493405,
+        "p_value": 0.5870097400285758,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | mean_queue_length": {
+        "statistic": 0.9543400549195905,
+        "p_value": 0.7199114556426693,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | throughput_completed_trips": {
+        "statistic": 0.9724329740242276,
+        "p_value": 0.9124406035830599,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": {
+        "statistic": 0.8704606136993875,
+        "p_value": 0.10120883828924587,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | box_gridlock_events": {
+        "statistic": 0.9337066871799249,
+        "p_value": 0.4853244507593591,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_NS": {
+        "statistic": 0.849969603805983,
+        "p_value": 0.05804077400927731,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_EW": null,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | deadlock_teleports": null,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | total_co2_kg": {
+        "statistic": 0.9754964388224872,
+        "p_value": 0.9366144390181718,
+        "normal_at_alpha_0.05": true
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": {
+        "statistic": 0.9335402410091622,
+        "p_value": 0.48360272402530896,
+        "normal_at_alpha_0.05": true
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": {
+        "statistic": 0.8579874000978092,
+        "p_value": 0.07224644479293091,
+        "normal_at_alpha_0.05": true
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": {
+        "statistic": 0.9432752337041918,
+        "p_value": 0.5899991368185734,
+        "normal_at_alpha_0.05": true
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": {
+        "statistic": 0.9511379486194508,
+        "p_value": 0.6819764988055891,
+        "normal_at_alpha_0.05": true
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": {
+        "statistic": 0.9579046438557657,
+        "p_value": 0.7617414493210994,
+        "normal_at_alpha_0.05": true
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": {
+        "statistic": 0.849969603805983,
+        "p_value": 0.05804077400927731,
+        "normal_at_alpha_0.05": true
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": null,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": null,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": {
+        "statistic": 0.9077028042478318,
+        "p_value": 0.26558152969343785,
+        "normal_at_alpha_0.05": true
+      }
     },
     "jains_index": {
       "Fixed-Time (Webster)": [
@@ -680,6 +845,12 @@
           "std": 0.0,
           "ci95_lo": 0.0,
           "ci95_hi": 0.0
+        },
+        "total_co2_kg": {
+          "mean": 1018.9826277459067,
+          "std": 23.091145591095547,
+          "ci95_lo": 1005.241472869582,
+          "ci95_hi": 1032.9838522871248
         }
       },
       "Vanilla Max-Pressure": {
@@ -730,6 +901,12 @@
           "std": 0.0,
           "ci95_lo": 0.0,
           "ci95_hi": 0.0
+        },
+        "total_co2_kg": {
+          "mean": 1277.5710033276284,
+          "std": 24.619222771640793,
+          "ci95_lo": 1262.3833416413104,
+          "ci95_hi": 1292.263005660907
         }
       },
       "Fuzzy Anti-Spillback": {
@@ -780,6 +957,12 @@
           "std": 0.0,
           "ci95_lo": 0.0,
           "ci95_hi": 0.0
+        },
+        "total_co2_kg": {
+          "mean": 1146.7890084263295,
+          "std": 19.439760809214565,
+          "ci95_lo": 1135.1524414723465,
+          "ci95_hi": 1158.1029317837647
         }
       }
     },
@@ -792,6 +975,7 @@
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_NS": "identical (no variance)",
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_EW": "identical (no variance)",
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | deadlock_teleports": "identical (no variance)",
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | total_co2_kg": 0.001953125,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | avg_delay_s": 0.001953125,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | mean_queue_length": 0.001953125,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.12890625,
@@ -800,6 +984,7 @@
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.001953125,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | total_co2_kg": 0.001953125,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 0.001953125,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 0.001953125,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.30078125,
@@ -807,33 +992,37 @@
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 0.921875,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.001953125,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
-      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)"
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": 0.001953125
     },
     "wilcoxon_p_holm_bonferroni": {
-      "Fixed-Time (Webster) vs Vanilla Max-Pressure | avg_delay_s": 0.033203125,
-      "Fixed-Time (Webster) vs Vanilla Max-Pressure | mean_queue_length": 0.033203125,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | avg_delay_s": 0.0390625,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | mean_queue_length": 0.0390625,
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | throughput_completed_trips": 1.0,
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | gridlock_incidents_per_1000veh": 1.0,
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | box_gridlock_events": 1.0,
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_NS": "identical (no variance)",
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_EW": "identical (no variance)",
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | deadlock_teleports": "identical (no variance)",
-      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | avg_delay_s": 0.033203125,
-      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | mean_queue_length": 0.033203125,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | total_co2_kg": 0.0390625,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | avg_delay_s": 0.0390625,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | mean_queue_length": 0.0390625,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.90234375,
-      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": 0.033203125,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": 0.0390625,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | box_gridlock_events": 1.0,
-      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.033203125,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.0390625,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)",
-      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 0.033203125,
-      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 0.033203125,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | total_co2_kg": 0.0390625,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 0.0390625,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 0.0390625,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 1.0,
-      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": 0.033203125,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": 0.0390625,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 1.0,
-      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.033203125,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 0.0390625,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
-      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)"
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": 0.0390625
     },
     "cohens_dz": {
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | avg_delay_s": -19.59390990833267,
@@ -844,6 +1033,7 @@
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_NS": 0.0,
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_EW": 0.0,
       "Fixed-Time (Webster) vs Vanilla Max-Pressure | deadlock_teleports": 0.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | total_co2_kg": -22.73558240170456,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | avg_delay_s": -6.855106613402018,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | mean_queue_length": -12.294169766076363,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.5623310557102607,
@@ -852,6 +1042,7 @@
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_NS": -5.048004847578543,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_EW": 0.0,
       "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | deadlock_teleports": 0.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | total_co2_kg": -7.468772835040803,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 7.59561161015675,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 4.527959444780553,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.40329964345339875,
@@ -859,7 +1050,146 @@
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 0.26900150379733223,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": -5.048004847578543,
       "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": 0.0,
-      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": 0.0
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": 0.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": 6.788916843095781
+    },
+    "rank_biserial_r": {
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | avg_delay_s": -1.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | mean_queue_length": -1.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | throughput_completed_trips": -0.022222222222222223,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | gridlock_incidents_per_1000veh": -0.2,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | box_gridlock_events": -0.17777777777777778,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_NS": 0.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_EW": 0.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | deadlock_teleports": 0.0,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | total_co2_kg": -1.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | avg_delay_s": -1.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | mean_queue_length": -1.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.5636363636363636,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": -1.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | box_gridlock_events": 0.07272727272727272,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_NS": -1.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | deadlock_teleports": 0.0,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | total_co2_kg": -1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.4222222222222222,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": -1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 0.25,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": -1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": 0.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": 1.0
+    },
+    "shapiro_wilk_on_diffs": {
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | avg_delay_s": {
+        "statistic": 0.8887708621081205,
+        "p_value": 0.16424938734841654,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | mean_queue_length": {
+        "statistic": 0.8523185734712434,
+        "p_value": 0.06189527048049032,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | throughput_completed_trips": {
+        "statistic": 0.960695786046654,
+        "p_value": 0.7937768135414898,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | gridlock_incidents_per_1000veh": {
+        "statistic": 0.9427876783868874,
+        "p_value": 0.5844289082312595,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | box_gridlock_events": {
+        "statistic": 0.9484349649027805,
+        "p_value": 0.6500207289939931,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_NS": null,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | storage_overflow_events_EW": null,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | deadlock_teleports": null,
+      "Fixed-Time (Webster) vs Vanilla Max-Pressure | total_co2_kg": {
+        "statistic": 0.9433361343802376,
+        "p_value": 0.590696372495326,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | avg_delay_s": {
+        "statistic": 0.9280126092548429,
+        "p_value": 0.4286312338309464,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | mean_queue_length": {
+        "statistic": 0.9207968270236606,
+        "p_value": 0.3636487345006986,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | throughput_completed_trips": {
+        "statistic": 0.8944442991201448,
+        "p_value": 0.19017974078141803,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": {
+        "statistic": 0.9103465470829977,
+        "p_value": 0.2833799257846315,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | box_gridlock_events": {
+        "statistic": 0.8601732223388455,
+        "p_value": 0.07666850129790072,
+        "normal_at_alpha_0.05": true
+      },
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_NS": {
+        "statistic": 0.8152011107401491,
+        "p_value": 0.022170075259159542,
+        "normal_at_alpha_0.05": false
+      },
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | storage_overflow_events_EW": null,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | deadlock_teleports": null,
+      "Fixed-Time (Webster) vs Fuzzy Anti-Spillback | total_co2_kg": {
+        "statistic": 0.9576428658815721,
+        "p_value": 0.75869748014045,
+        "normal_at_alpha_0.05": true
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": {
+        "statistic": 0.9408823066855528,
+        "p_value": 0.5628722959352923,
+        "normal_at_alpha_0.05": true
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": {
+        "statistic": 0.9619474827694527,
+        "p_value": 0.807831533286081,
+        "normal_at_alpha_0.05": true
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": {
+        "statistic": 0.9588654395209325,
+        "p_value": 0.7728616904810033,
+        "normal_at_alpha_0.05": true
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": {
+        "statistic": 0.9038940710362694,
+        "p_value": 0.24162429389565943,
+        "normal_at_alpha_0.05": true
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": {
+        "statistic": 0.8784688591537693,
+        "p_value": 0.12530937291391653,
+        "normal_at_alpha_0.05": true
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": {
+        "statistic": 0.8152011107401491,
+        "p_value": 0.022170075259159542,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": null,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": null,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": {
+        "statistic": 0.9149629946566513,
+        "p_value": 0.3168498448142068,
+        "normal_at_alpha_0.05": true
+      }
     },
     "jains_index": {
       "Fixed-Time (Webster)": [
@@ -1018,7 +1348,13 @@
       188.9
     ],
     "wilcoxon_p": 0.048828125,
-    "cohens_dz": -0.7355752984110502
+    "cohens_dz": -0.7355752984110502,
+    "rank_biserial_r": -0.7090909090909091,
+    "shapiro": {
+      "statistic": 0.8761137593641879,
+      "p_value": 0.11771125511091168,
+      "normal_at_alpha_0.05": true
+    }
   },
   "methodology_notes": {
     "seeds_primary": [
@@ -1040,9 +1376,10 @@
     ],
     "min_seeds_for_wilcoxon": 6,
     "multiple_comparison_correction": "Holm-Bonferroni, family = all pairwise comparisons per regime across CORE_KEYS",
-    "effect_size": "Cohen's d_z (paired), mean(diff)/std(diff)",
+    "effect_sizes": "Cohen's d_z (paired, assumes normal differences) and matched-pairs rank-biserial correlation r (nonparametric, the standard Wilcoxon-paired effect size) reported together; Shapiro-Wilk on paired differences reported to justify choice of Wilcoxon over a paired t-test",
     "ci_method": "percentile bootstrap, 2000 resamples, 95% CI",
     "composite_gridlock_index": "computed and stored (gridlock_incidents_per_1000veh) but not used as a headline metric; see README Sec 6.3 and CHANGELOG.md for rationale",
-    "occupancy_scaling_fix": "see CHANGELOG.md -- all results in this report were generated after the downstream-occupancy unit-scaling fix"
+    "occupancy_scaling_fix": "see CHANGELOG.md -- all results in this report were generated after the downstream-occupancy unit-scaling fix",
+    "phase_selection_reduction_claim": "see docs/THEOREM.md Proposition A.1 for the precise, proven statement; the controller's discharge-time pressure w_p is distinct from the raw-count pressure used by this repo's Vanilla Max-Pressure baseline"
   }
 }
