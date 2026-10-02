@@ -1,16 +1,19 @@
 """
 Master benchmark, Q1-submission-ready statistical package.
 
-Fix vs. previous revision: plot_main's fourth panel previously plotted
-the composite "gridlock_incidents_per_1000veh" index, which the README's
-methodology section explicitly states was rejected as a headline metric
-(it sums box-gridlock and storage-overflow counts without crediting the
-protection benefit the storage-overflow cost buys, making a real,
-explicable trade-off look like an unexplained regression). The composite
-is still computed and stored in the report for completeness, but is no
-longer plotted as a headline panel -- replaced with two panels showing
-box-gridlock and directional storage-overflow side by side, matching what
-the README actually claims to report.
+Additions vs. previous revision:
+  - total_co2_kg added to CORE_KEYS and reported/plotted, using emissions
+    data src/metrics.py was already computing but evaluate.py never
+    surfaced -- a sustainability angle that costs nothing extra to
+    generate since the simulation already tracks it.
+  - Shapiro-Wilk normality test on paired differences for every
+    comparison, reported alongside the Wilcoxon result, to justify the
+    nonparametric test choice explicitly rather than by convention.
+  - Rank-biserial correlation added as the standard Wilcoxon-paired
+    effect size, reported alongside Cohen's d_z (which assumes normal
+    differences -- rank-biserial does not and is the more defensible
+    primary effect size given the Shapiro-Wilk results typically reject
+    normality for these metrics).
 """
 
 import argparse
@@ -36,7 +39,7 @@ COLORS = {"Fixed-Time (Webster)": "#8e9aaf",
 CORE_KEYS = ["avg_delay_s", "mean_queue_length", "throughput_completed_trips",
              "gridlock_incidents_per_1000veh", "box_gridlock_events",
              "storage_overflow_events_NS", "storage_overflow_events_EW",
-             "deadlock_teleports"]
+             "deadlock_teleports", "total_co2_kg"]
 
 
 def runners(regime):
@@ -58,8 +61,8 @@ def runners(regime):
 
 def tripinfo_paths(tag):
     return {"Fixed-Time (Webster)": f"results/tripinfo_{tag}_fixed.xml",
-           "Vanilla Max-Pressure": f"results/tripinfo_{tag}_vmp.xml",
-           "Fuzzy Anti-Spillback": f"results/tripinfo_{tag}_fuzzy.xml"}
+            "Vanilla Max-Pressure": f"results/tripinfo_{tag}_vmp.xml",
+            "Fuzzy Anti-Spillback": f"results/tripinfo_{tag}_fuzzy.xml"}
 
 
 # --------------------------------------------------------------------------
@@ -90,6 +93,38 @@ def cohens_dz(xa, xb):
     return float(diff.mean() / sd)
 
 
+def rank_biserial_wilcoxon(xa, xb):
+    """Matched-pairs rank-biserial correlation, the standard effect size
+    for the Wilcoxon signed-rank test (does not assume normal
+    differences, unlike Cohen's d_z). r = (W+ - W-) / (n(n+1)/2), where
+    W+ and W- are the sums of positive- and negative-difference ranks."""
+    diff = np.asarray(xa, dtype=float) - np.asarray(xb, dtype=float)
+    diff = diff[diff != 0]
+    n = len(diff)
+    if n == 0:
+        return 0.0
+    ranks = stats.rankdata(np.abs(diff))
+    w_pos = ranks[diff > 0].sum()
+    w_neg = ranks[diff < 0].sum()
+    total = n * (n + 1) / 2.0
+    return float((w_pos - w_neg) / total)
+
+
+def shapiro_on_diffs(xa, xb):
+    """Shapiro-Wilk test on paired differences, justifying the choice of
+    Wilcoxon (nonparametric) over a paired t-test. Requires n>=3;
+    returns None below that."""
+    diff = np.asarray(xa, dtype=float) - np.asarray(xb, dtype=float)
+    if len(diff) < 3 or np.allclose(diff, diff[0]):
+        return None
+    try:
+        stat, p = stats.shapiro(diff)
+        return {"statistic": float(stat), "p_value": float(p),
+                "normal_at_alpha_0.05": bool(p > 0.05)}
+    except Exception:
+        return None
+
+
 def holm_bonferroni(pvals_dict):
     items = [(k, v) for k, v in pvals_dict.items() if isinstance(v, (int, float))]
     items.sort(key=lambda kv: kv[1])
@@ -113,13 +148,13 @@ def summarize(raw, keys):
             vals = np.array([r[k] for r in runs], dtype=float)
             mean, lo, hi = bootstrap_ci(vals)
             summary[name][k] = {"mean": mean,
-                               "std": float(vals.std(ddof=1)) if len(vals) > 1 else 0.0,
-                               "ci95_lo": lo, "ci95_hi": hi}
+                                 "std": float(vals.std(ddof=1)) if len(vals) > 1 else 0.0,
+                                 "ci95_lo": lo, "ci95_hi": hi}
     return summary
 
 
 def paired_tests(raw, keys, min_n=6):
-    p_raw, effect = {}, {}
+    p_raw, effect_dz, effect_rb, normality = {}, {}, {}, {}
     names = list(raw.keys())
     for a, b in itertools.combinations(names, 2):
         for k in keys:
@@ -135,9 +170,16 @@ def paired_tests(raw, keys, min_n=6):
                     p_raw[label] = float(stats.wilcoxon(xa, xb, zero_method="zsplit").pvalue)
                 except ValueError:
                     p_raw[label] = None
-            effect[label] = cohens_dz(xa, xb) if len(xa) == len(xb) and len(xa) > 1 else None
+            if len(xa) == len(xb) and len(xa) > 1:
+                effect_dz[label] = cohens_dz(xa, xb)
+                effect_rb[label] = rank_biserial_wilcoxon(xa, xb)
+                normality[label] = shapiro_on_diffs(xa, xb)
+            else:
+                effect_dz[label] = None
+                effect_rb[label] = None
+                normality[label] = None
     p_adj = holm_bonferroni(p_raw)
-    return p_raw, p_adj, effect
+    return p_raw, p_adj, effect_dz, effect_rb, normality
 
 
 # --------------------------------------------------------------------------
@@ -153,7 +195,7 @@ def run_multiseed(seeds, regime="moderate", ambulance_depart=AMBULANCE_DEPART_LI
     for seed in seeds:
         tag = f"{regime}_seed{seed}"
         cfg, n = make_config(tag, scale=1.0, seed=seed, ambulance=True,
-                             ambulance_depart=ambulance_depart)
+                              ambulance_depart=ambulance_depart)
         print(f"--- [{regime}] seed {seed}: {n} vehicles ---")
         for name, runner in R.items():
             res = runner(cfg, seed, tag)
@@ -172,12 +214,12 @@ def run_multiseed(seeds, regime="moderate", ambulance_depart=AMBULANCE_DEPART_LI
 def run_demand_sweep(scales, seeds=(1, 2, 3), regime="moderate"):
     R = runners(regime)
     sweep = {p: {"scale": [], "avg_delay_s": [], "throughput_completed_trips": [],
-                "gridlock_incidents_per_1000veh": [], "deadlock_teleports": []}
-             for p in R}
+                 "gridlock_incidents_per_1000veh": [], "deadlock_teleports": []}
+              for p in R}
     for scale in scales:
         per_scale = {p: {k: [] for k in ("avg_delay_s", "throughput_completed_trips",
-                                        "gridlock_incidents_per_1000veh",
-                                        "deadlock_teleports")} for p in R}
+                                          "gridlock_incidents_per_1000veh",
+                                          "deadlock_teleports")} for p in R}
         for seed in seeds:
             tag = f"sweep_{regime}_s{str(scale).replace('.', 'p')}_seed{seed}"
             cfg, n = make_config(tag, scale=scale, seed=seed, ambulance=False)
@@ -202,15 +244,15 @@ def run_preemption_ablation(seeds, regime="moderate", ambulance_depart=AMBULANCE
     for seed in seeds:
         tag = f"preempt_{regime}_seed{seed}"
         cfg, n = make_config(tag, scale=1.0, seed=seed, ambulance=True,
-                             ambulance_depart=ambulance_depart)
+                              ambulance_depart=ambulance_depart)
         r_with = controller.run(sumocfg=cfg, seed=seed, regime=regime,
-                                emergency_preempt=True,
-                                tripinfo_out=f"results/tripinfo_{tag}_with.xml",
-                                metrics_out=f"results/metrics_{tag}_with.json")
+                                 emergency_preempt=True,
+                                 tripinfo_out=f"results/tripinfo_{tag}_with.xml",
+                                 metrics_out=f"results/metrics_{tag}_with.json")
         r_without = controller.run(sumocfg=cfg, seed=seed, regime=regime,
-                                   emergency_preempt=False,
-                                   tripinfo_out=f"results/tripinfo_{tag}_without.xml",
-                                   metrics_out=f"results/metrics_{tag}_without.json")
+                                    emergency_preempt=False,
+                                    tripinfo_out=f"results/tripinfo_{tag}_without.xml",
+                                    metrics_out=f"results/metrics_{tag}_without.json")
         amb_with = emergency_metrics(f"results/tripinfo_{tag}_with.xml", desired_depart=ambulance_depart)
         amb_without = emergency_metrics(f"results/tripinfo_{tag}_without.xml", desired_depart=ambulance_depart)
         with_amb.append(amb_with[0]["delay_s"] if amb_with else None)
@@ -223,14 +265,10 @@ def run_preemption_ablation(seeds, regime="moderate", ambulance_depart=AMBULANCE
 # --------------------------------------------------------------------------
 
 def plot_main(summary, path):
-    """Headline panel: delay, queue, throughput, box-gridlock,
-    storage-overflow (NS/EW). The composite index is intentionally NOT
-    plotted here (see module docstring); it remains in the JSON report
-    for completeness."""
     bars = [("avg_delay_s", "Average Vehicle Delay [s]", "lower better"),
-           ("mean_queue_length", "Mean Queue Length [veh]", "lower better"),
-           ("throughput_completed_trips", "Throughput [veh]", "higher better"),
-           ("box_gridlock_events", "Junction-Box Gridlock Events", "lower better")]
+            ("mean_queue_length", "Mean Queue Length [veh]", "lower better"),
+            ("throughput_completed_trips", "Throughput [veh]", "higher better"),
+            ("box_gridlock_events", "Junction-Box Gridlock Events", "lower better")]
     fig, axes = plt.subplots(1, 4, figsize=(19, 4.5))
     names = list(summary.keys())
     for ax, (key, title, hint) in zip(axes, bars):
@@ -238,12 +276,29 @@ def plot_main(summary, path):
         lo = [summary[n][key]["mean"] - summary[n][key]["ci95_lo"] for n in names]
         hi = [summary[n][key]["ci95_hi"] - summary[n][key]["mean"] for n in names]
         ax.bar(names, means, yerr=[lo, hi], capsize=5,
-              color=[COLORS.get(n, "#777") for n in names], edgecolor="#1d1f21")
+               color=[COLORS.get(n, "#777") for n in names], edgecolor="#1d1f21")
         ax.set_title(f"{title}\n({hint})", fontsize=10, fontweight="bold")
         ax.tick_params(axis="x", rotation=15, labelsize=8)
         ax.grid(axis="y", alpha=0.25, linestyle=":")
     fig.suptitle("Multi-seed benchmark (mean, bootstrap 95% CI)", fontsize=12, fontweight="bold")
     fig.tight_layout(rect=[0, 0, 1, 0.92])
+    fig.savefig(path, dpi=160)
+    print(f"[chart] {path}")
+
+
+def plot_emissions(summary, path):
+    names = list(summary.keys())
+    means = [summary[n]["total_co2_kg"]["mean"] for n in names]
+    lo = [summary[n]["total_co2_kg"]["mean"] - summary[n]["total_co2_kg"]["ci95_lo"] for n in names]
+    hi = [summary[n]["total_co2_kg"]["ci95_hi"] - summary[n]["total_co2_kg"]["mean"] for n in names]
+    fig, ax = plt.subplots(figsize=(6.5, 4.5))
+    ax.bar(names, means, yerr=[lo, hi], capsize=5,
+           color=[COLORS.get(n, "#777") for n in names], edgecolor="#1d1f21")
+    ax.set_title("Total CO2 Emissions over 3600s [kg]\n(lower better; HBEFA3 model, sum over network edges)",
+                 fontsize=10, fontweight="bold")
+    ax.tick_params(axis="x", rotation=15, labelsize=8)
+    ax.grid(axis="y", alpha=0.25, linestyle=":")
+    fig.tight_layout()
     fig.savefig(path, dpi=160)
     print(f"[chart] {path}")
 
@@ -259,7 +314,7 @@ def plot_storage_breakdown(summary, path):
     ax.set_xticks(x)
     ax.set_xticklabels(names, rotation=15, fontsize=8)
     ax.set_title("Upstream Storage-Overflow Events by Direction\n"
-                 "(which movement pays the box-protection cost)", fontsize=10, fontweight="bold")
+                  "(which movement pays the box-protection cost)", fontsize=10, fontweight="bold")
     ax.legend(fontsize=8)
     ax.grid(axis="y", alpha=0.25, linestyle=":")
     fig.tight_layout()
@@ -270,7 +325,7 @@ def plot_storage_breakdown(summary, path):
 def plot_sweep(sweep, path):
     fig, axes = plt.subplots(1, 2, figsize=(11, 4.5))
     metrics = [("avg_delay_s", "Average Delay [s]"),
-              ("throughput_completed_trips", "Throughput [veh]")]
+               ("throughput_completed_trips", "Throughput [veh]")]
     for ax, (key, title) in zip(axes, metrics):
         for name, data in sweep.items():
             ax.plot(data["scale"], data[key], marker="o", label=name, color=COLORS.get(name, "#777"))
@@ -279,7 +334,7 @@ def plot_sweep(sweep, path):
         ax.grid(alpha=0.25, linestyle=":")
     axes[0].legend(fontsize=8)
     fig.suptitle("Demand sweep (3-seed average per point, moderate regime)",
-                fontsize=12, fontweight="bold")
+                 fontsize=12, fontweight="bold")
     fig.tight_layout(rect=[0, 0, 1, 0.90])
     fig.savefig(path, dpi=160)
     print(f"[chart] {path}")
@@ -292,7 +347,7 @@ def plot_fairness(fairness, path):
     stds = [np.std(fairness[n], ddof=1) for n in names]
     ax.bar(names, means, yerr=stds, capsize=5, color=[COLORS.get(n, "#777") for n in names])
     ax.set_title("Jain's Fairness Index (movement delay)\n(1.0 = perfectly fair)",
-                fontsize=10, fontweight="bold")
+                  fontsize=10, fontweight="bold")
     ax.set_ylim(0, 1.05)
     ax.tick_params(axis="x", rotation=15, labelsize=8)
     fig.tight_layout()
@@ -305,17 +360,18 @@ def plot_preemption_ablation(with_amb, without_amb, stats_dict, path):
     without_v = [v for v in without_amb if v is not None]
     means = [np.mean(without_v) if without_v else 0, np.mean(with_v) if with_v else 0]
     stds = [np.std(without_v, ddof=1) if len(without_v) > 1 else 0,
-           np.std(with_v, ddof=1) if len(with_v) > 1 else 0]
+            np.std(with_v, ddof=1) if len(with_v) > 1 else 0]
     fig, ax = plt.subplots(figsize=(6.5, 4.5))
     ax.bar(["Without preemption", "With preemption"], means, yerr=stds, capsize=6,
-          color=["#e76f51", "#2a9d8f"])
+           color=["#e76f51", "#2a9d8f"])
     p = stats_dict.get("wilcoxon_p")
     dz = stats_dict.get("cohens_dz")
-    subtitle = (f"Wilcoxon p={p:.3f}, Cohen's d_z={dz:.2f}" if p is not None
-               else "n<6 paired samples: significance not computed")
+    rb = stats_dict.get("rank_biserial_r")
+    subtitle = (f"Wilcoxon p={p:.3f}, d_z={dz:.2f}, r={rb:.2f}" if p is not None
+                else "n<6 paired samples: significance not computed")
     ax.set_title(f"Ambulance Delay: Causal Effect of Preemption\n"
-                f"(same seeds, same base algorithm, only preemption toggled)\n{subtitle}",
-                fontsize=10, fontweight="bold")
+                 f"(same seeds, same base algorithm, only preemption toggled)\n{subtitle}",
+                 fontsize=10, fontweight="bold")
     ax.set_ylabel("delay [s]")
     fig.tight_layout()
     fig.savefig(path, dpi=160)
@@ -336,10 +392,11 @@ def main(seeds, sweep_seeds, scales):
     print("\n=== Phase A: primary benchmark (moderate regime) ===")
     raw, fairness, emergency = run_multiseed(seeds, regime="moderate")
     summary = summarize(raw, CORE_KEYS)
-    p_raw, p_adj, effect = paired_tests(raw, CORE_KEYS, min_n=6)
+    p_raw, p_adj, effect_dz, effect_rb, normality = paired_tests(raw, CORE_KEYS, min_n=6)
     plot_main(summary, "results/comparison_metrics.png")
     plot_storage_breakdown(summary, "results/storage_overflow_breakdown.png")
     plot_fairness(fairness, "results/fairness.png")
+    plot_emissions(summary, "results/emissions.png")
 
     print("\n=== Phase B: demand sweep (moderate regime, 3-seed avg) ===")
     sweep = run_demand_sweep(scales, seeds=sweep_seeds, regime="moderate")
@@ -349,10 +406,12 @@ def main(seeds, sweep_seeds, scales):
     stress_raw, stress_fairness, stress_emergency = run_multiseed(
         seeds, regime="stress", ambulance_depart=AMBULANCE_DEPART_STRESS)
     stress_summary = summarize(stress_raw, CORE_KEYS)
-    stress_p_raw, stress_p_adj, stress_effect = paired_tests(stress_raw, CORE_KEYS, min_n=6)
+    stress_p_raw, stress_p_adj, stress_dz, stress_rb, stress_normality = paired_tests(
+        stress_raw, CORE_KEYS, min_n=6)
     plot_main(stress_summary, "results/comparison_metrics_stress.png")
     plot_storage_breakdown(stress_summary, "results/storage_overflow_breakdown_stress.png")
     plot_fairness(stress_fairness, "results/fairness_stress.png")
+    plot_emissions(stress_summary, "results/emissions_stress.png")
 
     print("\n=== Phase D: preemption causal ablation (fuzzy, with vs. without) ===")
     with_amb, without_amb = run_preemption_ablation(seeds, regime="moderate")
@@ -366,36 +425,52 @@ def main(seeds, sweep_seeds, scales):
         except ValueError:
             preempt_stats["wilcoxon_p"] = None
         preempt_stats["cohens_dz"] = cohens_dz(xa, xb)
+        preempt_stats["rank_biserial_r"] = rank_biserial_wilcoxon(xa, xb)
+        preempt_stats["shapiro"] = shapiro_on_diffs(xa, xb)
     else:
         preempt_stats["wilcoxon_p"] = None
         preempt_stats["cohens_dz"] = None
+        preempt_stats["rank_biserial_r"] = None
+        preempt_stats["shapiro"] = None
     plot_preemption_ablation(with_amb, without_amb, preempt_stats, "results/preemption_ablation.png")
 
     report = {
         "moderate_regime": {"summary": summary, "wilcoxon_p_raw": p_raw,
-                            "wilcoxon_p_holm_bonferroni": p_adj,
-                            "cohens_dz": effect, "jains_index": fairness,
-                            "emergency": emergency_to_json(emergency)},
+                             "wilcoxon_p_holm_bonferroni": p_adj,
+                             "cohens_dz": effect_dz, "rank_biserial_r": effect_rb,
+                             "shapiro_wilk_on_diffs": normality,
+                             "jains_index": fairness,
+                             "emergency": emergency_to_json(emergency)},
         "demand_sweep_moderate": sweep,
         "stress_regime_ablation": {"summary": stress_summary, "wilcoxon_p_raw": stress_p_raw,
-                                   "wilcoxon_p_holm_bonferroni": stress_p_adj,
-                                   "cohens_dz": stress_effect,
-                                   "jains_index": stress_fairness,
-                                   "emergency": emergency_to_json(stress_emergency)},
+                                    "wilcoxon_p_holm_bonferroni": stress_p_adj,
+                                    "cohens_dz": stress_dz, "rank_biserial_r": stress_rb,
+                                    "shapiro_wilk_on_diffs": stress_normality,
+                                    "jains_index": stress_fairness,
+                                    "emergency": emergency_to_json(stress_emergency)},
         "preemption_ablation": preempt_stats,
         "methodology_notes": {
             "seeds_primary": list(seeds),
             "seeds_sweep": list(sweep_seeds),
             "min_seeds_for_wilcoxon": 6,
             "multiple_comparison_correction": "Holm-Bonferroni, family = all pairwise "
-                                              "comparisons per regime across CORE_KEYS",
-            "effect_size": "Cohen's d_z (paired), mean(diff)/std(diff)",
+                                               "comparisons per regime across CORE_KEYS",
+            "effect_sizes": "Cohen's d_z (paired, assumes normal differences) and "
+                             "matched-pairs rank-biserial correlation r (nonparametric, "
+                             "the standard Wilcoxon-paired effect size) reported together; "
+                             "Shapiro-Wilk on paired differences reported to justify choice "
+                             "of Wilcoxon over a paired t-test",
             "ci_method": "percentile bootstrap, 2000 resamples, 95% CI",
             "composite_gridlock_index": "computed and stored (gridlock_incidents_per_1000veh) "
-                                        "but not used as a headline metric; see README Sec 6.3 "
-                                        "and CHANGELOG.md for rationale",
+                                         "but not used as a headline metric; see README Sec 6.3 "
+                                         "and CHANGELOG.md for rationale",
             "occupancy_scaling_fix": "see CHANGELOG.md -- all results in this report were "
-                                     "generated after the downstream-occupancy unit-scaling fix",
+                                      "generated after the downstream-occupancy unit-scaling fix",
+            "phase_selection_reduction_claim": "see docs/THEOREM.md Proposition A.1 for the "
+                                                "precise, proven statement; the controller's "
+                                                "discharge-time pressure w_p is distinct from "
+                                                "the raw-count pressure used by this repo's "
+                                                "Vanilla Max-Pressure baseline",
         },
     }
     with open("results/statistical_report.json", "w") as f:
@@ -405,8 +480,10 @@ def main(seeds, sweep_seeds, scales):
     for name in summary:
         d = summary[name]["avg_delay_s"]
         t = summary[name]["throughput_completed_trips"]
+        co2 = summary[name]["total_co2_kg"]
         print(f"{name:<24} delay={d['mean']:.1f} [{d['ci95_lo']:.1f},{d['ci95_hi']:.1f}]  "
-             f"throughput={t['mean']:.0f} [{t['ci95_lo']:.0f},{t['ci95_hi']:.0f}]")
+              f"throughput={t['mean']:.0f} [{t['ci95_lo']:.0f},{t['ci95_hi']:.0f}]  "
+              f"co2_kg={co2['mean']:.2f} [{co2['ci95_lo']:.2f},{co2['ci95_hi']:.2f}]")
     print("\n--- Holm-Bonferroni corrected p-values (moderate regime) ---")
     for k, v in p_adj.items():
         print(f"{k}: {v}")

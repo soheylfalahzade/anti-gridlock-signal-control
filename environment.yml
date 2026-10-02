@@ -1,0 +1,14 @@
+name: traffic_research_env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - numpy>=1.24,<2.0
+  - scipy>=1.10
+  - matplotlib>=3.7
+  - pytest>=7.4
+  - pip
+  - pip:
+      - scikit-fuzzy>=0.4.2
+      - traci>=1.19.0
+      - sumolib>=1.19.0
