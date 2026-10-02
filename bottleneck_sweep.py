@@ -1,12 +1,11 @@
 """
-Direct bottleneck-severity sweep: varies NS egress metering green time
-(hence duty ratio and sustainable capacity) at FIXED demand (scale=1.0),
-for all three policies. This is the counterpart the demand sweep in
-evaluate.py cannot substitute for: the demand sweep varies arrival rate
-against a fixed bottleneck; this sweep varies the bottleneck itself
-against fixed arrival rate, directly testing the core claim ("as the
-downstream constraint tightens, does the fuzzy controller degrade more
-gracefully than the baselines").
+Direct bottleneck-severity sweep: varies NS egress metering green time at
+FIXED demand (scale=1.0), for all three policies.
+
+Methodological fix: uses validation seeds disjoint from evaluate.py's
+primary benchmark seeds (1-10), for the same leakage-avoidance reason as
+sensitivity_analysis.py -- this sweep characterizes a design axis
+(bottleneck severity) independently of the headline seeds.
 """
 
 import json
@@ -22,8 +21,8 @@ from src import controller
 from src.demand import make_config
 from src.metering import ns_capacity_vph_per_lane
 
-SEEDS = [1, 2, 3]
-NS_GREEN_VALUES = [10, 13, 15, 18, 23, 28, 33]  # seconds, out of 50s cycle
+VALIDATION_SEEDS = [101, 102, 103]  # disjoint from evaluate.py's seeds 1-10
+NS_GREEN_VALUES = [10, 13, 15, 18, 23, 28, 33]
 COLORS = {"Fixed-Time (Webster)": "#8e9aaf", "Vanilla Max-Pressure": "#e63946",
           "Fuzzy Anti-Spillback": "#2a9d8f"}
 
@@ -50,7 +49,7 @@ def run_sweep():
     for ns_g in NS_GREEN_VALUES:
         per = {p: {"delay": [], "throughput": [], "box_gridlock": [], "storage_overflow": []}
               for p in policies}
-        for seed in SEEDS:
+        for seed in VALIDATION_SEEDS:
             tag = f"bneck_ns{ns_g}_seed{seed}"
             cfg, n = make_config(tag, scale=1.0, seed=seed, ambulance=False)
             print(f"--- bottleneck sweep ns_green={ns_g}s seed={seed} ({n} vehicles) ---")
@@ -79,10 +78,10 @@ def plot(sweep, path="results/bottleneck_sweep.png"):
         ax.set_xlabel("NS egress duty ratio (green/cycle)")
         ax.set_title(title, fontsize=10, fontweight="bold")
         ax.grid(alpha=0.25, linestyle=":")
-        ax.invert_xaxis()  # severity increases leftward (lower duty = tighter bottleneck)
+        ax.invert_xaxis()
     axes[0].legend(fontsize=8)
-    fig.suptitle("Bottleneck-severity sweep (fixed demand, scale=1.0, 3-seed average)\n"
-                "x-axis reversed: bottleneck tightens left-to-right",
+    fig.suptitle(f"Bottleneck-severity sweep (held-out validation seeds {VALIDATION_SEEDS}, "
+                f"fixed demand scale=1.0)\nx-axis reversed: bottleneck tightens left-to-right",
                 fontsize=12, fontweight="bold")
     fig.tight_layout(rect=[0, 0, 1, 0.90])
     fig.savefig(path, dpi=160)
@@ -94,7 +93,9 @@ def main():
     sweep = run_sweep()
     plot(sweep)
     with open("results/bottleneck_sweep_report.json", "w") as f:
-        json.dump(sweep, f, indent=2)
+        json.dump({"validation_seeds": VALIDATION_SEEDS,
+                  "note": "disjoint from evaluate.py's primary benchmark seeds (1-10)",
+                  "sweep": sweep}, f, indent=2)
     print("Full report: results/bottleneck_sweep_report.json")
 
 
