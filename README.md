@@ -1,5 +1,7 @@
 # Anti-Gridlock Signal Control: A Queue-Dissipation Max-Pressure Controller with Fuzzy Anti-Spillback Regulation
 
+[![tests](https://github.com/soheylfalahzade/anti-gridlock-signal-control/actions/workflows/tests.yml/badge.svg)](https://github.com/soheylfalahzade/anti-gridlock-signal-control/actions/workflows/tests.yml)
+
 **Status:** Phase 1 (single-intersection local control layer) — validated, statistically benchmarked, submission-track report.
 **Repository role:** Local control substrate for a planned network-level emergency-corridor navigation stack (time-varying, fault-tolerant geometric spanners + dynamic green wave). This repository stands on its own and makes no claims beyond the single-intersection scope tested here.
 
@@ -70,7 +72,7 @@ where `t_D^p` and `t_D^q` are the estimated discharge times (at 1900 veh/h/lane 
 
 A Mamdani fuzzy inference system (`src/fuzzy_engine.py`, `skfuzzy`, centroid defuzzification) maps `(w_p, downstream_occupancy)` to a green duration bounded in `[T_min, T_max] = [10s, 60s]`. Downstream occupancy is fed to the FIS as a **50-second rolling average** of `traci.edge.getLastStepOccupancy()`, matching the metering cycle length. **This occupancy signal was affected by a critical unit-scaling defect during development, fully disclosed in §12 and `CHANGELOG.md`; all results in this document are computed after the fix.**
 
-**Formal framing (Phase-Selection Lemma).** The fuzzy engine only ever *shortens* green relative to what unconstrained Max-Pressure would allocate; it never re-weights `w_p` or alters phase selection itself. Consequently, whenever downstream occupancy stays below the critical threshold for both candidate phases, the controller is *identical* to vanilla Max-Pressure and inherits its throughput-optimality argument unmodified. The behavior specific to this work is confined to the regime where occupancy exceeds the critical threshold, where a hard override additionally enforces:
+**Formal statement, precisely qualified.** A careless version of this claim — "the controller reduces to vanilla Max-Pressure when occupancy is low" — would be an overclaim, because this repository's two pressure signals are not the same functional: the Fuzzy controller selects phases by maximizing the discharge-time differential `w_p = t_D^p − t_D^q` (§3.1), while the `Vanilla Max-Pressure` baseline in `baselines/vanilla_max_pressure.py` maximizes the classical raw-count differential `queue_up − queue_down`. These two rankings coincide only when the upstream and downstream lane counts are equal for every phase; in this network they are not (2 lanes upstream, 1 lane egress), so the two pressure definitions are related but not interchangeable. **Proposition A.1** in `docs/THEOREM.md` states and proves the correct, narrower claim: *whenever downstream occupancy stays below `OCC_OVERRIDE` for both candidate phases, the Fuzzy controller's phase-selection step reduces exactly to greedy maximization of the discharge-time pressure `w_p` — i.e., to an unmodified discharge-time-weighted Max-Pressure policy — with the FIS acting only on green duration, never on the selection rule.* This is the policy the fuzzy controller degrades to at low occupancy; it is a lane-count-aware generalization of, but not bit-identical to, the raw-count `Vanilla Max-Pressure` baseline this document compares against. The behavior specific to this work is confined to the regime where occupancy exceeds the critical threshold, where a hard override additionally enforces:
 
 ```
 h(x) = OCC_OVERRIDE − occ(x),   OCC_OVERRIDE = 0.75 (moderate/stress regimes)
@@ -169,7 +171,7 @@ To isolate the preemption mechanism from the base algorithm's own queue manageme
 | Without preemption | 143.3 |
 | With preemption | 125.0 |
 
-Wilcoxon signed-rank *p* = 0.049; Cohen's *d*<sub>z</sub> = −0.74 (large effect). This corresponds to a ≈13% reduction attributable specifically to the preemption mechanism, isolated from confounding differences in baseline signal timing.
+Wilcoxon signed-rank *p* = 0.049; Cohen's *d*<sub>z</sub> = −0.74; matched-pairs rank-biserial *r* = −0.71 (both large effects, and in agreement — a Shapiro-Wilk check on the paired differences does not reject normality, *p* = 0.118, so the parametric and nonparametric effect sizes are both well-justified here and corroborate each other). This corresponds to a ≈13% reduction attributable specifically to the preemption mechanism, isolated from confounding differences in baseline signal timing.
 
 ---
 
@@ -212,6 +214,7 @@ An earlier iteration of this benchmark computed a single "gridlock incidents per
 ## 8. Reproducibility
 
 ```bash
+conda env create -f environment.yml   # or: pip install -r requirements.txt
 conda activate traffic_research_env
 cd ~/anti-gridlock-signal-control
 python configs/build_network.py
@@ -221,6 +224,8 @@ python sensitivity_analysis.py
 python bottleneck_sweep.py
 pytest tests/ -v
 ```
+
+`requirements.txt` and `environment.yml` pin every non-stdlib dependency version used in development. A GitHub Actions workflow (`.github/workflows/tests.yml`, badge above) runs the structural sanity tests in `tests/` on every push and pull request against `main`.
 
 **Outputs:** `results/comparison_metrics.png`, `results/comparison_metrics_stress.png`, `results/storage_overflow_breakdown.png`, `results/storage_overflow_breakdown_stress.png`, `results/demand_sweep.png`, `results/fairness.png`, `results/fairness_stress.png`, `results/preemption_ablation.png`, `results/sensitivity_analysis.png`, `results/bottleneck_sweep.png`, `results/statistical_report.json`, `results/sensitivity_report.json`, `results/bottleneck_sweep_report.json`.
 
@@ -288,6 +293,29 @@ All numbers in §5 and §10 above are from **after** this fix; no pre-fix result
 We disclose this prominently, rather than quietly re-running the benchmark, because a defect of this kind — no crash, no exception, silently plausible-looking output — is exactly the class of error a rigorous review process exists to catch, and because the corrected results are the stronger, more defensible ones.
 
 ---
+
+## 13. Emissions and Environmental Impact
+
+`src/metrics.py::MetricsCollector` was tracking `total_co2_kg` (SUMO's HBEFA3 emission model, summed over every network edge every step) throughout every run in this study, but earlier revisions never surfaced it. It is now part of `CORE_KEYS` and reported alongside the primary benchmark (n = 10 paired seeds; full CI and significance in `results/statistical_report.json`):
+
+| Policy | CO2 over 3600 s [kg], moderate regime | CO2 over 3600 s [kg], stress regime |
+|---|---|---|
+| Fixed-Time (Webster) | 912.8 | 1019.0 |
+| Vanilla Max-Pressure | 1047.2 | 1277.6 |
+| Fuzzy Anti-Spillback | 946.3 | 1146.8 |
+
+The expectation stated in an earlier draft of this section — that emissions would track the delay ordering in §5.1 and §5.3 reasonably closely, since idling and stop-and-go driving dominate HBEFA3 emissions at urban speeds — is confirmed by the completed run: Fuzzy sits between the two baselines on emissions in both regimes, exactly mirroring its position on delay. All three pairwise differences are statistically significant after Holm–Bonferroni correction in both regimes (*p* = 0.039). In the moderate regime, Fuzzy emits 9.6% less CO2 than Vanilla Max-Pressure (946.3 vs. 1047.2 kg); under chronic stress the gap widens to 10.2% (1146.8 vs. 1277.6 kg) — the same pattern as the delay results in §5.3, where the controller's advantage over Vanilla Max-Pressure grows under heavier sustained congestion. See `results/emissions.png` and `results/emissions_stress.png`.
+
+## 14. Statistical Robustness Additions
+
+Two additions strengthen the statistical claims in §5 and §10 beyond what was reported in earlier revisions, and both have now been run and checked against the n = 10 primary benchmark:
+
+- **Shapiro-Wilk normality test on paired differences**, reported for every comparison in `results/statistical_report.json` under `shapiro_wilk_on_diffs`. In the completed run, paired differences for every headline metric (delay, queue, throughput, CO2) are consistent with normality at alpha = 0.05 in both regimes, which supports Cohen's *d*<sub>z</sub> as a well-justified effect size for those comparisons rather than an assumed-safe default. The one exception across the full table is `storage_overflow_events_NS` in the stress regime (Shapiro-Wilk *p* = 0.022, normality rejected), where the paired difference distribution is right-skewed by a small number of seeds with unusually high overflow counts; for that specific comparison the rank-biserial correlation below, not Cohen's *d*<sub>z</sub>, is the defensible effect size.
+- **Matched-pairs rank-biserial correlation** (`rank_biserial_r`), the standard effect size that accompanies a Wilcoxon signed-rank test and does not assume normally distributed differences, reported alongside Cohen's *d*<sub>z</sub> for every comparison. For every metric where all 10 seeds agree in direction (delay, queue, throughput, CO2, and storage-overflow-NS in the Fuzzy comparisons), `rank_biserial_r` reaches its extreme value of ±1.0, the strongest possible nonparametric confirmation that the effect is consistent seed-by-seed rather than driven by a few outliers. The emergency-preemption ablation (§5.5) reaches *r* = −0.71, a large effect by conventional thresholds, corroborating the Cohen's *d*<sub>z</sub> = −0.74 reported there despite that comparison's smaller sample (n = 10 paired runs, one ambulance trip per run).
+
+## 15. Formal Appendix
+
+`docs/THEOREM.md` states and proves **Proposition A.1**, the precise version of the phase-selection reduction claim informally sketched in §3.2. It also documents and corrects an imprecision present in an earlier draft of this README, which described the reduction as being "identical to vanilla Max-Pressure" without noting that this repository's `Vanilla Max-Pressure` baseline and the Fuzzy controller's underlying pressure signal are two different functionals of the same queue data (raw vehicle count vs. discharge-time differential), related but not interchangeable given this network's asymmetric lane counts. The appendix is a short, self-contained proof by direct inspection of `src/controller.py`; it does not require simulation output and can be checked from the source code alone.
 
 ## References
 
