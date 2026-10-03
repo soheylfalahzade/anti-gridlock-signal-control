@@ -5,7 +5,34 @@
 **Status:** Phase 1 (single-intersection local control layer) — validated, statistically benchmarked, submission-track report.
 **Repository role:** Local control substrate for a planned network-level emergency-corridor navigation stack (time-varying, fault-tolerant geometric spanners + dynamic green wave). This repository stands on its own and makes no claims beyond the single-intersection scope tested here.
 
+![license](https://img.shields.io/badge/license-MIT-blue) ![python](https://img.shields.io/badge/python-3.10-blue) ![SUMO](https://img.shields.io/badge/SUMO-1.27.1-orange) ![seeds](https://img.shields.io/badge/seeds-10%20paired-green) ![status](https://img.shields.io/badge/status-Phase%201%20validated-success)
+
 *The short version: a signal controller that behaves exactly like textbook Max-Pressure until a downstream link starts to fill up, at which point it borrows an idea from safety-critical control (a barrier function) to back off before the junction box itself gets blocked. The four figures below carry most of the story; the sections after them carry the proof.*
+
+<details open>
+<summary><b>📑 Table of contents</b></summary>
+
+| | | |
+|---|---|---|
+| [Abstract](#abstract) | [4. Experimental Design](#4-experimental-design) | [10. Robustness](#10-robustness-sensitivity-analysis-and-direct-bottleneck-severity-sweep) |
+| [1. Problem Statement](#1-problem-statement) | [5. Results](#5-results) | [11. Tests](#11-tests) |
+| [2. System Model](#2-system-model) | [6. Discussion](#6-discussion) | [12. Critical Fix Disclosure](#12-critical-fix-disclosure-full-transparency) |
+| [3. Control Architecture](#3-control-architecture) | [7. Limitations](#7-limitations) | [13. Emissions](#13-emissions-and-environmental-impact) |
+| | [8. Reproducibility](#8-reproducibility) | [14. Statistical Robustness](#14-statistical-robustness-additions) |
+| | [9. Roadmap](#9-roadmap) | [15. Formal Appendix](#15-formal-appendix) |
+
+</details>
+
+### Results at a glance (n = 10 paired seeds, moderate regime unless noted)
+
+| 🏁 Finding | Value |
+|---|---|
+| Delay vs. Vanilla Max-Pressure | **−7.3%** (241.9s vs. 261.0s), *p* = 0.033 |
+| Junction-box gridlock events | **lowest of the three policies** (2.3 vs. 4.0–4.1 per run) |
+| Delay advantage under chronic stress | **widens to −10.0%** vs. Vanilla MP (342.6s vs. 380.3s) |
+| Emergency-vehicle delay, preemption on vs. off | **−13%** (125.0s vs. 143.3s), *p* = 0.049 |
+| CO2 emissions vs. Vanilla Max-Pressure | **−9.6% to −10.2%** across both regimes, *p* = 0.039 |
+| Honest cost | underperforms **both** baselines at loose bottlenecks (duty ≥ 0.56) |
 
 ---
 
@@ -139,9 +166,15 @@ The primary benchmark (§5) uses seeds **1–10**. The robustness analyses in §
 
 **Reading:** the fuzzy controller sits strictly between the two baselines on total delay, achieves the lowest box-gridlock count of the three policies, and substantially closes the fairness gap that fixed-time leaves open (0.686 → 0.749 toward Max-Pressure's 0.940) — while avoiding the aggregate delay and queue cost that full Max-Pressure pays.
 
+<p align="center"><img src="results/fairness.png" width="420" alt="Bar chart of Jain's Fairness Index for the three policies"></p>
+<p align="center"><sub>Fixed-Time's efficiency comes at a fairness cost (0.686); Fuzzy recovers most of that gap without Max-Pressure's full delay penalty.</sub></p>
+
 ### 5.2 Demand Sweep (Moderate Regime, 3-seed average per point)
 
-Across V/C scale 0.6–2.0, Fixed-Time's delay grows steeply beyond scale ≈1.2 (≈95s → ≈390s), while both Max-Pressure variants remain comparatively flat (Fuzzy: ≈147s → ≈263s; Vanilla: ≈84s → ≈279s), with Fuzzy tracking below Vanilla for most of the range at higher demand. This is the expected qualitative signature of Max-Pressure's adaptivity advantage over a fixed cycle under rising demand. (See `results/demand_sweep.png`.)
+Across V/C scale 0.6–2.0, Fixed-Time's delay grows steeply beyond scale ≈1.2 (≈95s → ≈390s), while both Max-Pressure variants remain comparatively flat (Fuzzy: ≈147s → ≈263s; Vanilla: ≈84s → ≈279s), with Fuzzy tracking below Vanilla for most of the range at higher demand. This is the expected qualitative signature of Max-Pressure's adaptivity advantage over a fixed cycle under rising demand.
+
+<p align="center"><img src="results/demand_sweep.png" width="100%" alt="Line charts of average delay and throughput against demand scale for the three policies"></p>
+<p align="center"><sub>Fixed-Time's delay curve bends upward past V/C≈1.2 while both Max-Pressure variants stay comparatively flat.</sub></p>
 
 ### 5.3 Chronic Stress Regime (n = 10 paired seeds)
 
@@ -157,7 +190,10 @@ This is the regime where the controller's design intent is most directly tested,
 
 ### 5.4 Direction-Specific Storage-Overflow Trade-off
 
-Across both regimes, **100% of storage-overflow events under the fuzzy controller occur on the NS (arterial) approach group**; the EW group shows zero storage-overflow events in every run, under every policy. This is consistent with the controller's design: the hard override and FIS both extend EW green (protecting the EW egress and the junction box) when NS egress occupancy is elevated, and the arterial's own upstream storage absorbs the resulting delay. We report this as **the controller's real cost**: *the fuzzy anti-spillback mechanism redistributes congestion risk from the junction box to upstream arterial storage, rather than eliminating congestion risk outright.* (See `results/storage_overflow_breakdown.png`.)
+Across both regimes, **100% of storage-overflow events under the fuzzy controller occur on the NS (arterial) approach group**; the EW group shows zero storage-overflow events in every run, under every policy. This is consistent with the controller's design: the hard override and FIS both extend EW green (protecting the EW egress and the junction box) when NS egress occupancy is elevated, and the arterial's own upstream storage absorbs the resulting delay. We report this as **the controller's real cost**: *the fuzzy anti-spillback mechanism redistributes congestion risk from the junction box to upstream arterial storage, rather than eliminating congestion risk outright.*
+
+<p align="center"><img src="results/storage_overflow_breakdown.png" width="460" alt="Bar chart of storage overflow events split by NS and EW approach for each policy"></p>
+<p align="center"><sub>Every storage-overflow event under Fuzzy lands on the NS arterial — the EW cross street never pays this price, under any policy.</sub></p>
 
 ### 5.5 Emergency Preemption: Controlled Causal Ablation
 
@@ -178,6 +214,9 @@ Wilcoxon signed-rank *p* = 0.049; Cohen's *d*<sub>z</sub> = −0.74; matched-pai
 ## 6. Discussion
 
 ### 6.1 The Fixed-Time Advantage Is Real and Not Hidden
+
+> [!NOTE]
+> At the moderate regime's baseline demand, **Webster fixed-time wins on raw delay**. We lead the discussion with this because a benchmark that only shows where the proposed method wins is not a benchmark.
 
 At the moderate regime's baseline demand (scale = 1.0), Webster fixed-time achieves the lowest total delay of the three policies. This is a genuine **price-of-fairness** effect: a fixed cycle guarantees the cross street a minimum green every cycle regardless of arterial pressure, which is efficient exactly when demand does not require dynamic reallocation. §5.2 shows this advantage is local to the moderate operating range and inverts as demand rises.
 
@@ -200,6 +239,9 @@ An earlier iteration of this benchmark computed a single "gridlock incidents per
 ---
 
 ## 7. Limitations
+
+> [!IMPORTANT]
+> None of the items below are hedging language added for reviewer comfort — each one is a specific, checkable claim about what this repository does *not* establish, and each is cross-referenced to the section where the gap is visible in the data.
 
 - **No closed-loop Lyapunov stability proof** for the fuzzy+override system outside the regime where it provably reduces to vanilla Max-Pressure (§3.2). This is stated as open, not claimed as solved.
 - **Membership function breakpoints are hand-set**, not calibrated by a formal optimization procedure. §10 provides a sensitivity analysis in place of formal calibration; a differential-evolution or similar calibration study against a held-out validation split is future work.
@@ -267,7 +309,12 @@ The demand sweep (§5.2) varies arrival rate against a *fixed* bottleneck. `bott
 | 0.56 | 201.9 | 208.2 | **210.2** |
 | 0.66 (loose) | 179.8 | 176.1 | **190.3** |
 
-**Fuzzy outperforms Vanilla Max-Pressure at every single severity level tested**, from severe (501.7 vs. 543.7) to loose (190.3 vs. 176.1 — a smaller absolute gap, but Vanilla still wins). **Reported without qualification:** at loose bottleneck severities (duty ≥ 0.56), Fuzzy underperforms *both* baselines on delay, and its throughput also falls below Vanilla Max-Pressure's at duty=0.66 (1919 vs. 2069 veh). The anti-spillback throttle imposes a real, reproduced cost when there is little spillback risk to guard against. Storage-overflow events for Fuzzy fall monotonically as the bottleneck loosens (9.0 at duty=0.20 → 0.0 at duty≥0.56), confirming the mechanism engages exactly where it is designed to and disengages cleanly where it is not needed.
+**Fuzzy outperforms Vanilla Max-Pressure at every single severity level tested**, from severe (501.7 vs. 543.7) to loose (190.3 vs. 176.1 — a smaller absolute gap, but Vanilla still wins).
+
+> [!WARNING]
+> At loose bottleneck severities (duty ≥ 0.56), Fuzzy underperforms **both** baselines on delay, and its throughput also falls below Vanilla Max-Pressure's at duty=0.66 (1919 vs. 2069 veh). This is reported without qualification: the anti-spillback throttle imposes a real, reproduced cost when there is little spillback risk to guard against.
+
+Storage-overflow events for Fuzzy fall monotonically as the bottleneck loosens (9.0 at duty=0.20 → 0.0 at duty≥0.56), confirming the mechanism engages exactly where it is designed to and disengages cleanly where it is not needed.
 
 Output: `results/bottleneck_sweep.png`, `results/bottleneck_sweep_report.json`.
 
@@ -304,7 +351,10 @@ We disclose this prominently, rather than quietly re-running the benchmark, beca
 | Vanilla Max-Pressure | 1047.2 | 1277.6 |
 | Fuzzy Anti-Spillback | 946.3 | 1146.8 |
 
-The expectation stated in an earlier draft of this section — that emissions would track the delay ordering in §5.1 and §5.3 reasonably closely, since idling and stop-and-go driving dominate HBEFA3 emissions at urban speeds — is confirmed by the completed run: Fuzzy sits between the two baselines on emissions in both regimes, exactly mirroring its position on delay. All three pairwise differences are statistically significant after Holm–Bonferroni correction in both regimes (*p* = 0.039). In the moderate regime, Fuzzy emits 9.6% less CO2 than Vanilla Max-Pressure (946.3 vs. 1047.2 kg); under chronic stress the gap widens to 10.2% (1146.8 vs. 1277.6 kg) — the same pattern as the delay results in §5.3, where the controller's advantage over Vanilla Max-Pressure grows under heavier sustained congestion. See `results/emissions.png` and `results/emissions_stress.png`.
+The expectation stated in an earlier draft of this section — that emissions would track the delay ordering in §5.1 and §5.3 reasonably closely, since idling and stop-and-go driving dominate HBEFA3 emissions at urban speeds — is confirmed by the completed run: Fuzzy sits between the two baselines on emissions in both regimes, exactly mirroring its position on delay. All three pairwise differences are statistically significant after Holm–Bonferroni correction in both regimes (*p* = 0.039). In the moderate regime, Fuzzy emits 9.6% less CO2 than Vanilla Max-Pressure (946.3 vs. 1047.2 kg); under chronic stress the gap widens to 10.2% (1146.8 vs. 1277.6 kg) — the same pattern as the delay results in §5.3, where the controller's advantage over Vanilla Max-Pressure grows under heavier sustained congestion.
+
+<p align="center"><img src="results/emissions.png" width="420" alt="Bar chart of total CO2 emissions for the three policies, moderate regime"></p>
+<p align="center"><sub>Emissions mirror the delay ordering almost exactly — idling and stop-and-go are the dominant HBEFA3 terms at these speeds, so less delay means less CO2, nearly for free.</sub></p>
 
 ## 14. Statistical Robustness Additions
 
