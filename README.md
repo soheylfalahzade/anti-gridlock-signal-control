@@ -36,6 +36,12 @@
 
 ---
 
+<p align="center">
+  <img src="figures/intersection_animated.svg" alt="Animated schematic: signal phases alternate NS/EW while a downstream-occupancy gauge crosses OCC_OVERRIDE = 0.75" width="860">
+</p>
+
+<p align="center"><sub>Illustrative schematic, not simulation output.</sub></p>
+
 ## Abstract
 
 Max-Pressure signal control (Varaiya, 2013) is throughput-optimal under the assumption of unbounded downstream storage — an assumption that fails at short urban links, where a discharging phase can push a queue the receiving link cannot absorb, backing traffic up into the junction box itself and gridlocking the cross street. We construct a symmetric four-approach intersection with an engineered downstream bottleneck (50 m metered egress against 250 m upstream storage) to reproduce this failure mode under controlled conditions, and evaluate three control policies — Webster fixed-time, vanilla Max-Pressure, and a Max-Pressure variant with a Mamdani fuzzy inference throttle on green duration — across 10 paired random seeds, a seven-point demand sweep, a seven-point direct bottleneck-severity sweep, a chronic-oversaturation stress regime, and a controlled emergency-vehicle preemption ablation. We report effect sizes (Cohen's *d*<sub>z</sub>), Holm–Bonferroni corrected significance, and bootstrap confidence intervals throughout. A critical measurement defect (an occupancy-unit double-scaling error that rendered the controller's core anti-spillback mechanism inert) was found during robustness testing, root-caused, fixed, and is disclosed in full (§12, `CHANGELOG.md`); all results below are post-fix. Robustness findings (§10) are additionally validated on three seeds held out from and disjoint with the ten primary benchmark seeds, to avoid calibration/evaluation leakage.
