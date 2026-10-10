@@ -148,14 +148,14 @@ def switch(states, metrics, frm, to):
 
 def run(sumocfg="configs/intersection.sumocfg", gui=False, seed=1, verbose=False,
         emergency_preempt=True, sim_end=3600, regime="moderate",
-        occ_override=OCC_OVERRIDE_DEFAULT, critical_shift=0.0,
+        occ_override=OCC_OVERRIDE_DEFAULT, critical_shift=0.0, fis_params=None,
         ns_green_override=None, ew_green_override=30,
         tripinfo_out="results/tripinfo_fuzzy.xml",
         metrics_out="results/metrics_fuzzy.json"):
     start_sumo(sumocfg, tripinfo_out, gui, seed, regime,
               ns_green_override, ew_green_override)
     states = build_state_strings()
-    engine = FuzzyAntiSpillbackEngine(critical_shift=critical_shift)
+    engine = FuzzyAntiSpillbackEngine(critical_shift=critical_shift, fis_params=fis_params)
     metrics = MetricsCollector()
     smoother = _OccupancySmoother()
 
@@ -239,7 +239,7 @@ def run(sumocfg="configs/intersection.sumocfg", gui=False, seed=1, verbose=False
     results = metrics.finalize(tripinfo_out, inserted, max(pending, 0))
     results.update(policy="Fuzzy Anti-Spillback", anti_spillback_overrides=overrides,
                    emergency_preemptions=preemptions, occ_override=occ_override,
-                   critical_shift=critical_shift)
+                   critical_shift=critical_shift, fis_params=fis_params)
     MetricsCollector.save(results, metrics_out)
     print(f"[Fuzzy:{regime} occ_ovr={occ_override} shift={critical_shift:+.2f}] "
          f"delay={results['avg_delay_s']:.1f}s queue={results['mean_queue_length']:.1f} "
