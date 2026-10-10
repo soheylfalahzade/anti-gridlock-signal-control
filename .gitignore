@@ -6,3 +6,4 @@ __pycache__/
 *.Zone.Identifier
 *.Zone.Identifier
 *:Zone.Identifier
+calibration/cache/
