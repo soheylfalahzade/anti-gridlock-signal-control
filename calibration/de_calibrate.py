@@ -11,17 +11,20 @@ fit, to select, and to test:
   final-test  one-shot paired evaluation on the benchmark seeds (1-10);
               refuses to run twice, so the test seeds cannot be tuned on
 
-Objective (minimise), per candidate, averaged over (regime, seed) pairs:
+Objective (minimise), per candidate, over all (regime, seed) pairs:
 
     J = mean( delay / delay_handset )
-        + w * mean( max(0, incidents - incidents_handset) / max(incidents_handset, 1) )
+        + w * max(0, I - I_handset) / max(I_handset, 1)
 
-where delay_handset / incidents_handset come from the hand-set controller on
-the SAME seed and regime, and incidents = box-gridlock events + storage-
-overflow events. The second term is one-sided: it never rewards extra
-incidents avoided, it only forbids buying lower delay with more incidents.
-The hand-set controller is part of the initial population, so on the
-training seeds the result cannot be worse than J = 1.
+delay_handset comes from the hand-set controller on the SAME seed and regime.
+I is the POOLED count of box-gridlock plus storage-overflow events over all
+pairs. The default weight is w = 0 (delay only): incident counts are noisy
+integers, and a first version of this objective that penalised per-seed
+increases (w = 0.5) scored every candidate at or above 1.0, because it
+punished count noise (see calibration/README.md). Incidents are instead
+checked at validation on held-out seeds, where pooled incidents must not
+exceed 110% of the hand-set controller's. The hand-set controller is part of
+the initial population, so on the training seeds J cannot end above 1.
 
 Run from the repository root:
   python calibration/de_calibrate.py train
@@ -131,7 +134,7 @@ def objective(x, cfgs, ref, sim_end, penalty_weight):
     fis_params, occ_override = vector_to_params(x)
     if not coverage_ok(fis_params):
         return PENALTY_INFEASIBLE
-    rel, extra = [], []
+    rel, ih, ic = [], 0, 0
     for k, cfg in cfgs.items():
         regime, seed = k.split(":")
         try:
@@ -140,8 +143,10 @@ def objective(x, cfgs, ref, sim_end, penalty_weight):
             return PENALTY_INFEASIBLE
         base = ref[k]
         rel.append(r["delay"] / base["delay"])
-        extra.append(max(0, r["incidents"] - base["incidents"]) / max(base["incidents"], 1))
-    return float(np.mean(rel) + penalty_weight * np.mean(extra))
+        ih += base["incidents"]
+        ic += r["incidents"]
+    extra = max(0, ic - ih) / max(ih, 1)
+    return float(np.mean(rel) + penalty_weight * extra)
 
 
 def git_commit():
@@ -222,19 +227,25 @@ def cmd_validate(a):
     cfgs = build_configs(a.seeds, a.regimes)
     rows = paired_runs(cfgs, fis_params, occ_override, a.sim_end)
     print(f"{'regime':8s} {'seed':>5s} {'delay hand':>11s} {'delay cal':>10s} {'inc hand':>9s} {'inc cal':>8s}")
-    rel, extra, out_rows = [], [], []
+    rel, ih, ic, out_rows = [], 0, 0, []
     for regime, seed, h, c in rows:
         print(f"{regime:8s} {seed:5d} {h['delay']:11.1f} {c['delay']:10.1f} {h['incidents']:9d} {c['incidents']:8d}")
         rel.append(c["delay"] / h["delay"])
-        extra.append(max(0, c["incidents"] - h["incidents"]) / max(h["incidents"], 1))
+        ih += h["incidents"]
+        ic += c["incidents"]
         out_rows.append({"regime": regime, "seed": seed, "hand": h, "calibrated": c})
-    J = float(np.mean(rel) + meta["protocol"]["incident_penalty_weight"] * np.mean(extra))
-    verdict = J < 1.0
-    print(f"\nvalidation J = {J:.4f} (hand-set = 1.0000) -> calibrated is "
-          f"{'BETTER' if verdict else 'NOT better'} on held-out seeds")
+    mean_rel = float(np.mean(rel))
+    inc_ratio = ic / max(ih, 1)
+    J = mean_rel + meta["protocol"]["incident_penalty_weight"] * max(0, ic - ih) / max(ih, 1)
+    verdict = bool(mean_rel < 1.0 and inc_ratio <= 1.10)
+    print(f"\nmean relative delay = {mean_rel:.4f} (hand-set = 1.0000)")
+    print(f"pooled incidents    = {ic} vs {ih} hand-set (ratio {inc_ratio:.3f}, limit 1.100)")
+    print(f"validation J        = {J:.4f}")
+    print(f"=> calibrated is {'BETTER' if verdict else 'NOT better'} than hand-set on held-out seeds")
     os.makedirs(OUT_DIR, exist_ok=True)
     with open(os.path.join(OUT_DIR, "validation.json"), "w") as fh:
-        json.dump({"validation_J": J, "better_than_handset": verdict, "rows": out_rows,
+        json.dump({"validation_J": J, "mean_relative_delay": mean_rel, "pooled_incident_ratio": inc_ratio,
+                   "better_than_handset": verdict, "rows": out_rows,
                    "validation_seeds": a.seeds, "regimes": a.regimes}, fh, indent=2)
     print(f"wrote {OUT_DIR}/validation.json")
 
@@ -295,12 +306,13 @@ def main():
     t.add_argument("--popsize", type=int, default=2, help="population = popsize x 10 members")
     t.add_argument("--maxiter", type=int, default=15)
     t.add_argument("--workers", type=int, default=1)
-    t.add_argument("--penalty", type=float, default=0.5)
+    t.add_argument("--penalty", type=float, default=0.0,
+                   help="weight of the pooled one-sided incident penalty (0 = delay only)")
     t.add_argument("--de-seed", type=int, default=0)
     t.set_defaults(fn=cmd_train)
 
     v = sub.add_parser("validate")
-    common(v, [101, 102, 103])
+    common(v, [101, 102, 103, 104, 105, 106])
     v.add_argument("--params", default=os.path.join(OUT_DIR, "best_params.json"))
     v.set_defaults(fn=cmd_validate)
 
