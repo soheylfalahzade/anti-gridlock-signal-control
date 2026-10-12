@@ -1,0 +1,38 @@
+{
+  "fis_params": {
+    "occ_low_a": 0.25,
+    "occ_low_b": 0.45,
+    "occ_med_a": 0.32,
+    "occ_med_b": 0.55,
+    "occ_med_c": 0.76,
+    "occ_crit_a": 0.62,
+    "occ_crit_b": 0.78,
+    "pres_zero_hw": 8.0,
+    "pres_pos_peak": 18.0
+  },
+  "occ_override": 0.75,
+  "train_J": 1.0,
+  "handset_train_J": 1.0,
+  "evaluations": 320,
+  "generations": 15,
+  "protocol": {
+    "train_seeds": [
+      201,
+      202,
+      203,
+      204
+    ],
+    "regimes": [
+      "moderate",
+      "stress"
+    ],
+    "sim_end": 3600,
+    "popsize": 2,
+    "maxiter": 15,
+    "de_seed": 0,
+    "incident_penalty_weight": 0.5
+  },
+  "git_commit": "546458c3eadde14eb1cbc19704a5b512a31009a1",
+  "scipy": "1.15.3",
+  "created": "2026-10-12 15:57:29"
+}
