@@ -1,0 +1,38 @@
+{
+  "fis_params": {
+    "occ_low_a": 0.18098770280520451,
+    "occ_low_b": 0.5881902799942,
+    "occ_med_a": 0.49243236673970636,
+    "occ_med_b": 0.6917137986583027,
+    "occ_med_c": 0.748151609968151,
+    "occ_crit_a": 0.6293012916192604,
+    "occ_crit_b": 0.8767847710862514,
+    "pres_zero_hw": 8.210002674245443,
+    "pres_pos_peak": 11.179612136675917
+  },
+  "occ_override": 0.834884239361882,
+  "train_J": 0.9858816819269914,
+  "handset_train_J": 1.0,
+  "evaluations": 320,
+  "generations": 15,
+  "protocol": {
+    "train_seeds": [
+      201,
+      202,
+      203,
+      204
+    ],
+    "regimes": [
+      "moderate",
+      "stress"
+    ],
+    "sim_end": 3600,
+    "popsize": 2,
+    "maxiter": 15,
+    "de_seed": 0,
+    "incident_penalty_weight": 0.0
+  },
+  "git_commit": "72746ab7a91b6c90d1c06fe7c53af724751fa743",
+  "scipy": "1.15.3",
+  "created": "2026-10-13 00:41:11"
+}

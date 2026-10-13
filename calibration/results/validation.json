@@ -1,0 +1,236 @@
+{
+  "validation_J": 0.9971104931546927,
+  "mean_relative_delay": 0.9971104931546927,
+  "pooled_incident_ratio": 1.1224489795918366,
+  "better_than_handset": false,
+  "rows": [
+    {
+      "regime": "moderate",
+      "seed": 101,
+      "hand": {
+        "delay": 240.3796893667862,
+        "incidents": 5,
+        "box": 3,
+        "overflow": 2,
+        "throughput": 1674
+      },
+      "calibrated": {
+        "delay": 237.3890284360191,
+        "incidents": 3,
+        "box": 2,
+        "overflow": 1,
+        "throughput": 1688
+      }
+    },
+    {
+      "regime": "moderate",
+      "seed": 102,
+      "hand": {
+        "delay": 241.51809437386555,
+        "incidents": 7,
+        "box": 5,
+        "overflow": 2,
+        "throughput": 1653
+      },
+      "calibrated": {
+        "delay": 248.20085261875766,
+        "incidents": 13,
+        "box": 8,
+        "overflow": 5,
+        "throughput": 1642
+      }
+    },
+    {
+      "regime": "moderate",
+      "seed": 103,
+      "hand": {
+        "delay": 245.95376135675374,
+        "incidents": 6,
+        "box": 3,
+        "overflow": 3,
+        "throughput": 1651
+      },
+      "calibrated": {
+        "delay": 249.3750061274509,
+        "incidents": 9,
+        "box": 6,
+        "overflow": 3,
+        "throughput": 1632
+      }
+    },
+    {
+      "regime": "moderate",
+      "seed": 104,
+      "hand": {
+        "delay": 244.695413397707,
+        "incidents": 6,
+        "box": 4,
+        "overflow": 2,
+        "throughput": 1657
+      },
+      "calibrated": {
+        "delay": 248.81831325301258,
+        "incidents": 14,
+        "box": 12,
+        "overflow": 2,
+        "throughput": 1660
+      }
+    },
+    {
+      "regime": "moderate",
+      "seed": 105,
+      "hand": {
+        "delay": 242.4551035322775,
+        "incidents": 11,
+        "box": 9,
+        "overflow": 2,
+        "throughput": 1642
+      },
+      "calibrated": {
+        "delay": 241.6149787750153,
+        "incidents": 1,
+        "box": 1,
+        "overflow": 0,
+        "throughput": 1649
+      }
+    },
+    {
+      "regime": "moderate",
+      "seed": 106,
+      "hand": {
+        "delay": 246.97744538834957,
+        "incidents": 9,
+        "box": 6,
+        "overflow": 3,
+        "throughput": 1648
+      },
+      "calibrated": {
+        "delay": 247.1869309309307,
+        "incidents": 8,
+        "box": 6,
+        "overflow": 2,
+        "throughput": 1665
+      }
+    },
+    {
+      "regime": "stress",
+      "seed": 101,
+      "hand": {
+        "delay": 337.76763271162184,
+        "incidents": 10,
+        "box": 1,
+        "overflow": 9,
+        "throughput": 1394
+      },
+      "calibrated": {
+        "delay": 335.81589208633136,
+        "incidents": 9,
+        "box": 2,
+        "overflow": 7,
+        "throughput": 1390
+      }
+    },
+    {
+      "regime": "stress",
+      "seed": 102,
+      "hand": {
+        "delay": 335.9167317425887,
+        "incidents": 11,
+        "box": 4,
+        "overflow": 7,
+        "throughput": 1383
+      },
+      "calibrated": {
+        "delay": 333.7226083815029,
+        "incidents": 7,
+        "box": 0,
+        "overflow": 7,
+        "throughput": 1384
+      }
+    },
+    {
+      "regime": "stress",
+      "seed": 103,
+      "hand": {
+        "delay": 345.294402930403,
+        "incidents": 12,
+        "box": 4,
+        "overflow": 8,
+        "throughput": 1365
+      },
+      "calibrated": {
+        "delay": 341.61465592972127,
+        "incidents": 9,
+        "box": 5,
+        "overflow": 4,
+        "throughput": 1366
+      }
+    },
+    {
+      "regime": "stress",
+      "seed": 104,
+      "hand": {
+        "delay": 348.17456474030723,
+        "incidents": 5,
+        "box": 0,
+        "overflow": 5,
+        "throughput": 1367
+      },
+      "calibrated": {
+        "delay": 338.55000728862984,
+        "incidents": 17,
+        "box": 7,
+        "overflow": 10,
+        "throughput": 1372
+      }
+    },
+    {
+      "regime": "stress",
+      "seed": 105,
+      "hand": {
+        "delay": 347.6156363636359,
+        "incidents": 7,
+        "box": 1,
+        "overflow": 6,
+        "throughput": 1375
+      },
+      "calibrated": {
+        "delay": 339.0397764960348,
+        "incidents": 10,
+        "box": 5,
+        "overflow": 5,
+        "throughput": 1387
+      }
+    },
+    {
+      "regime": "stress",
+      "seed": 106,
+      "hand": {
+        "delay": 341.08268363636387,
+        "incidents": 9,
+        "box": 3,
+        "overflow": 6,
+        "throughput": 1375
+      },
+      "calibrated": {
+        "delay": 340.13977552498187,
+        "incidents": 10,
+        "box": 3,
+        "overflow": 7,
+        "throughput": 1381
+      }
+    }
+  ],
+  "validation_seeds": [
+    101,
+    102,
+    103,
+    104,
+    105,
+    106
+  ],
+  "regimes": [
+    "moderate",
+    "stress"
+  ]
+}

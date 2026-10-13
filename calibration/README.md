@@ -29,9 +29,7 @@ an interrupted run resumes. Requires scipy >= 1.11. A full default run is about
 8 simulations per candidate; budget accordingly, and reduce with `--seeds`,
 `--maxiter` or `--regimes` for a trial.
 
-Status: the pipeline is implemented and smoke-tested; the calibration itself has
-not yet been run. Any outcome, including no improvement over the hand-set
-controller, will be reported as found.
+Status: run and validated; see the result section at the end.
 
 ## Revision of the objective (run 1 -> run 2)
 
@@ -46,3 +44,13 @@ The penalty therefore tracked count noise rather than controller quality.
 Run 1 outputs are kept in `results/run1_per_seed_penalty/`. Run 2 uses the delay-only
 objective above. The change was made after seeing run 1, but only on the training
 seeds; validation (101-106) and test (1-10) seeds had not been touched.
+
+## Result (run 2)
+
+Training on seeds 201-204 (both regimes; 320 evaluations, 15 generations) reached J = 0.9859, a 1.4% lower mean delay than the hand-set controller on those seeds.
+
+On the held-out validation seeds 101-106 the calibrated controller reached a mean relative delay of 0.9971, with 110 pooled incidents against 98 for the hand-set controller (ratio 1.122, limit 1.100). The acceptance rule was not met, so the calibrated parameters were not adopted and the one-shot test on seeds 1-10 was not run.
+
+By regime on the validation seeds: stress, mean relative delay 0.9870 (lower on 6 of 6 seeds), incidents 62 vs 54; moderate, mean relative delay 1.0072 (lower on 2 of 6 seeds), incidents 48 vs 44.
+
+Reading: the delay response to the membership-function breakpoints is flat (relative delay within about 2% across random candidates), the gain found on the training seeds shrank from 1.4% to 0.3% on held-out seeds, and pooled incidents rose. Within this search budget (10 parameters, 320 evaluations), this objective and these seed sets, the hand-set breakpoints were not improved upon. This is not a proof of optimality: other objectives, regime-specific calibration, larger budgets and more seeds were not explored.
