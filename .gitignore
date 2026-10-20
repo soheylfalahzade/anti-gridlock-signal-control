@@ -7,3 +7,5 @@ __pycache__/
 *.Zone.Identifier
 *:Zone.Identifier
 calibration/cache/
+multi/gen/
+multi/out/
