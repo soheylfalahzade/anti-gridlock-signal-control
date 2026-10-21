@@ -1,0 +1,2839 @@
+{
+  "seeds": [
+    301,
+    302,
+    303,
+    304,
+    305,
+    306,
+    307,
+    308,
+    309,
+    310
+  ],
+  "levels": {
+    "mild": 14,
+    "medium": 10,
+    "severe": 7
+  },
+  "sim_end": 3600,
+  "results": {
+    "mild": {
+      "summary": {
+        "Fixed-Time": {
+          "avg_delay_s": {
+            "mean": 175.3660999906685,
+            "std": 3.396634485030637,
+            "ci95_lo": 173.39999010010754,
+            "ci95_hi": 177.37116794783054
+          },
+          "throughput_completed_trips": {
+            "mean": 3024.6,
+            "std": 37.64512658440074,
+            "ci95_lo": 3003.6974999999998,
+            "ci95_hi": 3047.3
+          },
+          "mean_corridor_queue": {
+            "mean": 76.56072222222221,
+            "std": 1.4066828312706092,
+            "ci95_lo": 75.71663125,
+            "ci95_hi": 77.39701666666667
+          },
+          "box_gridlock_events": {
+            "mean": 2.8,
+            "std": 1.8737959096740262,
+            "ci95_lo": 1.7,
+            "ci95_hi": 3.9
+          },
+          "link_spillback_events": {
+            "mean": 8.2,
+            "std": 2.250925735484551,
+            "ci95_lo": 7.0,
+            "ci95_hi": 9.6
+          }
+        },
+        "Vanilla MP": {
+          "avg_delay_s": {
+            "mean": 176.88556081154053,
+            "std": 4.048783500619989,
+            "ci95_lo": 174.6113627750755,
+            "ci95_hi": 179.28132549981706
+          },
+          "throughput_completed_trips": {
+            "mean": 3025.9,
+            "std": 38.04806901217926,
+            "ci95_lo": 3004.6,
+            "ci95_hi": 3048.3
+          },
+          "mean_corridor_queue": {
+            "mean": 82.27366666666667,
+            "std": 1.2498713157355403,
+            "ci95_lo": 81.54499722222224,
+            "ci95_hi": 82.99858819444445
+          },
+          "box_gridlock_events": {
+            "mean": 13.3,
+            "std": 6.896859188548557,
+            "ci95_lo": 9.3,
+            "ci95_hi": 17.4
+          },
+          "link_spillback_events": {
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.0
+          }
+        },
+        "Fuzzy AS-MP": {
+          "avg_delay_s": {
+            "mean": 176.33751297618244,
+            "std": 4.2792805252927195,
+            "ci95_lo": 173.92566552387296,
+            "ci95_hi": 178.8423287106552
+          },
+          "throughput_completed_trips": {
+            "mean": 3023.6,
+            "std": 37.304155264527836,
+            "ci95_lo": 3002.4975,
+            "ci95_hi": 3045.8050000000003
+          },
+          "mean_corridor_queue": {
+            "mean": 84.93883333333333,
+            "std": 1.6731195287474219,
+            "ci95_lo": 84.00356666666666,
+            "ci95_hi": 85.95898194444445
+          },
+          "box_gridlock_events": {
+            "mean": 8.9,
+            "std": 4.508017549014447,
+            "ci95_lo": 6.4,
+            "ci95_hi": 11.6
+          },
+          "link_spillback_events": {
+            "mean": 21.9,
+            "std": 5.195083145522205,
+            "ci95_lo": 18.8,
+            "ci95_hi": 24.9
+          }
+        }
+      },
+      "p_holm": {
+        "Fixed-Time vs Vanilla MP | avg_delay_s": 0.029296875,
+        "Fixed-Time vs Vanilla MP | throughput_completed_trips": 0.697265625,
+        "Fixed-Time vs Vanilla MP | mean_corridor_queue": 0.029296875,
+        "Fixed-Time vs Vanilla MP | box_gridlock_events": 0.029296875,
+        "Fixed-Time vs Vanilla MP | link_spillback_events": 0.029296875,
+        "Fixed-Time vs Fuzzy AS-MP | avg_delay_s": 0.38671875,
+        "Fixed-Time vs Fuzzy AS-MP | throughput_completed_trips": 0.697265625,
+        "Fixed-Time vs Fuzzy AS-MP | mean_corridor_queue": 0.029296875,
+        "Fixed-Time vs Fuzzy AS-MP | box_gridlock_events": 0.0546875,
+        "Fixed-Time vs Fuzzy AS-MP | link_spillback_events": 0.029296875,
+        "Vanilla MP vs Fuzzy AS-MP | avg_delay_s": 0.697265625,
+        "Vanilla MP vs Fuzzy AS-MP | throughput_completed_trips": 0.64453125,
+        "Vanilla MP vs Fuzzy AS-MP | mean_corridor_queue": 0.029296875,
+        "Vanilla MP vs Fuzzy AS-MP | box_gridlock_events": 0.64453125,
+        "Vanilla MP vs Fuzzy AS-MP | link_spillback_events": 0.029296875
+      },
+      "cohens_dz": {
+        "Fixed-Time vs Vanilla MP | avg_delay_s": -1.7921572900002005,
+        "Fixed-Time vs Vanilla MP | throughput_completed_trips": -0.4203035239738163,
+        "Fixed-Time vs Vanilla MP | mean_corridor_queue": -8.768765539583027,
+        "Fixed-Time vs Vanilla MP | box_gridlock_events": -1.5252851289191012,
+        "Fixed-Time vs Vanilla MP | link_spillback_events": 3.6429455982184176,
+        "Fixed-Time vs Fuzzy AS-MP | avg_delay_s": -0.6997270913024883,
+        "Fixed-Time vs Fuzzy AS-MP | throughput_completed_trips": 0.33129457822453967,
+        "Fixed-Time vs Fuzzy AS-MP | mean_corridor_queue": -9.13892803259922,
+        "Fixed-Time vs Fuzzy AS-MP | box_gridlock_events": -1.1243722295273375,
+        "Fixed-Time vs Fuzzy AS-MP | link_spillback_events": -3.0127884331519037,
+        "Vanilla MP vs Fuzzy AS-MP | avg_delay_s": 0.5744942436634815,
+        "Vanilla MP vs Fuzzy AS-MP | throughput_completed_trips": 0.5453225097135179,
+        "Vanilla MP vs Fuzzy AS-MP | mean_corridor_queue": -4.095299036640527,
+        "Vanilla MP vs Fuzzy AS-MP | box_gridlock_events": 0.517587363608106,
+        "Vanilla MP vs Fuzzy AS-MP | link_spillback_events": -4.215524446201838
+      },
+      "rank_biserial": {
+        "Fixed-Time vs Vanilla MP | avg_delay_s": -1.0,
+        "Fixed-Time vs Vanilla MP | throughput_completed_trips": -0.4444444444444444,
+        "Fixed-Time vs Vanilla MP | mean_corridor_queue": -1.0,
+        "Fixed-Time vs Vanilla MP | box_gridlock_events": -1.0,
+        "Fixed-Time vs Vanilla MP | link_spillback_events": 1.0,
+        "Fixed-Time vs Fuzzy AS-MP | avg_delay_s": -0.6727272727272727,
+        "Fixed-Time vs Fuzzy AS-MP | throughput_completed_trips": 0.4222222222222222,
+        "Fixed-Time vs Fuzzy AS-MP | mean_corridor_queue": -1.0,
+        "Fixed-Time vs Fuzzy AS-MP | box_gridlock_events": -0.9555555555555556,
+        "Fixed-Time vs Fuzzy AS-MP | link_spillback_events": -1.0,
+        "Vanilla MP vs Fuzzy AS-MP | avg_delay_s": 0.45454545454545453,
+        "Vanilla MP vs Fuzzy AS-MP | throughput_completed_trips": 0.6111111111111112,
+        "Vanilla MP vs Fuzzy AS-MP | mean_corridor_queue": -1.0,
+        "Vanilla MP vs Fuzzy AS-MP | box_gridlock_events": 0.6,
+        "Vanilla MP vs Fuzzy AS-MP | link_spillback_events": -1.0
+      },
+      "runs": {
+        "fixed": [
+          {
+            "policy": "fixed",
+            "seed": 301,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 172.1086697098144,
+            "throughput_completed_trips": 3067,
+            "box_gridlock_events": 4,
+            "link_spillback_events": 6,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 2,
+              "C3": 2
+            },
+            "spillback_by_link": {
+              "lk_E1": 6,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 75.48694444444445,
+            "vehicles_inserted": 3067,
+            "vehicles_never_departed": 721,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 302,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 172.82858262573484,
+            "throughput_completed_trips": 3062,
+            "box_gridlock_events": 1,
+            "link_spillback_events": 7,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 1,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 7,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 77.12222222222222,
+            "vehicles_inserted": 3062,
+            "vehicles_never_departed": 696,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 303,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 173.11003312355066,
+            "throughput_completed_trips": 3019,
+            "box_gridlock_events": 2,
+            "link_spillback_events": 5,
+            "box_gridlock_by_junction": {
+              "C1": 1,
+              "C2": 1,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 5,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 73.68638888888889,
+            "vehicles_inserted": 3019,
+            "vehicles_never_departed": 704,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 304,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 179.71413319946475,
+            "throughput_completed_trips": 2988,
+            "box_gridlock_events": 5,
+            "link_spillback_events": 10,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 5
+            },
+            "spillback_by_link": {
+              "lk_E1": 10,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 78.48777777777778,
+            "vehicles_inserted": 2988,
+            "vehicles_never_departed": 717,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 305,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 170.34873175478438,
+            "throughput_completed_trips": 3083,
+            "box_gridlock_events": 5,
+            "link_spillback_events": 8,
+            "box_gridlock_by_junction": {
+              "C1": 3,
+              "C2": 2,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 8,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 76.06111111111112,
+            "vehicles_inserted": 3083,
+            "vehicles_never_departed": 635,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 306,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 178.99165937394847,
+            "throughput_completed_trips": 2971,
+            "box_gridlock_events": 0,
+            "link_spillback_events": 13,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 13,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 78.12444444444445,
+            "vehicles_inserted": 2971,
+            "vehicles_never_departed": 706,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 307,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 174.54399667774078,
+            "throughput_completed_trips": 3010,
+            "box_gridlock_events": 3,
+            "link_spillback_events": 9,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 2,
+              "C3": 1
+            },
+            "spillback_by_link": {
+              "lk_E1": 9,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 76.2238888888889,
+            "vehicles_inserted": 3010,
+            "vehicles_never_departed": 684,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 308,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 175.29013797634684,
+            "throughput_completed_trips": 3044,
+            "box_gridlock_events": 1,
+            "link_spillback_events": 9,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 1
+            },
+            "spillback_by_link": {
+              "lk_E1": 9,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 76.78944444444444,
+            "vehicles_inserted": 3044,
+            "vehicles_never_departed": 659,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 309,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 176.654955164397,
+            "throughput_completed_trips": 3011,
+            "box_gridlock_events": 2,
+            "link_spillback_events": 7,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 2,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 7,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 75.9825,
+            "vehicles_inserted": 3011,
+            "vehicles_never_departed": 659,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 310,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 180.0701003009029,
+            "throughput_completed_trips": 2991,
+            "box_gridlock_events": 5,
+            "link_spillback_events": 8,
+            "box_gridlock_by_junction": {
+              "C1": 3,
+              "C2": 2,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 8,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 77.6425,
+            "vehicles_inserted": 2991,
+            "vehicles_never_departed": 724,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          }
+        ],
+        "vanilla": [
+          {
+            "policy": "vanilla",
+            "seed": 301,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 173.23178710937506,
+            "throughput_completed_trips": 3072,
+            "box_gridlock_events": 21,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 7,
+              "C2": 4,
+              "C3": 10
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 81.32916666666667,
+            "vehicles_inserted": 3072,
+            "vehicles_never_departed": 716,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 302,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 174.11472412667342,
+            "throughput_completed_trips": 3063,
+            "box_gridlock_events": 14,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 2,
+              "C2": 2,
+              "C3": 10
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 82.04861111111111,
+            "vehicles_inserted": 3063,
+            "vehicles_never_departed": 695,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 303,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 173.24229290921133,
+            "throughput_completed_trips": 3018,
+            "box_gridlock_events": 3,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 2,
+              "C2": 1,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 80.0838888888889,
+            "vehicles_inserted": 3018,
+            "vehicles_never_departed": 705,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 304,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 181.28626336898395,
+            "throughput_completed_trips": 2992,
+            "box_gridlock_events": 13,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 2,
+              "C2": 4,
+              "C3": 7
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 83.95722222222223,
+            "vehicles_inserted": 2992,
+            "vehicles_never_departed": 713,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 305,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 171.54977287475668,
+            "throughput_completed_trips": 3082,
+            "box_gridlock_events": 10,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 6,
+              "C2": 4,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 81.10888888888888,
+            "vehicles_inserted": 3082,
+            "vehicles_never_departed": 636,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 306,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 181.58500672494958,
+            "throughput_completed_trips": 2974,
+            "box_gridlock_events": 10,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 4,
+              "C2": 0,
+              "C3": 6
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 83.02027777777778,
+            "vehicles_inserted": 2974,
+            "vehicles_never_departed": 703,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 307,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 176.00654152823938,
+            "throughput_completed_trips": 3010,
+            "box_gridlock_events": 11,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 5,
+              "C2": 1,
+              "C3": 5
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 81.89416666666666,
+            "vehicles_inserted": 3010,
+            "vehicles_never_departed": 684,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 308,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 176.08410433070807,
+            "throughput_completed_trips": 3048,
+            "box_gridlock_events": 25,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 9,
+              "C2": 9,
+              "C3": 7
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 82.51722222222222,
+            "vehicles_inserted": 3048,
+            "vehicles_never_departed": 655,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 309,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 178.63879230258826,
+            "throughput_completed_trips": 3014,
+            "box_gridlock_events": 6,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 4,
+              "C2": 1,
+              "C3": 1
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 82.7238888888889,
+            "vehicles_inserted": 3014,
+            "vehicles_never_departed": 656,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 310,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 183.11632283991966,
+            "throughput_completed_trips": 2986,
+            "box_gridlock_events": 20,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 9,
+              "C2": 4,
+              "C3": 7
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 84.05333333333333,
+            "vehicles_inserted": 2986,
+            "vehicles_never_departed": 729,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          }
+        ],
+        "fuzzy": [
+          {
+            "policy": "fuzzy",
+            "seed": 301,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 173.23840456770006,
+            "throughput_completed_trips": 3065,
+            "box_gridlock_events": 3,
+            "link_spillback_events": 18,
+            "box_gridlock_by_junction": {
+              "C1": 1,
+              "C2": 1,
+              "C3": 1
+            },
+            "spillback_by_link": {
+              "lk_E1": 13,
+              "lk_E2": 5,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 82.85555555555555,
+            "vehicles_inserted": 3065,
+            "vehicles_never_departed": 723,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 302,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 174.10369245837413,
+            "throughput_completed_trips": 3063,
+            "box_gridlock_events": 17,
+            "link_spillback_events": 15,
+            "box_gridlock_by_junction": {
+              "C1": 14,
+              "C2": 2,
+              "C3": 1
+            },
+            "spillback_by_link": {
+              "lk_E1": 12,
+              "lk_E2": 3,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 84.20555555555555,
+            "vehicles_inserted": 3063,
+            "vehicles_never_departed": 695,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 303,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 170.72504307488393,
+            "throughput_completed_trips": 3018,
+            "box_gridlock_events": 6,
+            "link_spillback_events": 21,
+            "box_gridlock_by_junction": {
+              "C1": 1,
+              "C2": 0,
+              "C3": 5
+            },
+            "spillback_by_link": {
+              "lk_E1": 15,
+              "lk_E2": 6,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 82.96666666666667,
+            "vehicles_inserted": 3018,
+            "vehicles_never_departed": 705,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 304,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 181.08812269527297,
+            "throughput_completed_trips": 2983,
+            "box_gridlock_events": 8,
+            "link_spillback_events": 29,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 8
+            },
+            "spillback_by_link": {
+              "lk_E1": 19,
+              "lk_E2": 10,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 87.68722222222222,
+            "vehicles_inserted": 2983,
+            "vehicles_never_departed": 722,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 305,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 170.7295516569198,
+            "throughput_completed_trips": 3078,
+            "box_gridlock_events": 5,
+            "link_spillback_events": 15,
+            "box_gridlock_by_junction": {
+              "C1": 2,
+              "C2": 0,
+              "C3": 3
+            },
+            "spillback_by_link": {
+              "lk_E1": 11,
+              "lk_E2": 4,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 83.54833333333333,
+            "vehicles_inserted": 3078,
+            "vehicles_never_departed": 640,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 306,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 181.62385728710882,
+            "throughput_completed_trips": 2971,
+            "box_gridlock_events": 5,
+            "link_spillback_events": 27,
+            "box_gridlock_by_junction": {
+              "C1": 3,
+              "C2": 2,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 18,
+              "lk_E2": 9,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 86.4675,
+            "vehicles_inserted": 2971,
+            "vehicles_never_departed": 706,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 307,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 174.8044709784409,
+            "throughput_completed_trips": 3015,
+            "box_gridlock_events": 11,
+            "link_spillback_events": 22,
+            "box_gridlock_by_junction": {
+              "C1": 3,
+              "C2": 2,
+              "C3": 6
+            },
+            "spillback_by_link": {
+              "lk_E1": 15,
+              "lk_E2": 7,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 84.56888888888889,
+            "vehicles_inserted": 3015,
+            "vehicles_never_departed": 679,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 308,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 176.50736772921465,
+            "throughput_completed_trips": 3043,
+            "box_gridlock_events": 10,
+            "link_spillback_events": 19,
+            "box_gridlock_by_junction": {
+              "C1": 4,
+              "C2": 3,
+              "C3": 3
+            },
+            "spillback_by_link": {
+              "lk_E1": 13,
+              "lk_E2": 6,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 84.6,
+            "vehicles_inserted": 3043,
+            "vehicles_never_departed": 660,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 309,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 178.98697875166005,
+            "throughput_completed_trips": 3012,
+            "box_gridlock_events": 15,
+            "link_spillback_events": 25,
+            "box_gridlock_by_junction": {
+              "C1": 11,
+              "C2": 4,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 16,
+              "lk_E2": 9,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 85.55777777777777,
+            "vehicles_inserted": 3012,
+            "vehicles_never_departed": 658,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 310,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 181.56764056224907,
+            "throughput_completed_trips": 2988,
+            "box_gridlock_events": 9,
+            "link_spillback_events": 28,
+            "box_gridlock_by_junction": {
+              "C1": 7,
+              "C2": 2,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 19,
+              "lk_E2": 9,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 86.93083333333334,
+            "vehicles_inserted": 2988,
+            "vehicles_never_departed": 727,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          }
+        ]
+      }
+    },
+    "medium": {
+      "summary": {
+        "Fixed-Time": {
+          "avg_delay_s": {
+            "mean": 189.40066429721998,
+            "std": 3.4949665501291958,
+            "ci95_lo": 187.3627686657736,
+            "ci95_hi": 191.45006554599533
+          },
+          "throughput_completed_trips": {
+            "mean": 2903.2,
+            "std": 36.602367865116776,
+            "ci95_lo": 2882.7975,
+            "ci95_hi": 2925.1025
+          },
+          "mean_corridor_queue": {
+            "mean": 89.66322222222223,
+            "std": 1.3895829327619569,
+            "ci95_lo": 88.8653625,
+            "ci95_hi": 90.49606874999999
+          },
+          "box_gridlock_events": {
+            "mean": 0.6,
+            "std": 1.2649110640673518,
+            "ci95_lo": 0.0,
+            "ci95_hi": 1.5
+          },
+          "link_spillback_events": {
+            "mean": 27.6,
+            "std": 2.1186998109427604,
+            "ci95_lo": 26.4,
+            "ci95_hi": 28.9
+          }
+        },
+        "Vanilla MP": {
+          "avg_delay_s": {
+            "mean": 195.58658972567616,
+            "std": 3.8540137026643504,
+            "ci95_lo": 193.37410265625115,
+            "ci95_hi": 197.86725426431025
+          },
+          "throughput_completed_trips": {
+            "mean": 2904.8,
+            "std": 37.59964538839872,
+            "ci95_lo": 2883.9,
+            "ci95_hi": 2927.0025
+          },
+          "mean_corridor_queue": {
+            "mean": 93.01208333333334,
+            "std": 1.1508824762365468,
+            "ci95_lo": 92.36441180555555,
+            "ci95_hi": 93.72438194444445
+          },
+          "box_gridlock_events": {
+            "mean": 3.4,
+            "std": 3.373096170846271,
+            "ci95_lo": 1.5,
+            "ci95_hi": 5.3
+          },
+          "link_spillback_events": {
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.0
+          }
+        },
+        "Fuzzy AS-MP": {
+          "avg_delay_s": {
+            "mean": 195.6902515997771,
+            "std": 4.2160061186894335,
+            "ci95_lo": 193.23194882542077,
+            "ci95_hi": 198.20985610385225
+          },
+          "throughput_completed_trips": {
+            "mean": 2902.4,
+            "std": 38.003508609951616,
+            "ci95_lo": 2881.4975,
+            "ci95_hi": 2924.905
+          },
+          "mean_corridor_queue": {
+            "mean": 94.81711111111112,
+            "std": 1.315680891072399,
+            "ci95_lo": 94.0370923611111,
+            "ci95_hi": 95.5990576388889
+          },
+          "box_gridlock_events": {
+            "mean": 4.1,
+            "std": 2.378141197564929,
+            "ci95_lo": 2.7,
+            "ci95_hi": 5.5
+          },
+          "link_spillback_events": {
+            "mean": 31.2,
+            "std": 4.8488257455915145,
+            "ci95_lo": 28.1,
+            "ci95_hi": 33.9
+          }
+        }
+      },
+      "p_holm": {
+        "Fixed-Time vs Vanilla MP | avg_delay_s": 0.029296875,
+        "Fixed-Time vs Vanilla MP | throughput_completed_trips": 0.15234375,
+        "Fixed-Time vs Vanilla MP | mean_corridor_queue": 0.029296875,
+        "Fixed-Time vs Vanilla MP | box_gridlock_events": 0.205078125,
+        "Fixed-Time vs Vanilla MP | link_spillback_events": 0.029296875,
+        "Fixed-Time vs Fuzzy AS-MP | avg_delay_s": 0.029296875,
+        "Fixed-Time vs Fuzzy AS-MP | throughput_completed_trips": 1.0,
+        "Fixed-Time vs Fuzzy AS-MP | mean_corridor_queue": 0.029296875,
+        "Fixed-Time vs Fuzzy AS-MP | box_gridlock_events": 0.08203125,
+        "Fixed-Time vs Fuzzy AS-MP | link_spillback_events": 0.205078125,
+        "Vanilla MP vs Fuzzy AS-MP | avg_delay_s": 1.0,
+        "Vanilla MP vs Fuzzy AS-MP | throughput_completed_trips": 0.0625,
+        "Vanilla MP vs Fuzzy AS-MP | mean_corridor_queue": 0.029296875,
+        "Vanilla MP vs Fuzzy AS-MP | box_gridlock_events": 1.0,
+        "Vanilla MP vs Fuzzy AS-MP | link_spillback_events": 0.029296875
+      },
+      "cohens_dz": {
+        "Fixed-Time vs Vanilla MP | avg_delay_s": -5.807282652714804,
+        "Fixed-Time vs Vanilla MP | throughput_completed_trips": -1.01418510567422,
+        "Fixed-Time vs Vanilla MP | mean_corridor_queue": -5.010238899626399,
+        "Fixed-Time vs Vanilla MP | box_gridlock_events": -0.6961432213383857,
+        "Fixed-Time vs Vanilla MP | link_spillback_events": 13.02685725342034,
+        "Fixed-Time vs Fuzzy AS-MP | avg_delay_s": -6.738924402038874,
+        "Fixed-Time vs Fuzzy AS-MP | throughput_completed_trips": 0.27602622373694174,
+        "Fixed-Time vs Fuzzy AS-MP | mean_corridor_queue": -7.280504497216084,
+        "Fixed-Time vs Fuzzy AS-MP | box_gridlock_events": -1.1289669941979878,
+        "Fixed-Time vs Fuzzy AS-MP | link_spillback_events": -0.7410482726333565,
+        "Vanilla MP vs Fuzzy AS-MP | avg_delay_s": -0.07382009547565888,
+        "Vanilla MP vs Fuzzy AS-MP | throughput_completed_trips": 1.0805404053377956,
+        "Vanilla MP vs Fuzzy AS-MP | mean_corridor_queue": -5.474922909218956,
+        "Vanilla MP vs Fuzzy AS-MP | box_gridlock_events": -0.16808069810728768,
+        "Vanilla MP vs Fuzzy AS-MP | link_spillback_events": -6.4345475867773985
+      },
+      "rank_biserial": {
+        "Fixed-Time vs Vanilla MP | avg_delay_s": -1.0,
+        "Fixed-Time vs Vanilla MP | throughput_completed_trips": -0.8,
+        "Fixed-Time vs Vanilla MP | mean_corridor_queue": -1.0,
+        "Fixed-Time vs Vanilla MP | box_gridlock_events": -0.7222222222222222,
+        "Fixed-Time vs Vanilla MP | link_spillback_events": 1.0,
+        "Fixed-Time vs Fuzzy AS-MP | avg_delay_s": -1.0,
+        "Fixed-Time vs Fuzzy AS-MP | throughput_completed_trips": 0.2222222222222222,
+        "Fixed-Time vs Fuzzy AS-MP | mean_corridor_queue": -1.0,
+        "Fixed-Time vs Fuzzy AS-MP | box_gridlock_events": -0.8727272727272727,
+        "Fixed-Time vs Fuzzy AS-MP | link_spillback_events": -0.7272727272727273,
+        "Vanilla MP vs Fuzzy AS-MP | avg_delay_s": -0.16363636363636364,
+        "Vanilla MP vs Fuzzy AS-MP | throughput_completed_trips": 1.0,
+        "Vanilla MP vs Fuzzy AS-MP | mean_corridor_queue": -1.0,
+        "Vanilla MP vs Fuzzy AS-MP | box_gridlock_events": -0.21818181818181817,
+        "Vanilla MP vs Fuzzy AS-MP | link_spillback_events": -1.0
+      },
+      "runs": {
+        "fixed": [
+          {
+            "policy": "fixed",
+            "seed": 301,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 185.6443143245079,
+            "throughput_completed_trips": 2946,
+            "box_gridlock_events": 0,
+            "link_spillback_events": 26,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 25,
+              "lk_E2": 1,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 88.91944444444445,
+            "vehicles_inserted": 2946,
+            "vehicles_never_departed": 842,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 302,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 186.8412300373769,
+            "throughput_completed_trips": 2943,
+            "box_gridlock_events": 1,
+            "link_spillback_events": 28,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 1
+            },
+            "spillback_by_link": {
+              "lk_E1": 25,
+              "lk_E2": 3,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 89.67472222222223,
+            "vehicles_inserted": 2943,
+            "vehicles_never_departed": 815,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 303,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 187.19296129923939,
+            "throughput_completed_trips": 2894,
+            "box_gridlock_events": 0,
+            "link_spillback_events": 25,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 25,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 87.74111111111111,
+            "vehicles_inserted": 2894,
+            "vehicles_never_departed": 829,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 304,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 194.41164862032855,
+            "throughput_completed_trips": 2863,
+            "box_gridlock_events": 1,
+            "link_spillback_events": 31,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 1
+            },
+            "spillback_by_link": {
+              "lk_E1": 29,
+              "lk_E2": 2,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 91.82111111111111,
+            "vehicles_inserted": 2863,
+            "vehicles_never_departed": 842,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 305,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 184.43527383367135,
+            "throughput_completed_trips": 2958,
+            "box_gridlock_events": 0,
+            "link_spillback_events": 27,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 24,
+              "lk_E2": 3,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 88.12916666666666,
+            "vehicles_inserted": 2958,
+            "vehicles_never_departed": 760,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 306,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 193.75153819201134,
+            "throughput_completed_trips": 2854,
+            "box_gridlock_events": 4,
+            "link_spillback_events": 25,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 1,
+              "C3": 3
+            },
+            "spillback_by_link": {
+              "lk_E1": 24,
+              "lk_E2": 1,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 89.4961111111111,
+            "vehicles_inserted": 2854,
+            "vehicles_never_departed": 823,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 307,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 188.78929757785463,
+            "throughput_completed_trips": 2890,
+            "box_gridlock_events": 0,
+            "link_spillback_events": 29,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 25,
+              "lk_E2": 4,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 88.33,
+            "vehicles_inserted": 2890,
+            "vehicles_never_departed": 804,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 308,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 188.91228004108183,
+            "throughput_completed_trips": 2921,
+            "box_gridlock_events": 0,
+            "link_spillback_events": 29,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 26,
+              "lk_E2": 3,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 90.52833333333334,
+            "vehicles_inserted": 2921,
+            "vehicles_never_departed": 782,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 309,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 191.1680955678671,
+            "throughput_completed_trips": 2888,
+            "box_gridlock_events": 0,
+            "link_spillback_events": 30,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 28,
+              "lk_E2": 2,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 91.07916666666667,
+            "vehicles_inserted": 2888,
+            "vehicles_never_departed": 782,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 310,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 192.86000347826072,
+            "throughput_completed_trips": 2875,
+            "box_gridlock_events": 0,
+            "link_spillback_events": 26,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 24,
+              "lk_E2": 2,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 90.91305555555556,
+            "vehicles_inserted": 2875,
+            "vehicles_never_departed": 840,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          }
+        ],
+        "vanilla": [
+          {
+            "policy": "vanilla",
+            "seed": 301,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 193.5344286198713,
+            "throughput_completed_trips": 2949,
+            "box_gridlock_events": 8,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 1,
+              "C2": 0,
+              "C3": 7
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 92.53888888888889,
+            "vehicles_inserted": 2949,
+            "vehicles_never_departed": 839,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 302,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 191.409236252546,
+            "throughput_completed_trips": 2946,
+            "box_gridlock_events": 3,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 3
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 92.47194444444445,
+            "vehicles_inserted": 2946,
+            "vehicles_never_departed": 812,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 303,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 192.2937245426302,
+            "throughput_completed_trips": 2897,
+            "box_gridlock_events": 8,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 1,
+              "C2": 1,
+              "C3": 6
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 91.17666666666666,
+            "vehicles_inserted": 2897,
+            "vehicles_never_departed": 826,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 304,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 200.59812500000018,
+            "throughput_completed_trips": 2864,
+            "box_gridlock_events": 3,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 1,
+              "C2": 1,
+              "C3": 1
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 94.895,
+            "vehicles_inserted": 2864,
+            "vehicles_never_departed": 841,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 305,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 190.17022297297277,
+            "throughput_completed_trips": 2960,
+            "box_gridlock_events": 0,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 92.04055555555556,
+            "vehicles_inserted": 2960,
+            "vehicles_never_departed": 758,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 306,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 199.3763467600696,
+            "throughput_completed_trips": 2855,
+            "box_gridlock_events": 0,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 93.42138888888888,
+            "vehicles_inserted": 2855,
+            "vehicles_never_departed": 822,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 307,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 194.83735731580762,
+            "throughput_completed_trips": 2891,
+            "box_gridlock_events": 0,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 92.53805555555556,
+            "vehicles_inserted": 2891,
+            "vehicles_never_departed": 803,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 308,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 194.946894664843,
+            "throughput_completed_trips": 2924,
+            "box_gridlock_events": 2,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 2
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 92.83694444444444,
+            "vehicles_inserted": 2924,
+            "vehicles_never_departed": 779,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 309,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 198.11130494981003,
+            "throughput_completed_trips": 2889,
+            "box_gridlock_events": 2,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 1,
+              "C3": 1
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 93.48666666666666,
+            "vehicles_inserted": 2889,
+            "vehicles_never_departed": 781,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 310,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 200.58825617821074,
+            "throughput_completed_trips": 2873,
+            "box_gridlock_events": 8,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 8
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 94.71472222222222,
+            "vehicles_inserted": 2873,
+            "vehicles_never_departed": 842,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          }
+        ],
+        "fuzzy": [
+          {
+            "policy": "fuzzy",
+            "seed": 301,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 190.63898097826092,
+            "throughput_completed_trips": 2944,
+            "box_gridlock_events": 4,
+            "link_spillback_events": 35,
+            "box_gridlock_by_junction": {
+              "C1": 4,
+              "C2": 0,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 21,
+              "lk_E2": 14,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 94.93194444444444,
+            "vehicles_inserted": 2944,
+            "vehicles_never_departed": 844,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 302,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 192.61050916496927,
+            "throughput_completed_trips": 2946,
+            "box_gridlock_events": 6,
+            "link_spillback_events": 21,
+            "box_gridlock_by_junction": {
+              "C1": 2,
+              "C2": 1,
+              "C3": 3
+            },
+            "spillback_by_link": {
+              "lk_E1": 12,
+              "lk_E2": 9,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 94.23805555555556,
+            "vehicles_inserted": 2946,
+            "vehicles_never_departed": 812,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 303,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 192.91168624740828,
+            "throughput_completed_trips": 2894,
+            "box_gridlock_events": 1,
+            "link_spillback_events": 31,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 1,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 19,
+              "lk_E2": 12,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 92.29305555555555,
+            "vehicles_inserted": 2894,
+            "vehicles_never_departed": 829,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 304,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 202.26729559748404,
+            "throughput_completed_trips": 2862,
+            "box_gridlock_events": 4,
+            "link_spillback_events": 38,
+            "box_gridlock_by_junction": {
+              "C1": 2,
+              "C2": 2,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 22,
+              "lk_E2": 16,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 96.8163888888889,
+            "vehicles_inserted": 2862,
+            "vehicles_never_departed": 843,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 305,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 189.48659682325143,
+            "throughput_completed_trips": 2959,
+            "box_gridlock_events": 7,
+            "link_spillback_events": 29,
+            "box_gridlock_by_junction": {
+              "C1": 7,
+              "C2": 0,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 18,
+              "lk_E2": 11,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 93.68861111111111,
+            "vehicles_inserted": 2959,
+            "vehicles_never_departed": 759,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 306,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 199.90460567823376,
+            "throughput_completed_trips": 2853,
+            "box_gridlock_events": 1,
+            "link_spillback_events": 34,
+            "box_gridlock_by_junction": {
+              "C1": 1,
+              "C2": 0,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 23,
+              "lk_E2": 11,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 95.39305555555555,
+            "vehicles_inserted": 2853,
+            "vehicles_never_departed": 824,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 307,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 195.91745416810764,
+            "throughput_completed_trips": 2891,
+            "box_gridlock_events": 5,
+            "link_spillback_events": 30,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 5
+            },
+            "spillback_by_link": {
+              "lk_E1": 19,
+              "lk_E2": 11,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 94.21583333333334,
+            "vehicles_inserted": 2891,
+            "vehicles_never_departed": 803,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 308,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 196.01746493328784,
+            "throughput_completed_trips": 2923,
+            "box_gridlock_events": 1,
+            "link_spillback_events": 35,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 1
+            },
+            "spillback_by_link": {
+              "lk_E1": 22,
+              "lk_E2": 13,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 94.90166666666667,
+            "vehicles_inserted": 2923,
+            "vehicles_never_departed": 780,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 309,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 197.88189104788333,
+            "throughput_completed_trips": 2882,
+            "box_gridlock_events": 5,
+            "link_spillback_events": 32,
+            "box_gridlock_by_junction": {
+              "C1": 1,
+              "C2": 0,
+              "C3": 4
+            },
+            "spillback_by_link": {
+              "lk_E1": 18,
+              "lk_E2": 14,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 95.22555555555556,
+            "vehicles_inserted": 2882,
+            "vehicles_never_departed": 788,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 310,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 199.2660313588845,
+            "throughput_completed_trips": 2870,
+            "box_gridlock_events": 7,
+            "link_spillback_events": 27,
+            "box_gridlock_by_junction": {
+              "C1": 2,
+              "C2": 1,
+              "C3": 4
+            },
+            "spillback_by_link": {
+              "lk_E1": 15,
+              "lk_E2": 12,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 96.46694444444445,
+            "vehicles_inserted": 2870,
+            "vehicles_never_departed": 845,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          }
+        ]
+      }
+    },
+    "severe": {
+      "summary": {
+        "Fixed-Time": {
+          "avg_delay_s": {
+            "mean": 198.86603508985894,
+            "std": 3.8587133496822545,
+            "ci95_lo": 196.62186869824816,
+            "ci95_hi": 201.1321497065318
+          },
+          "throughput_completed_trips": {
+            "mean": 2835.2,
+            "std": 36.904682027563325,
+            "ci95_lo": 2814.7975,
+            "ci95_hi": 2857.1025
+          },
+          "mean_corridor_queue": {
+            "mean": 98.84980555555556,
+            "std": 1.2982788744475355,
+            "ci95_lo": 98.09488055555556,
+            "ci95_hi": 99.60322013888887
+          },
+          "box_gridlock_events": {
+            "mean": 3.8,
+            "std": 3.119829055146024,
+            "ci95_lo": 2.2,
+            "ci95_hi": 5.8
+          },
+          "link_spillback_events": {
+            "mean": 44.9,
+            "std": 1.852925614624973,
+            "ci95_lo": 43.9,
+            "ci95_hi": 46.0
+          }
+        },
+        "Vanilla MP": {
+          "avg_delay_s": {
+            "mean": 209.6238519091508,
+            "std": 4.131431951611385,
+            "ci95_lo": 207.22566375945672,
+            "ci95_hi": 212.14913280363064
+          },
+          "throughput_completed_trips": {
+            "mean": 2836.8,
+            "std": 37.49903702467275,
+            "ci95_lo": 2815.9975,
+            "ci95_hi": 2858.9025
+          },
+          "mean_corridor_queue": {
+            "mean": 99.57791666666667,
+            "std": 1.083530215173894,
+            "ci95_lo": 98.94229930555555,
+            "ci95_hi": 100.24042291666666
+          },
+          "box_gridlock_events": {
+            "mean": 20.1,
+            "std": 10.482260146446366,
+            "ci95_lo": 13.7,
+            "ci95_hi": 26.4
+          },
+          "link_spillback_events": {
+            "mean": 0.0,
+            "std": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.0
+          }
+        },
+        "Fuzzy AS-MP": {
+          "avg_delay_s": {
+            "mean": 207.19119891199776,
+            "std": 4.184781309413491,
+            "ci95_lo": 204.80677856043226,
+            "ci95_hi": 209.7249452764086
+          },
+          "throughput_completed_trips": {
+            "mean": 2834.4,
+            "std": 37.6805284228104,
+            "ci95_lo": 2813.4,
+            "ci95_hi": 2856.8
+          },
+          "mean_corridor_queue": {
+            "mean": 101.03444444444445,
+            "std": 1.0745712530655904,
+            "ci95_lo": 100.35016805555557,
+            "ci95_hi": 101.6286111111111
+          },
+          "box_gridlock_events": {
+            "mean": 12.8,
+            "std": 4.3410188256265885,
+            "ci95_lo": 10.3,
+            "ci95_hi": 15.4
+          },
+          "link_spillback_events": {
+            "mean": 34.6,
+            "std": 3.306559138036598,
+            "ci95_lo": 32.5,
+            "ci95_hi": 36.4
+          }
+        }
+      },
+      "p_holm": {
+        "Fixed-Time vs Vanilla MP | avg_delay_s": 0.029296875,
+        "Fixed-Time vs Vanilla MP | throughput_completed_trips": 0.029296875,
+        "Fixed-Time vs Vanilla MP | mean_corridor_queue": 0.029296875,
+        "Fixed-Time vs Vanilla MP | box_gridlock_events": 0.029296875,
+        "Fixed-Time vs Vanilla MP | link_spillback_events": 0.029296875,
+        "Fixed-Time vs Fuzzy AS-MP | avg_delay_s": 0.029296875,
+        "Fixed-Time vs Fuzzy AS-MP | throughput_completed_trips": 0.234375,
+        "Fixed-Time vs Fuzzy AS-MP | mean_corridor_queue": 0.029296875,
+        "Fixed-Time vs Fuzzy AS-MP | box_gridlock_events": 0.029296875,
+        "Fixed-Time vs Fuzzy AS-MP | link_spillback_events": 0.029296875,
+        "Vanilla MP vs Fuzzy AS-MP | avg_delay_s": 0.029296875,
+        "Vanilla MP vs Fuzzy AS-MP | throughput_completed_trips": 0.029296875,
+        "Vanilla MP vs Fuzzy AS-MP | mean_corridor_queue": 0.029296875,
+        "Vanilla MP vs Fuzzy AS-MP | box_gridlock_events": 0.2265625,
+        "Vanilla MP vs Fuzzy AS-MP | link_spillback_events": 0.029296875
+      },
+      "cohens_dz": {
+        "Fixed-Time vs Vanilla MP | avg_delay_s": -12.813662500325806,
+        "Fixed-Time vs Vanilla MP | throughput_completed_trips": -1.3631084021929556,
+        "Fixed-Time vs Vanilla MP | mean_corridor_queue": -2.3077836903382045,
+        "Fixed-Time vs Vanilla MP | box_gridlock_events": -1.5798048364138069,
+        "Fixed-Time vs Vanilla MP | link_spillback_events": 24.231949542716873,
+        "Fixed-Time vs Fuzzy AS-MP | avg_delay_s": -8.85665671083693,
+        "Fixed-Time vs Fuzzy AS-MP | throughput_completed_trips": 0.47434164902525694,
+        "Fixed-Time vs Fuzzy AS-MP | mean_corridor_queue": -4.063283245102245,
+        "Fixed-Time vs Fuzzy AS-MP | box_gridlock_events": -1.4113126084211551,
+        "Fixed-Time vs Fuzzy AS-MP | link_spillback_events": 2.944861131610227,
+        "Vanilla MP vs Fuzzy AS-MP | avg_delay_s": 2.062827460778782,
+        "Vanilla MP vs Fuzzy AS-MP | throughput_completed_trips": 2.0446626032894333,
+        "Vanilla MP vs Fuzzy AS-MP | mean_corridor_queue": -3.022472386067707,
+        "Vanilla MP vs Fuzzy AS-MP | box_gridlock_events": 0.5669505091573613,
+        "Vanilla MP vs Fuzzy AS-MP | link_spillback_events": -10.464049955128017
+      },
+      "rank_biserial": {
+        "Fixed-Time vs Vanilla MP | avg_delay_s": -1.0,
+        "Fixed-Time vs Vanilla MP | throughput_completed_trips": -1.0,
+        "Fixed-Time vs Vanilla MP | mean_corridor_queue": -1.0,
+        "Fixed-Time vs Vanilla MP | box_gridlock_events": -1.0,
+        "Fixed-Time vs Vanilla MP | link_spillback_events": 1.0,
+        "Fixed-Time vs Fuzzy AS-MP | avg_delay_s": -1.0,
+        "Fixed-Time vs Fuzzy AS-MP | throughput_completed_trips": 0.6071428571428571,
+        "Fixed-Time vs Fuzzy AS-MP | mean_corridor_queue": -1.0,
+        "Fixed-Time vs Fuzzy AS-MP | box_gridlock_events": -0.9636363636363636,
+        "Fixed-Time vs Fuzzy AS-MP | link_spillback_events": 1.0,
+        "Vanilla MP vs Fuzzy AS-MP | avg_delay_s": 1.0,
+        "Vanilla MP vs Fuzzy AS-MP | throughput_completed_trips": 1.0,
+        "Vanilla MP vs Fuzzy AS-MP | mean_corridor_queue": -1.0,
+        "Vanilla MP vs Fuzzy AS-MP | box_gridlock_events": 0.5818181818181818,
+        "Vanilla MP vs Fuzzy AS-MP | link_spillback_events": -1.0
+      },
+      "runs": {
+        "fixed": [
+          {
+            "policy": "fixed",
+            "seed": 301,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 194.5933171240016,
+            "throughput_completed_trips": 2879,
+            "box_gridlock_events": 4,
+            "link_spillback_events": 47,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 4
+            },
+            "spillback_by_link": {
+              "lk_E1": 33,
+              "lk_E2": 14,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 98.10944444444445,
+            "vehicles_inserted": 2879,
+            "vehicles_never_departed": 909,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 302,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 195.78561391304365,
+            "throughput_completed_trips": 2875,
+            "box_gridlock_events": 1,
+            "link_spillback_events": 43,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 1
+            },
+            "spillback_by_link": {
+              "lk_E1": 32,
+              "lk_E2": 11,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 98.57111111111111,
+            "vehicles_inserted": 2875,
+            "vehicles_never_departed": 883,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 303,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 196.76902689313548,
+            "throughput_completed_trips": 2826,
+            "box_gridlock_events": 3,
+            "link_spillback_events": 43,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 1,
+              "C3": 2
+            },
+            "spillback_by_link": {
+              "lk_E1": 31,
+              "lk_E2": 12,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 96.58027777777778,
+            "vehicles_inserted": 2826,
+            "vehicles_never_departed": 897,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 304,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 204.25868025751083,
+            "throughput_completed_trips": 2796,
+            "box_gridlock_events": 7,
+            "link_spillback_events": 46,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 7
+            },
+            "spillback_by_link": {
+              "lk_E1": 35,
+              "lk_E2": 11,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 100.4636111111111,
+            "vehicles_inserted": 2796,
+            "vehicles_never_departed": 909,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 305,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 193.6159965397925,
+            "throughput_completed_trips": 2890,
+            "box_gridlock_events": 3,
+            "link_spillback_events": 43,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 3
+            },
+            "spillback_by_link": {
+              "lk_E1": 32,
+              "lk_E2": 11,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 97.47166666666666,
+            "vehicles_inserted": 2890,
+            "vehicles_never_departed": 828,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 306,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 203.1025376884421,
+            "throughput_completed_trips": 2786,
+            "box_gridlock_events": 1,
+            "link_spillback_events": 47,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 1
+            },
+            "spillback_by_link": {
+              "lk_E1": 33,
+              "lk_E2": 14,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 99.23722222222223,
+            "vehicles_inserted": 2786,
+            "vehicles_never_departed": 891,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 307,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 198.05289054197635,
+            "throughput_completed_trips": 2823,
+            "box_gridlock_events": 3,
+            "link_spillback_events": 44,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 3,
+              "C3": 0
+            },
+            "spillback_by_link": {
+              "lk_E1": 33,
+              "lk_E2": 11,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 98.2611111111111,
+            "vehicles_inserted": 2823,
+            "vehicles_never_departed": 871,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 308,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 197.9565557112825,
+            "throughput_completed_trips": 2854,
+            "box_gridlock_events": 1,
+            "link_spillback_events": 47,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 1
+            },
+            "spillback_by_link": {
+              "lk_E1": 35,
+              "lk_E2": 12,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 99.35388888888889,
+            "vehicles_inserted": 2854,
+            "vehicles_never_departed": 849,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 309,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 201.09931511710454,
+            "throughput_completed_trips": 2818,
+            "box_gridlock_events": 4,
+            "link_spillback_events": 43,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 4
+            },
+            "spillback_by_link": {
+              "lk_E1": 33,
+              "lk_E2": 10,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 99.80222222222223,
+            "vehicles_inserted": 2818,
+            "vehicles_never_departed": 852,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fixed",
+            "seed": 310,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 203.42641711229967,
+            "throughput_completed_trips": 2805,
+            "box_gridlock_events": 11,
+            "link_spillback_events": 46,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 2,
+              "C3": 9
+            },
+            "spillback_by_link": {
+              "lk_E1": 35,
+              "lk_E2": 11,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 100.6475,
+            "vehicles_inserted": 2805,
+            "vehicles_never_departed": 910,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          }
+        ],
+        "vanilla": [
+          {
+            "policy": "vanilla",
+            "seed": 301,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 204.7985808466341,
+            "throughput_completed_trips": 2882,
+            "box_gridlock_events": 12,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 1,
+              "C2": 1,
+              "C3": 10
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 98.97555555555556,
+            "vehicles_inserted": 2882,
+            "vehicles_never_departed": 906,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 302,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 206.9858617095212,
+            "throughput_completed_trips": 2878,
+            "box_gridlock_events": 36,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 3,
+              "C2": 0,
+              "C3": 33
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 99.15,
+            "vehicles_inserted": 2878,
+            "vehicles_never_departed": 880,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 303,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 208.0494026157653,
+            "throughput_completed_trips": 2829,
+            "box_gridlock_events": 27,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 2,
+              "C2": 2,
+              "C3": 23
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 97.90972222222223,
+            "vehicles_inserted": 2829,
+            "vehicles_never_departed": 894,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 304,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 216.3355488022876,
+            "throughput_completed_trips": 2797,
+            "box_gridlock_events": 33,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 3,
+              "C2": 2,
+              "C3": 28
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 101.22194444444445,
+            "vehicles_inserted": 2797,
+            "vehicles_never_departed": 908,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 305,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 203.3979453476305,
+            "throughput_completed_trips": 2891,
+            "box_gridlock_events": 5,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 2,
+              "C2": 0,
+              "C3": 3
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 98.21055555555556,
+            "vehicles_inserted": 2891,
+            "vehicles_never_departed": 827,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 306,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 213.81011123071394,
+            "throughput_completed_trips": 2787,
+            "box_gridlock_events": 7,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 7
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 99.93416666666667,
+            "vehicles_inserted": 2787,
+            "vehicles_never_departed": 890,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 307,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 209.49910024796338,
+            "throughput_completed_trips": 2823,
+            "box_gridlock_events": 21,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 2,
+              "C2": 3,
+              "C3": 16
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 99.38138888888889,
+            "vehicles_inserted": 2823,
+            "vehicles_never_departed": 871,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 308,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 209.05271708683492,
+            "throughput_completed_trips": 2856,
+            "box_gridlock_events": 22,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 4,
+              "C2": 2,
+              "C3": 16
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 99.8225,
+            "vehicles_inserted": 2856,
+            "vehicles_never_departed": 847,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 309,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 210.36402482269497,
+            "throughput_completed_trips": 2820,
+            "box_gridlock_events": 14,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 3,
+              "C2": 0,
+              "C3": 11
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 100.13694444444444,
+            "vehicles_inserted": 2820,
+            "vehicles_never_departed": 850,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "vanilla",
+            "seed": 310,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 213.94522638146177,
+            "throughput_completed_trips": 2805,
+            "box_gridlock_events": 24,
+            "link_spillback_events": 0,
+            "box_gridlock_by_junction": {
+              "C1": 2,
+              "C2": 1,
+              "C3": 21
+            },
+            "spillback_by_link": {
+              "lk_E1": 0,
+              "lk_E2": 0,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 101.0363888888889,
+            "vehicles_inserted": 2805,
+            "vehicles_never_departed": 910,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          }
+        ],
+        "fuzzy": [
+          {
+            "policy": "fuzzy",
+            "seed": 301,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 203.75461111111136,
+            "throughput_completed_trips": 2880,
+            "box_gridlock_events": 19,
+            "link_spillback_events": 38,
+            "box_gridlock_by_junction": {
+              "C1": 2,
+              "C2": 3,
+              "C3": 14
+            },
+            "spillback_by_link": {
+              "lk_E1": 24,
+              "lk_E2": 14,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 101.45805555555556,
+            "vehicles_inserted": 2880,
+            "vehicles_never_departed": 908,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 302,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 202.70477580813335,
+            "throughput_completed_trips": 2877,
+            "box_gridlock_events": 11,
+            "link_spillback_events": 36,
+            "box_gridlock_by_junction": {
+              "C1": 2,
+              "C2": 0,
+              "C3": 9
+            },
+            "spillback_by_link": {
+              "lk_E1": 23,
+              "lk_E2": 13,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 100.6025,
+            "vehicles_inserted": 2877,
+            "vehicles_never_departed": 881,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 303,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 204.81750176928526,
+            "throughput_completed_trips": 2826,
+            "box_gridlock_events": 13,
+            "link_spillback_events": 36,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 13
+            },
+            "spillback_by_link": {
+              "lk_E1": 23,
+              "lk_E2": 13,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 98.77027777777778,
+            "vehicles_inserted": 2826,
+            "vehicles_never_departed": 897,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 304,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 213.18274257071275,
+            "throughput_completed_trips": 2793,
+            "box_gridlock_events": 9,
+            "link_spillback_events": 36,
+            "box_gridlock_by_junction": {
+              "C1": 3,
+              "C2": 0,
+              "C3": 6
+            },
+            "spillback_by_link": {
+              "lk_E1": 22,
+              "lk_E2": 14,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 102.12027777777777,
+            "vehicles_inserted": 2793,
+            "vehicles_never_departed": 912,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 305,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 201.83212257617723,
+            "throughput_completed_trips": 2888,
+            "box_gridlock_events": 14,
+            "link_spillback_events": 28,
+            "box_gridlock_by_junction": {
+              "C1": 2,
+              "C2": 0,
+              "C3": 12
+            },
+            "spillback_by_link": {
+              "lk_E1": 14,
+              "lk_E2": 14,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 99.89055555555555,
+            "vehicles_inserted": 2888,
+            "vehicles_never_departed": 830,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 306,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 212.85072198275864,
+            "throughput_completed_trips": 2784,
+            "box_gridlock_events": 17,
+            "link_spillback_events": 37,
+            "box_gridlock_by_junction": {
+              "C1": 1,
+              "C2": 0,
+              "C3": 16
+            },
+            "spillback_by_link": {
+              "lk_E1": 21,
+              "lk_E2": 16,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 101.11194444444445,
+            "vehicles_inserted": 2784,
+            "vehicles_never_departed": 893,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 307,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 205.51250354609917,
+            "throughput_completed_trips": 2820,
+            "box_gridlock_events": 9,
+            "link_spillback_events": 38,
+            "box_gridlock_by_junction": {
+              "C1": 2,
+              "C2": 0,
+              "C3": 7
+            },
+            "spillback_by_link": {
+              "lk_E1": 23,
+              "lk_E2": 15,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 101.00833333333334,
+            "vehicles_inserted": 2820,
+            "vehicles_never_departed": 874,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 308,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 207.2828356116369,
+            "throughput_completed_trips": 2853,
+            "box_gridlock_events": 19,
+            "link_spillback_events": 32,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 0,
+              "C3": 19
+            },
+            "spillback_by_link": {
+              "lk_E1": 19,
+              "lk_E2": 13,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 101.14527777777778,
+            "vehicles_inserted": 2853,
+            "vehicles_never_departed": 850,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 309,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 208.41704045422296,
+            "throughput_completed_trips": 2818,
+            "box_gridlock_events": 7,
+            "link_spillback_events": 34,
+            "box_gridlock_by_junction": {
+              "C1": 0,
+              "C2": 3,
+              "C3": 4
+            },
+            "spillback_by_link": {
+              "lk_E1": 18,
+              "lk_E2": 16,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 101.97277777777778,
+            "vehicles_inserted": 2818,
+            "vehicles_never_departed": 852,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          },
+          {
+            "policy": "fuzzy",
+            "seed": 310,
+            "regime": "moderate",
+            "scale": 1.0,
+            "avg_delay_s": 211.5571336898395,
+            "throughput_completed_trips": 2805,
+            "box_gridlock_events": 10,
+            "link_spillback_events": 31,
+            "box_gridlock_by_junction": {
+              "C1": 4,
+              "C2": 3,
+              "C3": 3
+            },
+            "spillback_by_link": {
+              "lk_E1": 22,
+              "lk_E2": 9,
+              "lk_W2": 0,
+              "lk_W3": 0
+            },
+            "mean_corridor_queue": 102.26444444444445,
+            "vehicles_inserted": 2805,
+            "vehicles_never_departed": 910,
+            "deadlock_teleports": 0,
+            "anti_spillback_overrides": 0
+          }
+        ]
+      }
+    }
+  }
+}

@@ -40,7 +40,7 @@
   <img src="figures/intersection_animated.svg" alt="Animated schematic: signal phases alternate NS/EW while a downstream-occupancy gauge crosses OCC_OVERRIDE = 0.75" width="860">
 </p>
 
-<p align="center"><sub>Illustrative schematic, not simulation output.</sub></p>
+<p align="center"><sub>Illustrative schematic, not simulation output. In the benchmark runs downstream occupancy peaks at about 0.5-0.67, so the 0.75 threshold shown is not reached (see Section 10.1).</sub></p>
 
 ## Abstract
 
