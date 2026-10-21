@@ -72,3 +72,41 @@ Reading. The fuzzy controller was never better than Fixed-Time on delay (no diff
 
 The hard override did not engage in these runs. Downstream occupancy peaks at about 0.67, the physical ceiling for 5 m vehicles with a 2.5 m minimum gap (5 / 7.5), so a threshold of 0.75 cannot be reached. This evaluation therefore tests the fuzzy pressure logic, not the occupancy barrier. A follow-up with the override at 0.60 (90% of the ceiling), declared before running, uses new seeds 321-330.
 
+
+## Results, follow-up with the override at 0.60 (new blind seeds 321-330)
+
+Declared before running: the override threshold 0.60 is 90% of the occupancy ceiling (0.667), chosen from physics, not from performance. Ten paired seeds, four controllers, 30 comparisons per level.
+
+**mild** (east-exit green 14 s per 50 s); mean override engagements per run at 0.60: 144.4
+
+| metric | Fixed-Time | Vanilla MP | Fuzzy (0.75) | Fuzzy (0.60) |
+| --- | --- | --- | --- | --- |
+| mean delay (s) | 175.45 | 175.79 | 175.74 | 173.48 |
+| box-blocking events | 1.30 | 12.40 | 5.60 | 3.40 |
+| link-spillback events | 6.70 | 0.00 | 18.40 | 20.60 |
+| mean corridor queue | 76.21 | 81.65 | 84.61 | 88.60 |
+
+**medium** (east-exit green 10 s per 50 s); mean override engagements per run at 0.60: 235.6
+
+| metric | Fixed-Time | Vanilla MP | Fuzzy (0.75) | Fuzzy (0.60) |
+| --- | --- | --- | --- | --- |
+| mean delay (s) | 189.94 | 195.38 | 195.71 | 190.85 |
+| box-blocking events | 0.50 | 4.00 | 3.50 | 2.80 |
+| link-spillback events | 25.80 | 0.00 | 31.10 | 36.80 |
+| mean corridor queue | 89.21 | 92.62 | 94.65 | 102.96 |
+
+**severe** (east-exit green 7 s per 50 s); mean override engagements per run at 0.60: 289.0
+
+| metric | Fixed-Time | Vanilla MP | Fuzzy (0.75) | Fuzzy (0.60) |
+| --- | --- | --- | --- | --- |
+| mean delay (s) | 199.43 | 209.54 | 207.16 | 199.85 |
+| box-blocking events | 5.80 | 20.70 | 13.70 | 5.50 |
+| link-spillback events | 43.70 | 0.00 | 34.50 | 36.80 |
+| mean corridor queue | 98.51 | 99.26 | 100.70 | 108.81 |
+
+Statistics. With ten pairs and 30 comparisons per level the smallest attainable Holm-adjusted p is 0.0586, so no comparison can be formally significant at 0.05; a value of 0.0586 means all ten seeds moved in the same direction. The statements below are about consistent direction and effect size.
+
+Reading. With the barrier reachable, the fuzzy controller needed less delay than the 0.75 version (about 1.3%, 2.5% and 3.5% at the mild, medium and severe levels) and, at the severe level, had box-blocking and delay comparable to Fixed-Time (5.5 vs 5.8 events; 199.9 s vs 199.4 s) and better than Vanilla MP. It did not reduce link-spillback events (they were higher than with the 0.75 version at all three levels), and it had the longest mean corridor queue at every level. Vanilla MP kept links from staying packed (no sustained spillback event) at the price of several times more box-blocking events. At the mild and medium levels Fixed-Time had the fewest box-blocking events. In no setting was the fuzzy controller clearly better than Fixed-Time.
+
+Baseline means agree between the two seed sets within about 1.1 s of delay, so the setup reproduces. Limits: one demand pattern, one threshold value tested, no signal offsets for Fixed-Time, three junctions.
+

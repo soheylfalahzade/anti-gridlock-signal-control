@@ -408,33 +408,46 @@ def run(policy="fuzzy", seed=401, regime="moderate", scale=1.0, sim_end=SIM_END,
 # --------------------------------------------------------------- evaluation
 LEVELS = {"mild": 14, "medium": 10, "severe": 7}      # east-exit metering green s / 50 s cycle
 POLICIES = ["fixed", "vanilla", "fuzzy"]
+# "fuzzy60" = the same controller with the hard override at 0.60 instead of 0.75. The
+# physical ceiling of occupancy for 5 m vehicles with 2.5 m minimum gap is 5/7.5 = 0.667,
+# so 0.75 can never be reached; 0.60 is 90% of that ceiling.
+OCC_OVERRIDE_CEILING_BASED = 0.60
+POLICY_NAMES = {"fixed": "Fixed-Time", "vanilla": "Vanilla MP", "fuzzy": "Fuzzy AS-MP",
+                "fuzzy60": "Fuzzy AS-MP (override 0.60)"}
 EVAL_KEYS = ["avg_delay_s", "throughput_completed_trips", "mean_corridor_queue",
              "box_gridlock_events", "link_spillback_events"]
 
 
 def _eval_job(job):
     policy, level, seed, sim_end = job
-    return level, run(policy, seed, "moderate", 1.0, sim_end, meter_green=LEVELS[level], verbose=False)
+    base = "fuzzy" if policy == "fuzzy60" else policy
+    occ = OCC_OVERRIDE_CEILING_BASED if policy == "fuzzy60" else OCC_OVERRIDE
+    res = run(base, seed, "moderate", 1.0, sim_end, meter_green=LEVELS[level], occ_override=occ, verbose=False)
+    res["policy"] = policy
+    return level, res
 
 
-def evaluate_all(seeds, workers, sim_end, out_path):
+def evaluate_all(seeds, workers, sim_end, out_path, policies=None):
+    policies = policies or POLICIES
     import json
     from multiprocessing import Pool
     from evaluate import paired_tests, summarize
     if os.path.exists(out_path):
         sys.exit(f"Refusing: {out_path} exists. The evaluation seeds are blind; delete it deliberately "
                  "only if you accept that the evaluation is no longer blind.")
-    jobs = [(p, lv, sd, sim_end) for lv in LEVELS for p in POLICIES for sd in seeds]
+    jobs = [(p, lv, sd, sim_end) for lv in LEVELS for p in policies for sd in seeds]
     print(f"[eval] {len(jobs)} runs, {workers} workers", flush=True)
     with Pool(workers, maxtasksperchild=1) as pool:
         done = pool.map(_eval_job, jobs, chunksize=1)
-    raw = {lv: {p: [] for p in POLICIES} for lv in LEVELS}
+    raw = {lv: {p: [] for p in policies} for lv in LEVELS}
     for (lv, res), job in zip(done, jobs):
         raw[lv][job[0]].append(res)
-    names = {"fixed": "Fixed-Time", "vanilla": "Vanilla MP", "fuzzy": "Fuzzy AS-MP"}
-    out = {"seeds": seeds, "levels": LEVELS, "sim_end": sim_end, "results": {}}
+    names = POLICY_NAMES
+    out = {"seeds": seeds, "levels": LEVELS, "sim_end": sim_end, "policies": policies,
+           "overrides_mean": {}, "results": {}}
     for lv in LEVELS:
-        named = {names[p]: raw[lv][p] for p in POLICIES}
+        named = {names[p]: raw[lv][p] for p in policies}
+        out['overrides_mean'][lv] = {names[p]: sum(r['anti_spillback_overrides'] for r in raw[lv][p]) / len(raw[lv][p]) for p in policies}
         summ = summarize(named, EVAL_KEYS)
         p_raw, p_adj, dz, rb, _ = paired_tests(named, EVAL_KEYS)
         out["results"][lv] = {"summary": summ, "p_holm": p_adj, "cohens_dz": dz, "rank_biserial": rb,
@@ -445,12 +458,16 @@ def evaluate_all(seeds, workers, sim_end, out_path):
             print(f"{k:30s}" + "".join(
                 f"{summ[n][k]['mean']:>10.2f} [{summ[n][k]['ci95_lo']:.1f},{summ[n][k]['ci95_hi']:.1f}]".rjust(22)
                 for n in named))
-        for k in EVAL_KEYS:
-            for other in ("Fixed-Time", "Vanilla MP"):
-                lab = f"{other} vs Fuzzy AS-MP | {k}" if f"{other} vs Fuzzy AS-MP | {k}" in p_adj \
-                    else f"Fuzzy AS-MP vs {other} | {k}"
-                pv = p_adj.get(lab)
-                print(f"   Holm p, Fuzzy vs {other:11s} | {k:28s} = {pv if pv is None or isinstance(pv, str) else f'{pv:.4f}'}")
+        print(f"   mean override engagements per run: {out['overrides_mean'][lv]}")
+        targets = [n for n in named if n.startswith("Fuzzy")]
+        for t in targets:
+            for other in named:
+                if other == t or (other.startswith("Fuzzy") and targets.index(t) < targets.index(other)):
+                    continue
+                for k in EVAL_KEYS:
+                    pv = p_adj.get(f"{other} vs {t} | {k}", p_adj.get(f"{t} vs {other} | {k}"))
+                    shown = pv if pv is None or isinstance(pv, str) else f"{pv:.4f}"
+                    print(f"   Holm p, {t} vs {other} | {k:28s} = {shown}")
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     json.dump(out, open(out_path, "w"), indent=2, default=str)
     print(f"\nwrote {out_path}")
@@ -471,11 +488,12 @@ if __name__ == "__main__":
     e = sub.add_parser("eval")
     e.add_argument("--seeds", type=int, nargs="+", default=list(range(301, 311)))
     e.add_argument("--workers", type=int, default=1)
+    e.add_argument("--policies", nargs="+", default=POLICIES, choices=list(POLICY_NAMES))
     e.add_argument("--sim-end", type=int, default=SIM_END)
     e.add_argument("--out", default=os.path.join(ROOT, "multi", "results", "corridor_eval.json"))
     a = ap.parse_args()
     if a.cmd == "eval":
-        evaluate_all(a.seeds, a.workers, a.sim_end, a.out)
+        evaluate_all(a.seeds, a.workers, a.sim_end, a.out, a.policies)
     elif a.cmd == "build":
         build()
     else:
