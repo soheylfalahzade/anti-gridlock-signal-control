@@ -27,7 +27,7 @@ Fixes vs. previous revision:
    which is exactly the mechanism that can let the un-served approach's
    own upstream storage fill up. This is a real, reportable trade-off,
    not an artifact -- but it must be reported per-direction (NS vs EW)
-   so a reviewer can see which movement pays the storage-overflow price
+   so the movement that pays the storage-overflow price is visible
    for the box-gridlock protection the other movement receives, rather
    than one opaque aggregate number.
 
