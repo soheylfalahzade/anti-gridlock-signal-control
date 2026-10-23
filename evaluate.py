@@ -1,5 +1,5 @@
 """
-Master benchmark, Q1-submission-ready statistical package.
+Master benchmark with the full statistical package.
 
 Additions vs. previous revision:
   - total_co2_kg added to CORE_KEYS and reported/plotted, using emissions

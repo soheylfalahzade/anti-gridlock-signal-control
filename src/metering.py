@@ -6,7 +6,7 @@ ratio = ns_green/cycle) while EW stays at the moderate-regime value,
 enabling a direct bottleneck-severity sweep (varying the metering
 constraint itself) independent of the demand sweep (which varies arrival
 rate at a FIXED bottleneck). These are two different, non-substitutable
-axes of the same design question and a Q1 reviewer will expect both.
+axes of the same design question, so both are reported.
 """
 
 import traci

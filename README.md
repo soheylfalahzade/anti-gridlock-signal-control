@@ -2,7 +2,7 @@
 
 [![tests](https://github.com/soheylfalahzade/anti-gridlock-signal-control/actions/workflows/tests.yml/badge.svg)](https://github.com/soheylfalahzade/anti-gridlock-signal-control/actions/workflows/tests.yml)
 
-**Status:** Phase 1 (single-intersection local control layer) — validated, statistically benchmarked, submission-track report.
+**Status:** Phase 1 (single-intersection local control layer) — validated and statistically benchmarked.
 **Repository role:** Local control substrate for a planned network-level emergency-corridor navigation stack (time-varying, fault-tolerant geometric spanners + dynamic green wave). This repository stands on its own and makes no claims beyond the single-intersection scope tested here.
 
 ![license](https://img.shields.io/badge/license-MIT-blue) ![python](https://img.shields.io/badge/python-3.10-blue) ![SUMO](https://img.shields.io/badge/SUMO-1.27.1-orange) ![seeds](https://img.shields.io/badge/seeds-10%20paired-green) ![status](https://img.shields.io/badge/status-Phase%201%20validated-success)
@@ -263,7 +263,7 @@ An earlier iteration of this benchmark computed a single "gridlock incidents per
 ## 7. Limitations
 
 > [!IMPORTANT]
-> None of the items below are hedging language added for reviewer comfort — each one is a specific, checkable claim about what this repository does *not* establish, and each is cross-referenced to the section where the gap is visible in the data.
+> Each item below is a specific, checkable claim about what this repository does *not* establish, and each is cross-referenced to the section where the gap is visible in the data.
 
 - **No closed-loop Lyapunov stability proof** for the fuzzy+override system outside the regime where it provably reduces to vanilla Max-Pressure (§3.2). This is stated as open, not claimed as solved.
 - **Membership function breakpoints are hand-set**, not calibrated by a formal optimization procedure. §10 provides a sensitivity analysis in place of formal calibration; a differential-evolution or similar calibration study against a held-out validation split is future work.
