@@ -349,7 +349,7 @@ def tripinfo_delays(path):
 
 # ------------------------------------------------------------------- runner
 def run(policy="fuzzy", seed=401, regime="moderate", scale=1.0, sim_end=SIM_END, tag=None,
-        occ_override=OCC_OVERRIDE, fis_params=None, out_dir=None, verbose=True, meter_green=None):
+        occ_override=OCC_OVERRIDE, fis_params=None, out_dir=None, verbose=True, meter_green=None, on_step=None):
     tag = tag or f"{policy}_{regime}_s{seed}_{os.getpid()}"
     cfg, n_veh = write_config(tag, seed, scale, sim_end)
     out_dir = out_dir or os.path.join(ROOT, "multi", "out")
@@ -373,6 +373,8 @@ def run(policy="fuzzy", seed=401, regime="moderate", scale=1.0, sim_end=SIM_END,
     while traci.simulation.getTime() < sim_end:
         traci.simulationStep()
         metrics.sample()
+        if on_step is not None:
+            on_step(traci.simulation.getTime())
         inserted += traci.simulation.getDepartedNumber()
         for j in juncs:
             j.tick()

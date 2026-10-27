@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "anti-gridlock-signal-control: fuzzy anti-spillback Max-Pressure signal control, with benchmarks"
+type: software
+authors:
+  - family-names: "Fallahzadeh"
+    given-names: "Soheil"
+repository-code: "https://github.com/soheylfalahzade/anti-gridlock-signal-control"
+license: MIT
+keywords:
+  - traffic signal control
+  - max-pressure
+  - fuzzy logic
+  - SUMO

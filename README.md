@@ -10,7 +10,7 @@
 *The short version: a signal controller that behaves exactly like textbook Max-Pressure until a downstream link starts to fill up, at which point it borrows an idea from safety-critical control (a barrier function) to back off before the junction box itself gets blocked. The four figures below carry most of the story; the sections after them carry the proof.*
 
 <details open>
-<summary><b>📑 Table of contents</b></summary>
+<summary><b>Table of contents</b></summary>
 
 | | | |
 |---|---|---|
@@ -25,14 +25,16 @@
 
 ### Results at a glance (n = 10 paired seeds, moderate regime unless noted)
 
-| 🏁 Finding | Value |
-|---|---|
-| Delay vs. Vanilla Max-Pressure | **−7.3%** (241.9s vs. 261.0s), *p* = 0.033 |
-| Junction-box gridlock events | **lowest of the three policies** (2.3 vs. 4.0–4.1 per run) |
-| Delay advantage under chronic stress | **widens to −10.0%** vs. Vanilla MP (342.6s vs. 380.3s) |
-| Emergency-vehicle delay, preemption on vs. off | **−13%** (125.0s vs. 143.3s), *p* = 0.049 |
-| CO2 emissions vs. Vanilla Max-Pressure | **−9.6% to −10.2%** across both regimes, *p* = 0.039 |
-| Honest cost | underperforms **both** baselines at loose bottlenecks (duty ≥ 0.56) |
+<!-- BEGIN:glance -->
+| Finding | Value |
+| --- | --- |
+| Delay vs. Vanilla Max-Pressure, moderate regime | **-7.3%** (241.9 s vs. 261.0 s), Holm *p* = 0.039 |
+| Junction-box gridlock events, moderate regime | **lowest of the three policies** (2.3 vs. 4.0 to 4.1 per run) |
+| Delay vs. Vanilla Max-Pressure, chronic stress | **-9.9%** (342.6 s vs. 380.3 s) |
+| Emergency-vehicle delay, preemption on vs. off | **-13%** (125.0 s vs. 143.3 s), Wilcoxon *p* = 0.049 |
+| CO2 vs. Vanilla Max-Pressure | **-9.6%** (moderate) and **-10.2%** (stress) |
+| Cost, stated plainly | underperforms both baselines at loose bottlenecks (Section 10.2); no clear advantage over Fixed-Time in the three-junction corridor (Section 5.6) |
+<!-- END:glance -->
 
 ---
 
@@ -178,13 +180,28 @@ The primary benchmark (§5) uses seeds **1–10**. The robustness analyses in §
 <p align="center"><img src="results/comparison_metrics.png" width="100%" alt="Bar charts comparing average delay, mean queue length, throughput, and junction-box gridlock events across Fixed-Time, Vanilla Max-Pressure, and Fuzzy Anti-Spillback, with bootstrap 95% confidence intervals"></p>
 <p align="center"><sub><b>Figure 2.</b> Fuzzy sits between the two baselines on delay and queue, matches Vanilla Max-Pressure on throughput, and has the lowest box-gridlock count of the three — mean, bootstrap 95% CI, n=10 seeds.</sub></p>
 
+<!-- BEGIN:primary -->
 | Policy | Delay [s], mean | Throughput [veh] | Box-gridlock events | Jain's Fairness Index |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | Fixed-Time (Webster) | 234.8 | 1659 | 4.0 | 0.686 |
 | Vanilla Max-Pressure | 261.0 | 1696 | 4.1 | 0.940 |
 | Fuzzy Anti-Spillback | 241.9 | 1654 | 2.3 | 0.749 |
+<!-- END:primary -->
 
-**Holm–Bonferroni corrected significance** (full table in `statistical_report.json`): Fuzzy vs. Vanilla Max-Pressure on delay, queue, and throughput all significant at *p* = 0.033. Fixed-Time vs. Fuzzy on delay and queue significant at *p* = 0.033–0.035. Fuzzy's storage-overflow-NS difference from both baselines is significant (*p* = 0.033); box-gridlock differences are not significant at this sample size (*p* = 0.86).
+**Holm–Bonferroni corrected significance** (Wilcoxon signed-rank, paired by seed; the Holm family is all pairwise comparisons across the core metrics in the regime; with ten pairs, 0.039 is the smallest adjusted value reached in this report, which happens when all ten seeds agree in direction; full table in `results/statistical_report.json`):
+
+<!-- BEGIN:holm -->
+| Metric | Fixed-Time vs. Vanilla MP | Fixed-Time vs. Fuzzy | Vanilla MP vs. Fuzzy |
+| --- | --- | --- | --- |
+| Delay | **0.039** | **0.039** | **0.039** |
+| Mean queue length | **0.039** | **0.039** | **0.039** |
+| Throughput | **0.039** | 0.861 | **0.039** |
+| Box-gridlock events | 1.000 | 0.861 | 0.861 |
+| Storage overflow, NS | identical | **0.039** | **0.039** |
+| CO2 | **0.039** | **0.039** | **0.039** |
+
+Holm-adjusted p-values, moderate regime; bold entries are below 0.05.
+<!-- END:holm -->
 
 **Reading:** the fuzzy controller sits strictly between the two baselines on total delay, achieves the lowest box-gridlock count of the three policies, and substantially closes the fairness gap that fixed-time leaves open (0.686 → 0.749 toward Max-Pressure's 0.940) — while avoiding the aggregate delay and queue cost that full Max-Pressure pays.
 
@@ -202,11 +219,13 @@ Across V/C scale 0.6–2.0, Fixed-Time's delay grows steeply beyond scale ≈1.2
 
 Under sustained V/C ≈ 1.3 for the full simulation:
 
+<!-- BEGIN:stress -->
 | Policy | Delay [s], mean | Throughput [veh] |
-|---|---|---|
+| --- | --- | --- |
 | Fixed-Time (Webster) | 306.2 | 1374 |
 | Vanilla Max-Pressure | 380.3 | 1374 |
 | Fuzzy Anti-Spillback | 342.6 | 1373 |
+<!-- END:stress -->
 
 This is the regime where the controller's design intent is most directly tested, and the result is the strongest in this study: Fuzzy closes roughly **38s of the 74s gap** between Fixed-Time and Vanilla Max-Pressure — a materially larger advantage over Vanilla Max-Pressure than observed at moderate demand (§5.1), consistent with the anti-spillback mechanism mattering most exactly where downstream occupancy is chronically high.
 
@@ -224,14 +243,69 @@ To isolate the preemption mechanism from the base algorithm's own queue manageme
 <p align="center"><img src="results/preemption_ablation.png" width="480" alt="Bar chart comparing ambulance delay with and without preemption, showing a reduction from 143.3 to 125.0 seconds"></p>
 <p align="center"><sub><b>Figure 3.</b> Same seeds, same base algorithm, only preemption toggled — the only lever in this chart is whether an approaching ambulance gets an immediate phase transition.</sub></p>
 
+<!-- BEGIN:preemption -->
 | Condition | Ambulance in-network delay [s], mean |
-|---|---|
+| --- | --- |
 | Without preemption | 143.3 |
 | With preemption | 125.0 |
+<!-- END:preemption -->
 
 Wilcoxon signed-rank *p* = 0.049; Cohen's *d*<sub>z</sub> = −0.74; matched-pairs rank-biserial *r* = −0.71 (both large effects, and in agreement — a Shapiro-Wilk check on the paired differences does not reject normality, *p* = 0.118, so the parametric and nonparametric effect sizes are both well-justified here and corroborate each other). This corresponds to a ≈13% reduction attributable specifically to the preemption mechanism, isolated from confounding differences in baseline signal timing.
 
 ---
+
+### 5.6 Three-junction corridor (proof of concept, local controllers only)
+
+Does the local layer still help when spillback can propagate between adjacent junctions? Three junctions sit 200 m apart on an east-west arterial, each with a north and a south cross street; the engineered bottleneck of the single-junction study is kept at the east exit only, so a queue can back up C3, then C2, then C1. Every junction runs its own controller with no communication and no signal offsets. See `multi/README.md` for the scenario-selection criterion, which was fixed before the controllers were compared.
+
+<p align="center">
+  <img src="figures/corridor_comparison.gif" alt="Side-by-side animation of the corridor under Fixed-Time, Vanilla Max-Pressure and the fuzzy anti-spillback controller" width="75%">
+</p>
+<p align="center"><sub>Same demand and seed (a tuning seed) under three controllers, severe east-exit metering. Red vehicles are stopped. Regenerate with <code>python multi/make_animation.py</code>.</sub></p>
+
+**First evaluation (blind seeds 301-310).** The occupancy threshold of 0.75 can never be reached in these runs (standing queues of 5 m vehicles with a 2.5 m gap give an occupancy ceiling of 0.667), so the hard override never engaged and this evaluation tests the fuzzy pressure logic only.
+
+<!-- BEGIN:corridor -->
+| Metering level (east-exit green per 50 s) | Metric | Fixed-Time | Vanilla MP | Fuzzy AS-MP |
+| --- | --- | --- | --- | --- |
+| mild (14 s) | Mean delay (s) | 175.37 | 176.89 | 176.34 |
+| mild (14 s) | Box-blocking events | 2.80 | 13.30 | 8.90 |
+| mild (14 s) | Link-spillback events | 8.20 | 0.00 | 21.90 |
+| mild (14 s) | Mean corridor queue | 76.56 | 82.27 | 84.94 |
+| medium (10 s) | Mean delay (s) | 189.40 | 195.59 | 195.69 |
+| medium (10 s) | Box-blocking events | 0.60 | 3.40 | 4.10 |
+| medium (10 s) | Link-spillback events | 27.60 | 0.00 | 31.20 |
+| medium (10 s) | Mean corridor queue | 89.66 | 93.01 | 94.82 |
+| severe (7 s) | Mean delay (s) | 198.87 | 209.62 | 207.19 |
+| severe (7 s) | Box-blocking events | 3.80 | 20.10 | 12.80 |
+| severe (7 s) | Link-spillback events | 44.90 | 0.00 | 34.60 |
+| severe (7 s) | Mean corridor queue | 98.85 | 99.58 | 101.03 |
+
+Seeds 301-310 (blind), ten paired runs per cell. Source: `multi/results/corridor_eval.json`.
+<!-- END:corridor -->
+
+**Follow-up (new blind seeds 321-330), declared before running.** The override threshold was set to 0.60, 90% of the occupancy ceiling, chosen from physics rather than performance.
+
+<!-- BEGIN:corridor_followup -->
+| Metering level | Metric | Fixed-Time | Vanilla MP | Fuzzy (override 0.75) | Fuzzy (override 0.60) |
+| --- | --- | --- | --- | --- | --- |
+| mild (14 s) | Mean delay (s) | 175.45 | 175.79 | 175.74 | 173.48 |
+| mild (14 s) | Box-blocking events | 1.30 | 12.40 | 5.60 | 3.40 |
+| mild (14 s) | Link-spillback events | 6.70 | 0.00 | 18.40 | 20.60 |
+| mild (14 s) | Mean corridor queue | 76.21 | 81.65 | 84.61 | 88.60 |
+| medium (10 s) | Mean delay (s) | 189.94 | 195.38 | 195.71 | 190.85 |
+| medium (10 s) | Box-blocking events | 0.50 | 4.00 | 3.50 | 2.80 |
+| medium (10 s) | Link-spillback events | 25.80 | 0.00 | 31.10 | 36.80 |
+| medium (10 s) | Mean corridor queue | 89.21 | 92.62 | 94.65 | 102.96 |
+| severe (7 s) | Mean delay (s) | 199.43 | 209.54 | 207.16 | 199.85 |
+| severe (7 s) | Box-blocking events | 5.80 | 20.70 | 13.70 | 5.50 |
+| severe (7 s) | Link-spillback events | 43.70 | 0.00 | 34.50 | 36.80 |
+| severe (7 s) | Mean corridor queue | 98.51 | 99.26 | 100.70 | 108.81 |
+
+Seeds 321-330. With the threshold at 0.60 the override engaged on average 289 times per run at the severe level; at 0.75 it never engaged. Source: `multi/results/corridor_eval_followup.json`.
+<!-- END:corridor_followup -->
+
+**Reading.** In no setting was the fuzzy controller clearly better than Fixed-Time. With the barrier reachable (0.60), delay and box-blocking improve relative to the 0.75 version and, at the severe level, are comparable to Fixed-Time, but link-spillback events do not fall and the mean corridor queue is the longest at every level. Vanilla Max-Pressure keeps links from staying packed (no sustained spillback event) at the price of several times more box-blocking events than Fixed-Time. With ten pairs and 30 comparisons per level the smallest attainable Holm-adjusted p-value is 0.0586, so statements are about consistent direction and effect size, not significance. Limits: one demand pattern, no offsets for Fixed-Time, three junctions.
 
 ## 6. Discussion
 
