@@ -160,7 +160,7 @@ A composite "gridlock incidents per 1000 vehicles" index (summing box-gridlock a
 
 ### 4.4 Seed Hygiene: Calibration/Validation vs. Evaluation
 
-The primary benchmark (§5) uses seeds **1–10**. The robustness analyses in §10 (parameter sensitivity, bottleneck-severity sweep) use a disjoint set of seeds **101–103**, held out from the primary benchmark entirely. This separation exists because §10's sweeps characterize design parameters (`OCC_OVERRIDE`, the FIS's critical-membership threshold, bottleneck severity) that could in principle inform a future choice of default parameter value; evaluating that choice on the same seeds used to make it would be a straightforward calibration/evaluation leak. Every §10 finding reported below was independently reproduced on both seed sets during development (seeds 1–3 initially, then reproduced on the disjoint 101–103 set reported here) — the qualitative pattern held in both, which is itself evidence the findings reflect a real mechanism rather than a sampling artifact of one seed set.
+The primary benchmark (§5) uses seeds **1–10**. The robustness analyses in §10 (parameter sensitivity, bottleneck-severity sweep) use a disjoint set of seeds **101–103**, held out from the primary benchmark entirely. The crisp-twin ablation (§5.7) uses seeds **501-530**, disjoint from all of the above. This separation exists because §10's sweeps characterize design parameters (`OCC_OVERRIDE`, the FIS's critical-membership threshold, bottleneck severity) that could in principle inform a future choice of default parameter value; evaluating that choice on the same seeds used to make it would be a straightforward calibration/evaluation leak. Every §10 finding reported below was independently reproduced on both seed sets during development (seeds 1–3 initially, then reproduced on the disjoint 101–103 set reported here) — the qualitative pattern held in both, which is itself evidence the findings reflect a real mechanism rather than a sampling artifact of one seed set.
 
 ---
 
@@ -300,6 +300,47 @@ Seeds 321-330. With the threshold at 0.60 the override engaged on average 289 ti
 
 **Reading.** In no setting was the fuzzy controller clearly better than Fixed-Time. With the barrier reachable (0.60), delay and box-blocking improve relative to the 0.75 version and, at the severe level, are comparable to Fixed-Time, but link-spillback events do not fall and the mean corridor queue is the longest at every level. Vanilla Max-Pressure keeps links from staying packed (no sustained spillback event) at the price of several times more box-blocking events than Fixed-Time. With ten pairs and 30 comparisons per level the smallest attainable Holm-adjusted p-value is 0.0586, so statements are about consistent direction and effect size, not significance. Limits: one demand pattern, no offsets for Fixed-Time, three junctions.
 
+### 5.7 Does the fuzzy engine earn its place? Crisp-twin ablation
+
+The comparisons above show that the controller beats Vanilla Max-Pressure; they do not show that fuzziness is the reason. To separate the two, the Mamdani engine is compared with a non-fuzzy twin (`CrispTwinEngine` in `src/fuzzy_engine.py`) that keeps everything except the fuzziness: the same nine rules, the same membership breakpoints, the same output range and the same occupancy override. Each input is assigned to the single class with the largest membership degree, the rule table selects one output class, and the output is the centroid of that class, so the twin takes only three values and does not interpolate between rules. Vanilla Max-Pressure is run on the same seeds as the reference.
+
+The protocol was fixed before the runs (`crisp_ablation.py`): fresh seeds that no other analysis in this repository uses, both demand regimes of sections 5.1 and 5.3, and one primary endpoint, the mean delay in the moderate regime. All other metrics and the stress regime are secondary. The result is reported whichever way it falls.
+
+<!-- BEGIN:crisp -->
+Seeds 501-530 (n = 30 per regime), paired by seed; mean with 95% bootstrap interval.
+
+| Regime | Policy | Mean delay [s] | Mean queue [veh] | Box-blocking events |
+| --- | --- | --- | --- | --- |
+| moderate | Vanilla Max-Pressure | 263.0 (260.0 to 266.3) | 55.6 (54.7 to 56.7) | 3.97 (2.80 to 5.27) |
+| moderate | Fuzzy Anti-Spillback | 243.8 (241.9 to 245.8) | 51.0 (50.4 to 51.5) | 2.63 (1.87 to 3.43) |
+| moderate | Crisp-Twin Anti-Spillback | 244.1 (242.3 to 246.0) | 51.3 (50.9 to 51.8) | 3.30 (2.60 to 4.00) |
+| stress | Vanilla Max-Pressure | 381.7 (378.6 to 385.0) | 82.4 (81.7 to 83.2) | 3.60 (2.27 to 5.10) |
+| stress | Fuzzy Anti-Spillback | 344.3 (341.8 to 346.8) | 74.2 (73.6 to 74.9) | 3.33 (2.60 to 4.10) |
+| stress | Crisp-Twin Anti-Spillback | 346.9 (344.5 to 349.6) | 75.5 (75.0 to 76.0) | 2.97 (2.27 to 3.80) |
+
+Paired difference, Fuzzy Anti-Spillback minus Crisp-Twin Anti-Spillback (negative favours the fuzzy engine); Holm correction over the 27 comparisons of each regime (three policy pairs, nine metrics).
+
+| Regime | Metric | Difference | Wilcoxon p | Holm p | Cohen's dz |
+| --- | --- | --- | --- | --- | --- |
+| moderate | Mean delay [s] | -0.3 | 0.968 | 1.000 | -0.07 |
+| moderate | Mean queue [veh] | -0.4 | 0.184 | 1.000 | -0.25 |
+| moderate | Box-blocking events | -0.67 | 0.227 | 1.000 | -0.21 |
+| stress | Mean delay [s] | -2.7 | 0.006 | 0.040 | -0.56 |
+| stress | Mean queue [veh] | -1.3 | <0.001 | 0.003 | -0.77 |
+| stress | Box-blocking events | +0.37 | 0.620 | 1.000 | +0.10 |
+
+Reading, generated from the table above:
+
+- moderate, mean delay [s]: no significant difference (Holm-adjusted p = 1.000).
+- moderate, mean queue [veh]: no significant difference (Holm-adjusted p = 1.000).
+- moderate, box-blocking events: no significant difference (Holm-adjusted p = 1.000).
+- stress, mean delay [s]: the fuzzy engine is lower than its crisp twin (0.8%, Holm-adjusted p = 0.040).
+- stress, mean queue [veh]: the fuzzy engine is lower than its crisp twin (1.7%, Holm-adjusted p = 0.003).
+- stress, box-blocking events: no significant difference (Holm-adjusted p = 1.000).
+
+Share of the fuzzy engine's mean-delay reduction relative to Vanilla Max-Pressure that the crisp twin already achieves: moderate 99%, stress 93%. Source: `results/crisp_ablation_report.json`.
+<!-- END:crisp -->
+
 ## 6. Discussion
 
 ### 6.1 The Fixed-Time Advantage Is Real and Not Hidden
@@ -311,7 +352,7 @@ At the moderate regime's baseline demand (scale = 1.0), Webster fixed-time achie
 
 ### 6.2 What the Fuzzy Controller Actually Buys
 
-The fuzzy controller's defensible claims, each backed by the statistics above:
+The fuzzy controller's defensible claims, each backed by the statistics above. Section 5.7 separates the contribution of the rule base from that of the fuzzy interpolation and should be read before any of them is attributed to fuzziness itself:
 
 1. Statistically significant delay and queue reduction relative to unmodified Max-Pressure at moderate demand (§5.1).
 2. The lowest box-gridlock incidence of the three policies at moderate demand (§5.1).
@@ -334,6 +375,7 @@ An earlier iteration of this benchmark computed a single "gridlock incidents per
 
 - **No closed-loop Lyapunov stability proof** for the fuzzy+override system outside the regime where it provably reduces to vanilla Max-Pressure (§3.2). This is stated as open, not claimed as solved.
 - **Membership function breakpoints are hand-set**, not calibrated by a formal optimization procedure. §10 provides a sensitivity analysis in place of formal calibration; a differential-evolution or similar calibration study against a held-out validation split is future work.
+- **The ablation in §5.7 tests one non-fuzzy design** (hard class assignment on the same rules and breakpoints). It does not show that no other non-fuzzy controller could match the Mamdani engine, and the stress-regime comparison is a secondary endpoint.
 - **Single intersection only.** No network-level or corridor-level claim is made; integration with the geometric-spanner/green-wave layer is future work.
 - **Demand and bottleneck-severity sweeps use 3 seeds per point**, not 10; sweep curves should be read as indicative trends, not independently significance-tested at each point. (The bottleneck-severity sweep's qualitative pattern was independently reproduced on two disjoint 3-seed sets — §4.4 — which partially mitigates, but does not replace, a full 10-seed sweep.)
 - **Box-gridlock counts are noisy at the primary sample size** (overlapping confidence intervals across all three policies at moderate demand); the box-gridlock advantage reported in §5.1 is a point estimate, not yet a statistically significant difference at n=10.
@@ -353,6 +395,9 @@ python evaluate.py --seeds 1 2 3 4 5 6 7 8 9 10 --sweep-seeds 1 2 3 \
     --scales 0.6 0.8 1.0 1.2 1.5 1.8 2.0
 python sensitivity_analysis.py
 python bottleneck_sweep.py
+python crisp_ablation.py --run --max-seconds 7200   # resumable; about 35 min for 180 runs
+python crisp_ablation.py --summarize
+python render_readme_tables.py --check
 pytest tests/ -v
 ```
 

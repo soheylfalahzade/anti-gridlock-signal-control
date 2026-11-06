@@ -7,7 +7,8 @@ so no number inside them is typed by hand.
     python render_readme_tables.py --check    # exit 1 if README.md differs from the data
 
 Sources: results/statistical_report.json (single junction), multi/results/corridor_eval.json and
-multi/results/corridor_eval_followup.json (three-junction corridor).
+multi/results/corridor_eval_followup.json (three-junction corridor), results/crisp_ablation_report.json
+(crisp-twin ablation).
 """
 import argparse
 import json
@@ -137,10 +138,66 @@ def table_corridor_followup():
         "Source: `multi/results/corridor_eval_followup.json`."
 
 
+CRISP = "Crisp-Twin Anti-Spillback"
+CRISP_METRICS = [("avg_delay_s", "Mean delay [s]", 1), ("mean_queue_length", "Mean queue [veh]", 1),
+                 ("box_gridlock_events", "Box-blocking events", 2)]
+ALPHA = 0.05
+
+
+def fmt_p(p):
+    return "<0.001" if p < 0.001 else f"{p:.3f}"
+
+
+def eq_p(p):
+    return "p < 0.001" if p < 0.001 else f"p = {p:.3f}"
+
+
+def table_crisp():
+    rep = load("results/crisp_ablation_report.json")
+    seeds = rep["seeds"]
+    out = [f"Seeds {seeds[0]}-{seeds[-1]} (n = {len(seeds)} per regime), paired by seed; mean with 95% bootstrap interval.", ""]
+    rows = []
+    for regime in ("moderate", "stress"):
+        for pol in (VANILLA, FUZZY, CRISP):
+            cells = []
+            for key, _, nd in CRISP_METRICS:
+                v = rep[regime]["summary"][pol][key]
+                cells.append(f"{v['mean']:.{nd}f} ({v['ci95_lo']:.{nd}f} to {v['ci95_hi']:.{nd}f})")
+            rows.append([regime, pol] + cells)
+    out += [md(["Regime", "Policy"] + [m[1] for m in CRISP_METRICS], rows), "",
+            "Paired difference, Fuzzy Anti-Spillback minus Crisp-Twin Anti-Spillback (negative favours the fuzzy engine); "
+            f"Holm correction over the {len(rep['moderate']['wilcoxon_p_raw'])} comparisons of each regime "
+            "(three policy pairs, nine metrics).", ""]
+    rows, lines = [], []
+    for regime in ("moderate", "stress"):
+        d = rep[regime]
+        for key, label, nd in CRISP_METRICS:
+            pair = f"{FUZZY} vs {CRISP} | {key}"
+            diff = mean(rep, regime, FUZZY, key) - mean(rep, regime, CRISP, key)
+            p_raw, p_holm, dz = d["wilcoxon_p_raw"][pair], d["wilcoxon_p_holm_bonferroni"][pair], d["cohens_dz"][pair]
+            rows.append([regime, label, f"{diff:+.{nd}f}", fmt_p(p_raw), fmt_p(p_holm), f"{dz:+.2f}"])
+            if p_holm < ALPHA:
+                side = "lower" if diff < 0 else "higher"
+                lines.append(f"- {regime}, {label.lower()}: the fuzzy engine is {side} than its crisp twin "
+                             f"({abs(100 * diff / mean(rep, regime, CRISP, key)):.1f}%, Holm-adjusted p = {fmt_p(p_holm)}).")
+            else:
+                lines.append(f"- {regime}, {label.lower()}: no significant difference (Holm-adjusted {eq_p(p_holm)}).")
+    out += [md(["Regime", "Metric", "Difference", "Wilcoxon p", "Holm p", "Cohen's dz"], rows), "",
+            "Reading, generated from the table above:", ""] + lines + [""]
+    share = []
+    for regime in ("moderate", "stress"):
+        v, f, c = (mean(rep, regime, p, "avg_delay_s") for p in (VANILLA, FUZZY, CRISP))
+        share.append(f"{regime} {100 * (v - c) / (v - f):.0f}%")
+    out.append("Share of the fuzzy engine's mean-delay reduction relative to Vanilla Max-Pressure that the crisp twin already achieves: "
+               + ", ".join(share) + ". Source: `results/crisp_ablation_report.json`.")
+    return "\n".join(out)
+
+
 def render(text):
     rep = load("results/statistical_report.json")
     blocks = {"glance": lambda: table_glance(rep), "holm": lambda: table_holm(rep), "primary": lambda: table_primary(rep), "stress": lambda: table_stress(rep),
-              "preemption": lambda: table_preemption(rep), "corridor": table_corridor, "corridor_followup": table_corridor_followup}
+              "preemption": lambda: table_preemption(rep), "corridor": table_corridor, "corridor_followup": table_corridor_followup,
+              "crisp": table_crisp}
     for name, fn in blocks.items():
         pat = re.compile(rf"(<!-- BEGIN:{name} -->)\n.*?(<!-- END:{name} -->)", re.S)
         if not pat.search(text):

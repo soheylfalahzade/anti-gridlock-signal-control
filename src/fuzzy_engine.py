@@ -134,3 +134,72 @@ class FuzzyAntiSpillbackEngine:
         except Exception:
             g = T_MIN if o >= self._crit_start else 0.5 * (T_MIN + T_MAX)
         return float(np.clip(g, T_MIN, T_MAX))
+
+
+class CrispTwinEngine:
+    """Non-fuzzy twin of FuzzyAntiSpillbackEngine, used only for the ablation.
+
+    It keeps everything except the fuzziness: the same nine rules, the same
+    membership breakpoints and the same output range. Each input is assigned
+    to the single class with the largest membership degree (ties go to the
+    first class in the order critical > medium > low for occupancy and
+    high > positive > zero > negative for pressure), the rule table gives one
+    output class, and the output is the centroid of that class. There is no
+    interpolation between neighbouring rules, so the output takes only three
+    values apart from the fallback, which mirrors the Mamdani engine's own.
+    """
+
+    OCC_ORDER = ("critical", "medium", "low")
+    PRES_ORDER = ("high", "positive", "zero", "negative")
+
+    def __init__(self, critical_shift=0.0, fis_params=None):
+        self._pts = membership_points(fis_params, critical_shift)
+        universe = np.arange(T_MIN, T_MAX + 0.01, 0.5)
+        self.centres = {
+            "short": float(fuzz.defuzz(universe, fuzz.trapmf(universe, [10, 10, 14, 22]), "centroid")),
+            "medium": float(fuzz.defuzz(universe, fuzz.trimf(universe, [18, 32, 46]), "centroid")),
+            "long": float(fuzz.defuzz(universe, fuzz.trapmf(universe, [40, 50, 60, 60]), "centroid")),
+        }
+        self._crit_start = self._pts["occ_critical"][0]
+
+    @staticmethod
+    def _first_max(degrees):
+        best = max(degrees.values())
+        if best <= 0.0:
+            return None
+        return next(k for k, v in degrees.items() if v == best)
+
+    def classify_occupancy(self, o):
+        x, q = np.array([o]), self._pts
+        deg = {"critical": fuzz.trapmf(x, q["occ_critical"])[0],
+               "medium": fuzz.trimf(x, q["occ_medium"])[0],
+               "low": fuzz.trapmf(x, q["occ_low"])[0]}
+        return self._first_max({k: deg[k] for k in self.OCC_ORDER})
+
+    def classify_pressure(self, p):
+        x, q = np.array([p]), self._pts
+        deg = {"high": fuzz.trapmf(x, q["pres_high"])[0],
+               "positive": fuzz.trimf(x, q["pres_positive"])[0],
+               "zero": fuzz.trimf(x, q["pres_zero"])[0],
+               "negative": fuzz.trapmf(x, q["pres_negative"])[0]}
+        return self._first_max({k: deg[k] for k in self.PRES_ORDER})
+
+    @staticmethod
+    def rule(occupancy_class, pressure_class):
+        if occupancy_class == "critical":
+            return "short"
+        if pressure_class == "high":
+            return "long" if occupancy_class == "low" else "medium"
+        if pressure_class == "positive":
+            return "medium"
+        return "short"
+
+    def compute(self, pressure_value, occupancy_value):
+        p = float(np.clip(pressure_value, -60.0, 60.0))
+        o = float(np.clip(occupancy_value, 0.0, 1.0))
+        oc, pc = self.classify_occupancy(o), self.classify_pressure(p)
+        if oc is None or pc is None:
+            g = T_MIN if o >= self._crit_start else 0.5 * (T_MIN + T_MAX)
+        else:
+            g = self.centres[self.rule(oc, pc)]
+        return float(np.clip(g, T_MIN, T_MAX))

@@ -27,7 +27,7 @@ import traci
 import sumolib
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-from src.fuzzy_engine import FuzzyAntiSpillbackEngine, T_MIN
+from src.fuzzy_engine import CrispTwinEngine, FuzzyAntiSpillbackEngine, T_MIN
 from src.metrics import MetricsCollector
 from src.metering import apply_metering, apply_metering_custom
 
@@ -149,13 +149,16 @@ def switch(states, metrics, frm, to):
 def run(sumocfg="configs/intersection.sumocfg", gui=False, seed=1, verbose=False,
         emergency_preempt=True, sim_end=3600, regime="moderate",
         occ_override=OCC_OVERRIDE_DEFAULT, critical_shift=0.0, fis_params=None,
-        ns_green_override=None, ew_green_override=30,
+        ns_green_override=None, ew_green_override=30, engine_kind="mamdani",
         tripinfo_out="results/tripinfo_fuzzy.xml",
         metrics_out="results/metrics_fuzzy.json"):
+    if engine_kind not in ("mamdani", "crisp_twin"):
+        raise ValueError(f"unknown engine_kind: {engine_kind!r}")
+    engine_cls = FuzzyAntiSpillbackEngine if engine_kind == "mamdani" else CrispTwinEngine
     start_sumo(sumocfg, tripinfo_out, gui, seed, regime,
               ns_green_override, ew_green_override)
     states = build_state_strings()
-    engine = FuzzyAntiSpillbackEngine(critical_shift=critical_shift, fis_params=fis_params)
+    engine = engine_cls(critical_shift=critical_shift, fis_params=fis_params)
     metrics = MetricsCollector()
     smoother = _OccupancySmoother()
 
@@ -237,11 +240,14 @@ def run(sumocfg="configs/intersection.sumocfg", gui=False, seed=1, verbose=False
     traci.close()
 
     results = metrics.finalize(tripinfo_out, inserted, max(pending, 0))
-    results.update(policy="Fuzzy Anti-Spillback", anti_spillback_overrides=overrides,
+    results.update(policy="Fuzzy Anti-Spillback" if engine_kind == "mamdani" else "Crisp-Twin Anti-Spillback",
+                   anti_spillback_overrides=overrides,
                    emergency_preemptions=preemptions, occ_override=occ_override,
                    critical_shift=critical_shift, fis_params=fis_params)
+    if engine_kind != "mamdani":
+        results["engine_kind"] = engine_kind
     MetricsCollector.save(results, metrics_out)
-    print(f"[Fuzzy:{regime} occ_ovr={occ_override} shift={critical_shift:+.2f}] "
+    print(f"[{'Fuzzy' if engine_kind == 'mamdani' else 'Crisp-Twin'}:{regime} occ_ovr={occ_override} shift={critical_shift:+.2f}] "
          f"delay={results['avg_delay_s']:.1f}s queue={results['mean_queue_length']:.1f} "
          f"throughput={results['throughput_completed_trips']} "
          f"overrides={overrides} "
@@ -258,6 +264,7 @@ if __name__ == "__main__":
     p.add_argument("--regime", default="moderate", choices=["moderate", "stress"])
     p.add_argument("--occ-override", type=float, default=OCC_OVERRIDE_DEFAULT)
     p.add_argument("--critical-shift", type=float, default=0.0)
+    p.add_argument("--engine-kind", default="mamdani", choices=["mamdani", "crisp_twin"])
     p.add_argument("--quiet", dest="verbose", action="store_false")
     p.add_argument("--no-preempt", dest="emergency_preempt", action="store_false")
     run(**vars(p.parse_args()))

@@ -1,0 +1,907 @@
+{
+  "seeds": [
+    501,
+    502,
+    503,
+    504,
+    505,
+    506,
+    507,
+    508,
+    509,
+    510,
+    511,
+    512,
+    513,
+    514,
+    515,
+    516,
+    517,
+    518,
+    519,
+    520,
+    521,
+    522,
+    523,
+    524,
+    525,
+    526,
+    527,
+    528,
+    529,
+    530
+  ],
+  "policies": [
+    "Vanilla Max-Pressure",
+    "Fuzzy Anti-Spillback",
+    "Crisp-Twin Anti-Spillback"
+  ],
+  "moderate": {
+    "n_pairs": 30,
+    "seeds": [
+      501,
+      502,
+      503,
+      504,
+      505,
+      506,
+      507,
+      508,
+      509,
+      510,
+      511,
+      512,
+      513,
+      514,
+      515,
+      516,
+      517,
+      518,
+      519,
+      520,
+      521,
+      522,
+      523,
+      524,
+      525,
+      526,
+      527,
+      528,
+      529,
+      530
+    ],
+    "summary": {
+      "Vanilla Max-Pressure": {
+        "avg_delay_s": {
+          "mean": 262.9784273184461,
+          "std": 9.3560391911463,
+          "ci95_lo": 260.0291018779487,
+          "ci95_hi": 266.2891085434196
+        },
+        "mean_queue_length": {
+          "mean": 55.64740526275235,
+          "std": 2.8633705692621185,
+          "ci95_lo": 54.73956611091847,
+          "ci95_hi": 56.67488792539939
+        },
+        "throughput_completed_trips": {
+          "mean": 1687.2333333333333,
+          "std": 39.26100402156839,
+          "ci95_lo": 1672.8975,
+          "ci95_hi": 1699.5
+        },
+        "gridlock_incidents_per_1000veh": {
+          "mean": 2.8211208094586646,
+          "std": 2.8443843048181474,
+          "ci95_lo": 1.9417481386684785,
+          "ci95_hi": 3.8449221596559857
+        },
+        "box_gridlock_events": {
+          "mean": 3.966666666666667,
+          "std": 3.6528999659064776,
+          "ci95_lo": 2.8,
+          "ci95_hi": 5.267499999999996
+        },
+        "storage_overflow_events_NS": {
+          "mean": 0.03333333333333333,
+          "std": 0.18257418583505533,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.1
+        },
+        "storage_overflow_events_EW": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "deadlock_teleports": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "total_co2_kg": {
+          "mean": 1050.298821924896,
+          "std": 18.538498227664103,
+          "ci95_lo": 1043.9652568154825,
+          "ci95_hi": 1057.2613196500529
+        }
+      },
+      "Fuzzy Anti-Spillback": {
+        "avg_delay_s": {
+          "mean": 243.79723420304637,
+          "std": 5.694677333685367,
+          "ci95_lo": 241.8811931724153,
+          "ci95_hi": 245.83275983689194
+        },
+        "mean_queue_length": {
+          "mean": 50.97021215065705,
+          "std": 1.5957183246885396,
+          "ci95_lo": 50.43639604450716,
+          "ci95_hi": 51.4997868988679
+        },
+        "throughput_completed_trips": {
+          "mean": 1650.9,
+          "std": 18.136170755018064,
+          "ci95_lo": 1644.3,
+          "ci95_hi": 1657.1333333333334
+        },
+        "gridlock_incidents_per_1000veh": {
+          "mean": 3.0809349354292896,
+          "std": 1.7987868177982058,
+          "ci95_lo": 2.494485336252032,
+          "ci95_hi": 3.777888032568644
+        },
+        "box_gridlock_events": {
+          "mean": 2.6333333333333333,
+          "std": 2.220334447210885,
+          "ci95_lo": 1.8666666666666667,
+          "ci95_hi": 3.433333333333333
+        },
+        "storage_overflow_events_NS": {
+          "mean": 1.9666666666666666,
+          "std": 1.2172137016162357,
+          "ci95_lo": 1.5666666666666667,
+          "ci95_hi": 2.433333333333333
+        },
+        "storage_overflow_events_EW": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "deadlock_teleports": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "total_co2_kg": {
+          "mean": 952.5950946654074,
+          "std": 18.751121607482247,
+          "ci95_lo": 946.3434810523769,
+          "ci95_hi": 959.0197320894927
+        }
+      },
+      "Crisp-Twin Anti-Spillback": {
+        "avg_delay_s": {
+          "mean": 244.077392038988,
+          "std": 5.230933044112028,
+          "ci95_lo": 242.32603929866514,
+          "ci95_hi": 245.95208150927854
+        },
+        "mean_queue_length": {
+          "mean": 51.3328359740607,
+          "std": 1.3325000186009588,
+          "ci95_lo": 50.89551675190533,
+          "ci95_hi": 51.80795314129564
+        },
+        "throughput_completed_trips": {
+          "mean": 1656.3666666666666,
+          "std": 19.682800707169722,
+          "ci95_lo": 1649.2325,
+          "ci95_hi": 1663.1333333333334
+        },
+        "gridlock_incidents_per_1000veh": {
+          "mean": 3.199343395648212,
+          "std": 1.3386275411240998,
+          "ci95_lo": 2.7142276147958655,
+          "ci95_hi": 3.6778036003098538
+        },
+        "box_gridlock_events": {
+          "mean": 3.3,
+          "std": 1.9678449616530893,
+          "ci95_lo": 2.6,
+          "ci95_hi": 4.0
+        },
+        "storage_overflow_events_NS": {
+          "mean": 1.4666666666666666,
+          "std": 0.8603661343041528,
+          "ci95_lo": 1.1666666666666667,
+          "ci95_hi": 1.7666666666666666
+        },
+        "storage_overflow_events_EW": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "deadlock_teleports": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "total_co2_kg": {
+          "mean": 956.6827571382524,
+          "std": 16.01049989781126,
+          "ci95_lo": 951.3531133378717,
+          "ci95_hi": 962.436264792832
+        }
+      }
+    },
+    "wilcoxon_p_raw": {
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 1.862645149230957e-09,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 2.60770320892334e-08,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 3.872235158726154e-05,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": 0.6263462882488966,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 0.12896160050370753,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 2.6546270143670367e-06,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": 1.862645149230957e-09,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | avg_delay_s": 1.862645149230957e-09,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | mean_queue_length": 1.6391277313232422e-07,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | throughput_completed_trips": 6.305643205158674e-05,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": 0.20540969260036945,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | box_gridlock_events": 0.7172578578153808,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": 2.56898407263718e-06,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | total_co2_kg": 1.862645149230957e-09,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | avg_delay_s": 0.9676735773682594,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | mean_queue_length": 0.18396909348666668,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | throughput_completed_trips": 0.035746120855181585,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": 0.5158484429121017,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | box_gridlock_events": 0.22686749524570493,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": 0.1311147293420479,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | total_co2_kg": 0.10943205840885639
+    },
+    "wilcoxon_p_holm_bonferroni": {
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 3.91155481338501e-08,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 4.4330954551696777e-07,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.0005033905706344,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": 1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 3.85347610895577e-05,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": 3.91155481338501e-08,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | avg_delay_s": 3.91155481338501e-08,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | mean_queue_length": 2.6226043701171875e-06,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | throughput_completed_trips": 0.0007566771846190408,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": 1.0,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | box_gridlock_events": 1.0,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": 3.85347610895577e-05,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | total_co2_kg": 3.91155481338501e-08,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | avg_delay_s": 1.0,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | mean_queue_length": 1.0,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | throughput_completed_trips": 0.39320732940699743,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": 1.0,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | box_gridlock_events": 1.0,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": 1.0,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | total_co2_kg": 1.0
+    },
+    "cohens_dz": {
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 1.7498128001913138,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 1.2540289581934938,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 1.0051137091746414,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": -0.07514723102579728,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 0.31467181719925175,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": -1.5048359063104113,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": 0.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": 3.813634079459953,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | avg_delay_s": 1.9940444789815575,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | mean_queue_length": 1.3085014986696384,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | throughput_completed_trips": 0.9541424082221489,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": -0.13299083683100535,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | box_gridlock_events": 0.17802805697709068,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": -1.6698513515105005,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | deadlock_teleports": 0.0,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | total_co2_kg": 4.21319808005134,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | avg_delay_s": -0.06737597166865388,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | mean_queue_length": -0.24847075686702538,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | throughput_completed_trips": -0.3989367454119245,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": -0.04822781646295148,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | box_gridlock_events": -0.2127842269632323,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": 0.3550872519842681,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | deadlock_teleports": 0.0,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | total_co2_kg": -0.3526502884283765
+    },
+    "rank_biserial_r": {
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 0.9741935483870968,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.8620689655172413,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": -0.1053763440860215,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 0.34236453201970446,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": -0.9747126436781609,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": 0.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": 1.0,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | avg_delay_s": 1.0,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | mean_queue_length": 0.9440860215053763,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | throughput_completed_trips": 0.8365591397849462,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": -0.26881720430107525,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | box_gridlock_events": 0.08620689655172414,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": -1.0,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | deadlock_teleports": 0.0,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | total_co2_kg": 1.0,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | avg_delay_s": 0.010752688172043012,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | mean_queue_length": -0.2817204301075269,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | throughput_completed_trips": -0.43870967741935485,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": -0.13978494623655913,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | box_gridlock_events": -0.22153846153846155,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": 0.47368421052631576,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | deadlock_teleports": 0.0,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | total_co2_kg": -0.33763440860215055
+    },
+    "shapiro_on_differences": {
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": {
+        "statistic": 0.7908650309515342,
+        "p_value": 4.4885600945311405e-05,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": {
+        "statistic": 0.8450846987114962,
+        "p_value": 0.0004900610427044694,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": {
+        "statistic": 0.7612339373145828,
+        "p_value": 1.3906213079649665e-05,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": {
+        "statistic": 0.8901150959557675,
+        "p_value": 0.004854490209990198,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": {
+        "statistic": 0.9439105715605973,
+        "p_value": 0.11594267474607672,
+        "normal_at_alpha_0.05": true
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": {
+        "statistic": 0.8997549392117952,
+        "p_value": 0.008283550565106407,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": null,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": null,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": {
+        "statistic": 0.8974878677621287,
+        "p_value": 0.0072946270824060635,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | avg_delay_s": {
+        "statistic": 0.8749515010489565,
+        "p_value": 0.0021632864053517716,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | mean_queue_length": {
+        "statistic": 0.9258563137788954,
+        "p_value": 0.03815351219582693,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | throughput_completed_trips": {
+        "statistic": 0.8163383096434719,
+        "p_value": 0.0001320773584043253,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": {
+        "statistic": 0.8322709883180701,
+        "p_value": 0.0002695916977546357,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | box_gridlock_events": {
+        "statistic": 0.8706888735244415,
+        "p_value": 0.0017354770009591874,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": {
+        "statistic": 0.8532510270645359,
+        "p_value": 0.0007257879853473042,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": null,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | deadlock_teleports": null,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | total_co2_kg": {
+        "statistic": 0.9795193453823414,
+        "p_value": 0.8126317964830174,
+        "normal_at_alpha_0.05": true
+      },
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | avg_delay_s": {
+        "statistic": 0.9228098992919775,
+        "p_value": 0.03174197947178685,
+        "normal_at_alpha_0.05": false
+      },
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | mean_queue_length": {
+        "statistic": 0.9823370311935057,
+        "p_value": 0.8836983462008827,
+        "normal_at_alpha_0.05": true
+      },
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | throughput_completed_trips": {
+        "statistic": 0.9639241186713808,
+        "p_value": 0.38859339134100385,
+        "normal_at_alpha_0.05": true
+      },
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": {
+        "statistic": 0.9284045675556959,
+        "p_value": 0.04454551991070661,
+        "normal_at_alpha_0.05": false
+      },
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | box_gridlock_events": {
+        "statistic": 0.9163504084310877,
+        "p_value": 0.02159028054151779,
+        "normal_at_alpha_0.05": false
+      },
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": {
+        "statistic": 0.9215532303457598,
+        "p_value": 0.029433961496666633,
+        "normal_at_alpha_0.05": false
+      },
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": null,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | deadlock_teleports": null,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | total_co2_kg": {
+        "statistic": 0.9444789786700883,
+        "p_value": 0.12010634037403611,
+        "normal_at_alpha_0.05": true
+      }
+    }
+  },
+  "stress": {
+    "n_pairs": 30,
+    "seeds": [
+      501,
+      502,
+      503,
+      504,
+      505,
+      506,
+      507,
+      508,
+      509,
+      510,
+      511,
+      512,
+      513,
+      514,
+      515,
+      516,
+      517,
+      518,
+      519,
+      520,
+      521,
+      522,
+      523,
+      524,
+      525,
+      526,
+      527,
+      528,
+      529,
+      530
+    ],
+    "summary": {
+      "Vanilla Max-Pressure": {
+        "avg_delay_s": {
+          "mean": 381.6603600844793,
+          "std": 8.980668762085255,
+          "ci95_lo": 378.62959979759063,
+          "ci95_hi": 385.0442204614646
+        },
+        "mean_queue_length": {
+          "mean": 82.38032996866492,
+          "std": 2.15847109463587,
+          "ci95_lo": 81.66447487221967,
+          "ci95_hi": 83.21781609743412
+        },
+        "throughput_completed_trips": {
+          "mean": 1371.4,
+          "std": 21.264508231906692,
+          "ci95_lo": 1364.0658333333333,
+          "ci95_hi": 1378.935
+        },
+        "gridlock_incidents_per_1000veh": {
+          "mean": 3.1075526358908054,
+          "std": 3.5257196905088892,
+          "ci95_lo": 1.9283962454780237,
+          "ci95_hi": 4.470210028900876
+        },
+        "box_gridlock_events": {
+          "mean": 3.6,
+          "std": 3.9444417462620955,
+          "ci95_lo": 2.2666666666666666,
+          "ci95_hi": 5.100833333333329
+        },
+        "storage_overflow_events_NS": {
+          "mean": 0.03333333333333333,
+          "std": 0.18257418583505536,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.1
+        },
+        "storage_overflow_events_EW": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "deadlock_teleports": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "total_co2_kg": {
+          "mean": 1278.3958451888984,
+          "std": 18.888661598144637,
+          "ci95_lo": 1271.5774102040857,
+          "ci95_hi": 1285.1491909707875
+        }
+      },
+      "Fuzzy Anti-Spillback": {
+        "avg_delay_s": {
+          "mean": 344.2807070689707,
+          "std": 7.23947079029373,
+          "ci95_lo": 341.78987157524153,
+          "ci95_hi": 346.84894483803635
+        },
+        "mean_queue_length": {
+          "mean": 74.22672042315274,
+          "std": 1.8296136967194987,
+          "ci95_lo": 73.57263227767801,
+          "ci95_hi": 74.85371833558649
+        },
+        "throughput_completed_trips": {
+          "mean": 1370.3333333333333,
+          "std": 19.877787522297577,
+          "ci95_lo": 1363.6333333333334,
+          "ci95_hi": 1376.9666666666667
+        },
+        "gridlock_incidents_per_1000veh": {
+          "mean": 8.04772173676147,
+          "std": 2.031207486762929,
+          "ci95_lo": 7.346198152604256,
+          "ci95_hi": 8.772855927377538
+        },
+        "box_gridlock_events": {
+          "mean": 3.3333333333333335,
+          "std": 2.1226745220209295,
+          "ci95_lo": 2.6,
+          "ci95_hi": 4.1
+        },
+        "storage_overflow_events_NS": {
+          "mean": 7.033333333333333,
+          "std": 1.188546876720022,
+          "ci95_lo": 6.633333333333334,
+          "ci95_hi": 7.466666666666667
+        },
+        "storage_overflow_events_EW": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "deadlock_teleports": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "total_co2_kg": {
+          "mean": 1150.4752443250288,
+          "std": 20.28951242922164,
+          "ci95_lo": 1142.909096731413,
+          "ci95_hi": 1157.3766604958198
+        }
+      },
+      "Crisp-Twin Anti-Spillback": {
+        "avg_delay_s": {
+          "mean": 346.9386294734289,
+          "std": 7.04285743128027,
+          "ci95_lo": 344.4959248199893,
+          "ci95_hi": 349.56798523156107
+        },
+        "mean_queue_length": {
+          "mean": 75.5001850212586,
+          "std": 1.424303607926606,
+          "ci95_lo": 74.9882316988395,
+          "ci95_hi": 76.01529988172675
+        },
+        "throughput_completed_trips": {
+          "mean": 1370.8666666666666,
+          "std": 19.50549583620196,
+          "ci95_lo": 1364.0991666666666,
+          "ci95_hi": 1377.37
+        },
+        "gridlock_incidents_per_1000veh": {
+          "mean": 9.585763535926175,
+          "std": 2.159912428410002,
+          "ci95_lo": 8.875892095097393,
+          "ci95_hi": 10.372544541381226
+        },
+        "box_gridlock_events": {
+          "mean": 2.966666666666667,
+          "std": 2.1732437750393134,
+          "ci95_lo": 2.2666666666666666,
+          "ci95_hi": 3.8
+        },
+        "storage_overflow_events_NS": {
+          "mean": 9.433333333333334,
+          "std": 1.8323403789601471,
+          "ci95_lo": 8.766666666666667,
+          "ci95_hi": 10.1
+        },
+        "storage_overflow_events_EW": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "deadlock_teleports": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95_lo": 0.0,
+          "ci95_hi": 0.0
+        },
+        "total_co2_kg": {
+          "mean": 1159.6776680172156,
+          "std": 17.27899346107652,
+          "ci95_lo": 1153.6358008853285,
+          "ci95_hi": 1165.8784979161203
+        }
+      }
+    },
+    "wilcoxon_p_raw": {
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 1.862645149230957e-09,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 1.862645149230957e-09,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.0015018278734234198,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": 1.597777009010315e-05,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 0.8044334259054962,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 1.1535870549699865e-06,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": 1.862645149230957e-09,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | avg_delay_s": 1.862645149230957e-09,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | mean_queue_length": 1.862645149230957e-09,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | throughput_completed_trips": 0.0069065259665225896,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": 5.718320608139038e-07,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | box_gridlock_events": 0.6876227792115092,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": 1.600349795648682e-06,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | total_co2_kg": 1.862645149230957e-09,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | avg_delay_s": 0.00577649287879467,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | mean_queue_length": 0.000283263623714447,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | throughput_completed_trips": 0.450981353935451,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": 0.0426517054438591,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | box_gridlock_events": 0.6200485557469486,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": 3.177026867163645e-05,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | total_co2_kg": 0.00466480478644371
+    },
+    "wilcoxon_p_holm_bonferroni": {
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 3.91155481338501e-08,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 3.91155481338501e-08,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.013516450860810778,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": 0.0001917332410812378,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": 1.615021876957981e-05,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": 3.91155481338501e-08,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | avg_delay_s": 3.91155481338501e-08,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | mean_queue_length": 3.91155481338501e-08,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | throughput_completed_trips": 0.04143915579913554,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": 8.577480912208557e-06,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | box_gridlock_events": 1.0,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": 2.0804547343432865e-05,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | total_co2_kg": 3.91155481338501e-08,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | avg_delay_s": 0.04043545015156269,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | mean_queue_length": 0.00283263623714447,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | throughput_completed_trips": 1.0,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": 0.2132585272192955,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | box_gridlock_events": 1.0,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": 0.00034947295538800095,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": "identical (no variance)",
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | deadlock_teleports": "identical (no variance)",
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | total_co2_kg": 0.03731843829154968
+    },
+    "cohens_dz": {
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 5.244762927840476,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 3.415570052206607,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.09142110878550072,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": -1.0762584050528778,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": 0.052233019746661384,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": -5.68290898620192,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": 0.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": 7.044928159895218,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | avg_delay_s": 5.241794243904908,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | mean_queue_length": 3.166191078241192,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | throughput_completed_trips": 0.04160495042282471,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": -1.4166884752428974,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | box_gridlock_events": 0.1419894194766721,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": -4.935361656130793,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | deadlock_teleports": 0.0,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | total_co2_kg": 7.7186731819461825,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | avg_delay_s": -0.5605318373356638,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | mean_queue_length": -0.770592015238804,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | throughput_completed_trips": -0.14056811620836407,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": -0.4392990258630354,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | box_gridlock_events": 0.1006372743970454,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": -1.0116963041173501,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | deadlock_teleports": 0.0,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | total_co2_kg": -0.5850158430328878
+    },
+    "rank_biserial_r": {
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": 1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": 1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": 0.6640211640211641,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": -0.8279569892473119,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": -0.029556650246305417,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": -1.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": 0.0,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": 1.0,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | avg_delay_s": 1.0,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | mean_queue_length": 1.0,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | throughput_completed_trips": 0.5634408602150538,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": -0.9182795698924732,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | box_gridlock_events": 0.09523809523809523,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": -1.0,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | deadlock_teleports": 0.0,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | total_co2_kg": 1.0,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | avg_delay_s": -0.5655913978494623,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | mean_queue_length": -0.7204301075268817,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | throughput_completed_trips": -0.16995073891625614,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": -0.4236559139784946,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | box_gridlock_events": 0.10804597701149425,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": -0.8994708994708994,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": 0.0,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | deadlock_teleports": 0.0,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | total_co2_kg": -0.578494623655914
+    },
+    "shapiro_on_differences": {
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | avg_delay_s": {
+        "statistic": 0.917359337514325,
+        "p_value": 0.02291975328517795,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | mean_queue_length": {
+        "statistic": 0.954252565044576,
+        "p_value": 0.21943813055562927,
+        "normal_at_alpha_0.05": true
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | throughput_completed_trips": {
+        "statistic": 0.4375084625954373,
+        "p_value": 1.2421643061665952e-09,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | gridlock_incidents_per_1000veh": {
+        "statistic": 0.8811463073917691,
+        "p_value": 0.002995645327415343,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | box_gridlock_events": {
+        "statistic": 0.9086703703232407,
+        "p_value": 0.013776785542519213,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_NS": {
+        "statistic": 0.8503662854241028,
+        "p_value": 0.0006310827089115073,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | storage_overflow_events_EW": null,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | deadlock_teleports": null,
+      "Vanilla Max-Pressure vs Fuzzy Anti-Spillback | total_co2_kg": {
+        "statistic": 0.97691717313965,
+        "p_value": 0.7390179977692161,
+        "normal_at_alpha_0.05": true
+      },
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | avg_delay_s": {
+        "statistic": 0.8212181041443718,
+        "p_value": 0.00016379168206184398,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | mean_queue_length": {
+        "statistic": 0.9660508069137883,
+        "p_value": 0.4374829841485045,
+        "normal_at_alpha_0.05": true
+      },
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | throughput_completed_trips": {
+        "statistic": 0.45986225672481407,
+        "p_value": 2.0683331928188115e-09,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": {
+        "statistic": 0.9091576140359484,
+        "p_value": 0.014170852700863419,
+        "normal_at_alpha_0.05": false
+      },
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | box_gridlock_events": {
+        "statistic": 0.9342464123732663,
+        "p_value": 0.06372758256299171,
+        "normal_at_alpha_0.05": true
+      },
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": {
+        "statistic": 0.9680895684181218,
+        "p_value": 0.48831427431518176,
+        "normal_at_alpha_0.05": true
+      },
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": null,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | deadlock_teleports": null,
+      "Vanilla Max-Pressure vs Crisp-Twin Anti-Spillback | total_co2_kg": {
+        "statistic": 0.9599434857363696,
+        "p_value": 0.30874599926234436,
+        "normal_at_alpha_0.05": true
+      },
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | avg_delay_s": {
+        "statistic": 0.9824469650224782,
+        "p_value": 0.8862048157614619,
+        "normal_at_alpha_0.05": true
+      },
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | mean_queue_length": {
+        "statistic": 0.9860825042072981,
+        "p_value": 0.9541468224370596,
+        "normal_at_alpha_0.05": true
+      },
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | throughput_completed_trips": {
+        "statistic": 0.9657139716590593,
+        "p_value": 0.42945255286190337,
+        "normal_at_alpha_0.05": true
+      },
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | gridlock_incidents_per_1000veh": {
+        "statistic": 0.9517796856973538,
+        "p_value": 0.1886326362304112,
+        "normal_at_alpha_0.05": true
+      },
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | box_gridlock_events": {
+        "statistic": 0.9732140428628524,
+        "p_value": 0.6303075903930794,
+        "normal_at_alpha_0.05": true
+      },
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_NS": {
+        "statistic": 0.9528488599479586,
+        "p_value": 0.20141332663128841,
+        "normal_at_alpha_0.05": true
+      },
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | storage_overflow_events_EW": null,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | deadlock_teleports": null,
+      "Fuzzy Anti-Spillback vs Crisp-Twin Anti-Spillback | total_co2_kg": {
+        "statistic": 0.9905724945841988,
+        "p_value": 0.9936463836558671,
+        "normal_at_alpha_0.05": true
+      }
+    }
+  }
+}
